@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="just starting things and choosing name">
-      <change afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="started to creat eGFR component">
+      <change afterPath="$PROJECT_DIR$/nephrology_equations_module.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,13 +39,20 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.Main.executor": "Run",
+    "Python.nephrology_equations_module.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/moham/Google Drive/python programs/ClinicEnviromentAndRegistryAccessCEARA",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\moham\Google Drive\python programs\ClinicEnviromentAndRegistryAccessCEARA" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -68,11 +76,28 @@
       <option name="project" value="LOCAL" />
       <updated>1769272759970</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="started to creat eGFR component">
+      <option name="closed" value="true" />
+      <created>1769451384123</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1769451384123</updated>
+    </task>
+    <task id="LOCAL-00003" summary="started to creat eGFR component">
+      <option name="closed" value="true" />
+      <created>1769451394584</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1769451394584</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="just starting things and choosing name" />
-    <option name="LAST_COMMIT_MESSAGE" value="just starting things and choosing name" />
+    <MESSAGE value="started to creat eGFR component" />
+    <option name="LAST_COMMIT_MESSAGE" value="started to creat eGFR component" />
   </component>
 </project>
