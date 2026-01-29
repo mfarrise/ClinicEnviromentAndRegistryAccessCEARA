@@ -5,6 +5,7 @@
 
 from nephrology_equations_module import calculate_eGFR
 from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton
+from PySide6.QtCore import Qt
 
 class eGFRSubWindow(QWidget):
     def __init__(self):
@@ -17,7 +18,6 @@ class eGFRSubWindow(QWidget):
 
 
         self.setWindowTitle("eGFR Calculator")
-
 
         #self.resize(300,150)
         eGFRLayout=QGridLayout(self)

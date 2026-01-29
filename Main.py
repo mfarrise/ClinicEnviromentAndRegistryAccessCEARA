@@ -2,6 +2,8 @@ import os,sys
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QGuiApplication
 from eGFRSubWindow import eGFRSubWindow
+from ContrastRiskSubWindow import ContrastRiskSubWindow
+
 
 App = QApplication(sys.argv)
 MainWindow = QMainWindow()
@@ -15,7 +17,8 @@ MainWindow.resize(screen_width,screen_height)
 eGFRWindow=eGFRSubWindow()
 eGFRWindow.move(screen_width-300,0)
 
-
+CINWindow=ContrastRiskSubWindow()
+CINWindow.move(screen_width-300,screen_height-400)
 
 
 
@@ -25,6 +28,7 @@ eGFRWindow.move(screen_width-300,0)
                                                 #######################
 MainWindow.show()
 eGFRWindow.show()
+CINWindow.show()
 eGFRWindow.raise_()
-
+CINWindow.raise_()
 App.exec()
