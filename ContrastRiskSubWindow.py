@@ -29,6 +29,8 @@ class ContrastRiskSubWindow(QWidget):
             )
             risklbl.setText("Risk for CIN "+str(risk)+"%")
             dialysislbl.setText("Risk for Dialysis "+str(dialysis)+"%")
+        def generate_docx_report():
+            pass
 
         CINLayout = QGridLayout(self)
         self.setLayout(CINLayout)
@@ -85,4 +87,4 @@ class ContrastRiskSubWindow(QWidget):
 
         generate_report_btn=QPushButton("Generate Report")
         CINLayout.addWidget(generate_report_btn,11,1,1,2)
-        generate_report_btn.clicked.connect(calculate_CIN_risk)
+        generate_report_btn.clicked.connect(generate_docx_report)
