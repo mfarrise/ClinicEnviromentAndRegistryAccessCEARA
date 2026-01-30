@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="finsihed the cin calculator window but still i have to write the generate docx report code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContrastRiskSubWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/ContrastRiskSubWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +61,11 @@
     "last_opened_file_path": "C:/Users/moham/Google Drive/python programs/ClinicEnviromentAndRegistryAccessCEARA",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Python"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -213,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769715566784</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="finsihed the cin calculator window but still i have to write the generate docx report code">
+      <option name="closed" value="true" />
+      <created>1769716118589</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1769716118589</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

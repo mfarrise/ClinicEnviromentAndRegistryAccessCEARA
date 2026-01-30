@@ -1,8 +1,8 @@
                                                 ################################################
                                                 #      setting things for CIN RISK Window      #
                                                 ################################################
-
-
+import os
+from docx import Document
 from nephrology_equations_module import contrast_risk
 from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton, QCheckBox
 
@@ -29,9 +29,47 @@ class ContrastRiskSubWindow(QWidget):
             )
             risklbl.setText("Risk for CIN "+str(risk)+"%")
             dialysislbl.setText("Risk for Dialysis "+str(dialysis)+"%")
-        def generate_docx_report():
-            pass
+        def handel_docx(replacements):
+            print(replacements)
+            doc = Document("pciForm.docx")
+            for paragraph in doc.paragraphs:
+                for run in paragraph.runs:
+                    for key,value in replacements.items():
+                        if key in run.text:
 
+                            run.text = run.text.replace(key, value)
+            for table in doc.tables:
+                for row in table.rows:
+                    for cell in row.cells:
+                        for paragraph in cell.paragraphs:
+                            for run in paragraph.runs:
+                                print(run.text)
+                                for key,value in replacements.items():
+
+                                    if key in run.text:
+                                        print(run.text)
+                                        run.text = run.text.replace(key, value)
+            doc.save("temppci.docx")
+            os.startfile("temppci.docx")
+        def generate_docx_report():
+            score, risk, dialysis = contrast_risk(
+                egfr=float(egfrLine.text()),
+                age=float(ageLine.text()),
+                contrast=float(contrastLine.text()),
+                hf=check_boxes_logic(hfcbx),
+                baloon=check_boxes_logic(balooncbx),
+                hypo_tension=check_boxes_logic(shockcbx),
+                dm=check_boxes_logic(diabeticcbx),
+                anemia=check_boxes_logic(anemialcbx)
+            )
+            replacements = {}
+            replacements['putgfr'] = egfrLine.text()
+            replacements['putcinhere'] = str(risk)
+            replacements['putdiaysishere'] = str(dialysis)
+            replacements['putcontrasthere'] = contrastLine.text()
+            handel_docx(replacements)
+            risklbl.setText("Risk for CIN " + str(risk) + "%")
+            dialysislbl.setText("Risk for Dialysis " + str(dialysis) + "%")
         CINLayout = QGridLayout(self)
         self.setLayout(CINLayout)
         self.setWindowTitle("Contrast Risk Calculator")
