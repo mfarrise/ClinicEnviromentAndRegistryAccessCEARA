@@ -126,3 +126,5 @@ class ContrastRiskSubWindow(QWidget):
         generate_report_btn=QPushButton("Generate Report")
         CINLayout.addWidget(generate_report_btn,11,1,1,2)
         generate_report_btn.clicked.connect(generate_docx_report)
+
+        print(self.width())
