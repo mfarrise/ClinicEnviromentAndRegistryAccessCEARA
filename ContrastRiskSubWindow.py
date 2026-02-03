@@ -10,12 +10,12 @@ from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox
 class ContrastRiskSubWindow(QWidget):
     def __init__(self):
         super().__init__()
+
         def check_boxes_logic(status):
             if status.isChecked():
                 return "y"
             else:
                 return "n"
-
         def calculate_CIN_risk():
             score,risk,dialysis=contrast_risk(
                 egfr=float(egfrLine.text()),
@@ -70,6 +70,7 @@ class ContrastRiskSubWindow(QWidget):
             handel_docx(replacements)
             risklbl.setText("Risk for CIN " + str(risk) + "%")
             dialysislbl.setText("Risk for Dialysis " + str(dialysis) + "%")
+
         CINLayout = QGridLayout(self)
         self.setLayout(CINLayout)
         self.setWindowTitle("Contrast Risk Calculator")
