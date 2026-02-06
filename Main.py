@@ -34,7 +34,7 @@ PatientWindow=Patient_Dash_Board()
                                                 #######################
                                                 #   Final Excution    #
                                                 #######################
-# MainWindow.show()g
+# MainWindow.show()
 eGFRWindow.show()
 CINWindow.show()
 PatientWindow.show()
