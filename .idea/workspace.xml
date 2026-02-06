@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="started tinkering with patient dash board and desided i dont neee the main window to show">
+    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="started tinkering with patient dash board and desided i dont building the components">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Patient_Dash_Board.py" beforeDir="false" afterPath="$PROJECT_DIR$/Patient_Dash_Board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temppci.docx" beforeDir="false" afterPath="$PROJECT_DIR$/temppci.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +261,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770113727155</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="started tinkering with patient dash board and desided i dont building the components">
+      <option name="closed" value="true" />
+      <created>1770391143845</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1770391143845</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -272,6 +280,18 @@
     <MESSAGE value="finsihed the cin calculator window but still i have to write the generate docx report code" />
     <MESSAGE value="finsihed the cin calculator  write the generate docx report code" />
     <MESSAGE value="started tinkering with patient dash board and desided i dont neee the main window to show" />
-    <option name="LAST_COMMIT_MESSAGE" value="started tinkering with patient dash board and desided i dont neee the main window to show" />
+    <MESSAGE value="started tinkering with patient dash board and desided i dont building the components" />
+    <option name="LAST_COMMIT_MESSAGE" value="started tinkering with patient dash board and desided i dont building the components" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ContrastRiskSubWindow.py</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
