@@ -10,10 +10,10 @@ class PatientDashBoard(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Patient Dashboard")
-        # self.setMaximumSize(1000, 900)
 
-        quadrant_width=650
-        quadrant_height=450
+
+        quadrant_width=640
+        quadrant_height=490
 
         def set_quadrants_size(widget, width=450, height=450):
             widget.setMaximumWidth(width)
@@ -104,31 +104,54 @@ class PatientDashBoard(QWidget):
 
         main_layout.addWidget(patient_today_clinical_widget,2,1)
 
+        ##########################################################################
+        # setting up the RUQ which is the patient current history and examination#
+        ##########################################################################
 
-        # # Last investigations == today investigation
-        # # label
-        # last_investigations_label = QLabel(self)
-        # last_investigations_label.setText("last investigations")
-        # Layout.addWidget(last_investigations_label, 33, 1)
-        #
-        # # last_investigations
-        # # text edit
-        # last_investigations_edit = QTextEdit(self)
-        # last_investigations_edit.setReadOnly(True)
-        # Layout.addWidget(last_investigations_edit, 34, 1, 30, 2)
-        #
-        # # Last medications == today modeications
-        # # label
-        # last_medications_label = QLabel(self)
-        # last_medications_label.setText("last medications")
-        # Layout.addWidget(last_medications_label, 33, 4)
-        #
-        # # last medications
-        # # text edit
-        # last_medications_edit = QTextEdit(self)
-        # last_medications_edit.setReadOnly(True)
-        # Layout.addWidget(last_medications_edit, 34, 4, 30, 10)
+        patient_today_ix_medication_widget=QWidget(self)
+        patient_today_ix_medication_layout = QGridLayout(patient_today_ix_medication_widget)
+        patient_today_ix_medication_widget.setLayout(patient_today_ix_medication_layout)
+        set_quadrants_size(patient_today_ix_medication_widget,quadrant_width,quadrant_height)
 
+        # today investigations
+        # label
+        today_investigations_label = QLabel(self)
+        today_investigations_label.setText("Today Investigations")
+        patient_today_ix_medication_layout.addWidget(today_investigations_label, 1, 1)
+
+        # today investigations
+        # text edit
+        today_investigations_edit = QTextEdit(self)
+        today_investigations_edit.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(today_investigations_edit, 2, 1, 1, 1)
+
+        # Last medications == today modeications
+        # label
+        last_medications_label = QLabel(self)
+        last_medications_label.setText("Today Medications")
+        patient_today_ix_medication_layout.addWidget(last_medications_label, 1, 2)
+
+        # today medications
+        # text edit
+        last_medications_edit = QTextEdit(self)
+        last_medications_edit.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(last_medications_edit, 2, 2, 1, 1)
+
+        # today investigation intelligent
+        # line edit
+        today_investigations_line = QLineEdit(self)
+        today_investigations_line.setPlaceholderText("Intelligent Fill")
+        today_investigations_line.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(today_investigations_line, 3, 1, 1, 1)
+
+        # today Medication intelligent
+        # line edit
+        today_medication_line = QLineEdit(self)
+        today_medication_line.setPlaceholderText("Intelligent Fill")
+        today_medication_line.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(today_medication_line, 3, 2, 1, 1)
+
+        main_layout.addWidget(patient_today_ix_medication_widget,1,2)
 
     #Just Button
         # fetch_path_button = QPushButton(self)
