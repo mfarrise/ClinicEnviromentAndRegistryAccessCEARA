@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QGridLayou
 from PySide6.QtGui import QGuiApplication
 from eGFRSubWindow import eGFRSubWindow
 from ContrastRiskSubWindow import ContrastRiskSubWindow
-from Patient_Dash_Board import Patient_Dash_Board
+from PatientDashBoard import PatientDashBoard
 
 App = QApplication(sys.argv)
 MainWindow = QMainWindow()
@@ -27,7 +27,7 @@ CINWindow.adjustSize()
 CINWindow.move(screen_width-CINWindow.frameGeometry().width(),screen_size.height()-CINWindow.frameGeometry().height())
 
 #calling Patient Dash Board
-PatientWindow=Patient_Dash_Board()
+PatientWindow=PatientDashBoard()
 
 
 
