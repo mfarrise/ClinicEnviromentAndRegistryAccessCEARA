@@ -1,9 +1,9 @@
 import os
 import sys
-
+from datetime import datetime
 
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
-    QLabel, QRadioButton
+    QLabel, QRadioButton, QComboBox
 
 from docx import Document
 
@@ -49,6 +49,13 @@ class PatientDashBoard(QWidget):
         patient_residence_edit = QLineEdit(self)
         patient_residence_edit.setPlaceholderText("ٌResidence")
         patient_demo_and_old_data_layout.addWidget(patient_residence_edit, 1, 3)
+
+        patient_gender_combo=QComboBox()
+        patient_gender_combo.addItems(["Male","Female"])
+        patient_demo_and_old_data_layout.addWidget(patient_gender_combo, 1, 4)
+
+
+
         # create patient_... variable and assign text to it
         patient_residence_edit.textChanged.connect(lambda text: setattr(self, "patient_residence", text))
 
@@ -62,7 +69,7 @@ class PatientDashBoard(QWidget):
         # text edit
         previous_history_edit = QTextEdit(self)
         previous_history_edit.setReadOnly(True)
-        patient_demo_and_old_data_layout.addWidget(previous_history_edit, 3, 1,1,3)
+        patient_demo_and_old_data_layout.addWidget(previous_history_edit, 3, 1,1,4)
 
         main_layout.addWidget(patient_demo_and_old_data_widget,1,1)
 
@@ -167,7 +174,30 @@ class PatientDashBoard(QWidget):
             for paragraph in doc.paragraphs:
                 old_history=old_history+paragraph.text+"\n"
             previous_history_edit.setText(old_history)
+        def update_patient_data():
+            doc = Document()
+            demographic_table=doc.add_table(2,5)
 
+            demographic_table.cell(0,0).text("Name")
+            if patient_name_edit.text() != "":
+                demographic_table.cell(1,0).text(patient_name_edit.text())
+
+            demographic_table.cell(0,1).text("DOB")
+            if patient_name_edit.text() != "":
+                demographic_table.cell(1,1).text(patient_DOB_edit.text())
+
+            demographic_table.cell(0,2).text("Age")
+            if patient_name_edit.text() != "":
+                demographic_table.cell(1,1).text(str(datetime.now().year-int(patient_DOB_edit.text())))
+
+            demographic_table.cell(0,3).text("Gender")
+            demographic_table.cell(1,3).text(patient_gender_combo.currentText())
+
+            demographic_table.cell(0,4).text("Residence")
+            if patient_name_edit.text() != "":
+                demographic_table.cell(1,4).text(patient_residence_edit.text())
+
+            doc.save("PatientDashBoard.docx")
         io_widget=QWidget(self)
         io_layout = QGridLayout(io_widget)
         io_widget.setLayout(io_layout)
@@ -181,13 +211,14 @@ class PatientDashBoard(QWidget):
         #update new data button
         update_patient_button=QPushButton("Update Patient")
         io_layout.addWidget(update_patient_button,0,1)
+        update_patient_button.clicked.connect(update_patient_data)
 
 
 
         main_layout.addWidget(io_widget,2,2)
 
 
-            ##########################################
+        ##########################################
         #starting writing th engine of the widget#
         ##########################################
 

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="started tinkering with patient dash board and desided i dont building the components and now got the idea of adopting nested qgrids as quadrant layouts&#10;finsihed 3 quadrants">
+    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="starting the final quadrant">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PatientDashBoard.py" beforeDir="false" afterPath="$PROJECT_DIR$/PatientDashBoard.py" afterDir="false" />
     </list>
@@ -113,7 +113,7 @@
       <workItem from="1770701398324" duration="6068000" />
       <workItem from="1770720949262" duration="2651000" />
       <workItem from="1770746491646" duration="3408000" />
-      <workItem from="1770899647635" duration="2910000" />
+      <workItem from="1770899647635" duration="6650000" />
     </task>
     <task id="LOCAL-00001" summary="just starting things and choosing name">
       <option name="closed" value="true" />
@@ -251,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770750506351</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="starting the final quadrant">
+      <option name="closed" value="true" />
+      <created>1770902869839</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1770902869839</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,7 +276,8 @@
     <MESSAGE value="started tinkering with patient dash board and desided i dont building the components" />
     <MESSAGE value="started tinkering with patient dash board and desided i dont building the components and now got the idea of adopting nested qgrids as quadrant layouts" />
     <MESSAGE value="started tinkering with patient dash board and desided i dont building the components and now got the idea of adopting nested qgrids as quadrant layouts&#10;finsihed 3 quadrants" />
-    <option name="LAST_COMMIT_MESSAGE" value="started tinkering with patient dash board and desided i dont building the components and now got the idea of adopting nested qgrids as quadrant layouts&#10;finsihed 3 quadrants" />
+    <MESSAGE value="starting the final quadrant" />
+    <option name="LAST_COMMIT_MESSAGE" value="starting the final quadrant" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -282,7 +291,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1770902387128" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1770907107035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Patient_Dash_Board.coverage" NAME="Patient_Dash_Board Coverage Results" MODIFIED="1770723813956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Main.coverage" NAME="Main Coverage Results" MODIFIED="1770750513019" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
