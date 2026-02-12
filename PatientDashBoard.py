@@ -1,10 +1,11 @@
-
+import os
 import sys
 
 
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
     QLabel, QRadioButton
 
+from docx import Document
 
 class PatientDashBoard(QWidget):
     def __init__(self):
@@ -15,11 +16,7 @@ class PatientDashBoard(QWidget):
         quadrant_width=640
         quadrant_height=490
 
-        def set_quadrants_size(widget, width=450, height=450):
-            widget.setMaximumWidth(width)
-            widget.setMaximumHeight(height)
-            widget.setMinimumHeight(height)
-            widget.setMinimumWidth(width)
+
 
         ##############################################################################
         #setting main lay out that will contain 4 Qgridlayouts each for each quadrant#
@@ -34,7 +31,7 @@ class PatientDashBoard(QWidget):
         patient_demo_and_old_data_widget=QWidget(self)
         patient_demo_and_old_data_layout = QGridLayout(patient_demo_and_old_data_widget)
         patient_demo_and_old_data_widget.setLayout(patient_demo_and_old_data_layout)
-        set_quadrants_size(patient_demo_and_old_data_widget,quadrant_width,quadrant_height)
+        self.set_quadrants_size(patient_demo_and_old_data_widget,quadrant_width,quadrant_height)
 
 
         patient_name_edit = QLineEdit(self)
@@ -76,7 +73,7 @@ class PatientDashBoard(QWidget):
         patient_today_clinical_widget=QWidget(self)
         patient_today_clinical_layout = QGridLayout(patient_today_clinical_widget)
         patient_today_clinical_widget.setLayout(patient_today_clinical_layout)
-        set_quadrants_size(patient_today_clinical_widget,quadrant_width,quadrant_height)
+        self.set_quadrants_size(patient_today_clinical_widget,quadrant_width,quadrant_height)
 
         #Today history
         #label
@@ -111,7 +108,7 @@ class PatientDashBoard(QWidget):
         patient_today_ix_medication_widget=QWidget(self)
         patient_today_ix_medication_layout = QGridLayout(patient_today_ix_medication_widget)
         patient_today_ix_medication_widget.setLayout(patient_today_ix_medication_layout)
-        set_quadrants_size(patient_today_ix_medication_widget,quadrant_width,quadrant_height)
+        self.set_quadrants_size(patient_today_ix_medication_widget,quadrant_width,quadrant_height)
 
         # today investigations
         # label
@@ -153,23 +150,71 @@ class PatientDashBoard(QWidget):
 
         main_layout.addWidget(patient_today_ix_medication_widget,1,2)
 
-    #Just Button
-        # fetch_path_button = QPushButton(self)
-        # fetch_path_button.setText("Fetch Path")
-        # Layout.addWidget(fetch_path_button, 30, 1)
-        # fetch_path_button.clicked.connect(self.open_path_dialog)
-        # main_layout.addWidget(patient_demo_and_old_data_widget)
-        #
+
+        ##########################################################################
+        # setting up the RUQ which is the patient current history and examination#
+        ##########################################################################
+        def load_patient_data():
+            patient_file_path = self.open_path_dialog()
+
+            doc = Document(patient_file_path)
+            # in the following code
+            # splitext() returns a tuple:
+            # ("README", ".md")
+            # [0]takes the first part(without extension)
+            patient_name_edit.setText(os.path.splitext(os.path.basename(patient_file_path))[0])
+            old_history=""
+            for paragraph in doc.paragraphs:
+                old_history=old_history+paragraph.text+"\n"
+            previous_history_edit.setText(old_history)
+
+        io_widget=QWidget(self)
+        io_layout = QGridLayout(io_widget)
+        io_widget.setLayout(io_layout)
+        self.set_quadrants_size(io_widget,quadrant_width,quadrant_height)
+
+        #load patient button
+        load_patient_button=QPushButton("Load Patient")
+        io_layout.addWidget(load_patient_button,0,0)
+        load_patient_button.clicked.connect(load_patient_data)
+
+        #update new data button
+        update_patient_button=QPushButton("Update Patient")
+        io_layout.addWidget(update_patient_button,0,1)
+
+
+
+        main_layout.addWidget(io_widget,2,2)
+
+
+            ##########################################
+        #starting writing th engine of the widget#
+        ##########################################
+
+
+
+
+
+
+
 
 
     def open_path_dialog(self):
-        print(self.patient_residence)
+
         file_path, _ = QFileDialog.getOpenFileName(
             parent=None,
             caption="Select file",
             dir="",
             filter="All Files (*.*);;Word Files (*.docx);;PDF Files (*.pdf)"
         )
+        #print(type(file_path),file_path)
+        return file_path
+
+    def set_quadrants_size(self,widget, width=450, height=450):
+        widget.setMaximumWidth(width)
+        widget.setMaximumHeight(height)
+        widget.setMinimumHeight(height)
+        widget.setMinimumWidth(width)
 
 
 
