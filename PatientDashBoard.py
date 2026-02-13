@@ -2,11 +2,10 @@ import os
 import sys
 import json
 from datetime import datetime
-
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
-    QLabel, QRadioButton, QComboBox, QMenuBar
-
+    QLabel, QComboBox, QMenuBar
 from docx import Document
+
 
 class PatientDashBoard(QWidget):
     def __init__(self):
@@ -96,7 +95,7 @@ class PatientDashBoard(QWidget):
 
         #Today history
         #label
-        today_history_label = QLabel(self);
+        today_history_label = QLabel(self)
         today_history_label.setText("Today History")
         patient_today_clinical_layout.addWidget(today_history_label, 1, 1)
 
@@ -108,7 +107,7 @@ class PatientDashBoard(QWidget):
 
         #Today Examination
         #label
-        today_examination_label = QLabel(self);
+        today_examination_label = QLabel(self)
         today_examination_label.setText("Today Examination")
         patient_today_clinical_layout.addWidget(today_examination_label, 1, 2)
 
@@ -143,15 +142,15 @@ class PatientDashBoard(QWidget):
 
         # Last medications == today modeications
         # label
-        last_medications_label = QLabel(self)
-        last_medications_label.setText("Today Medications")
-        patient_today_ix_medication_layout.addWidget(last_medications_label, 1, 2)
+        today_medications_label = QLabel(self)
+        today_medications_label.setText("Today Medications")
+        patient_today_ix_medication_layout.addWidget(today_medications_label, 1, 2)
 
         # today medications
         # text edit
-        last_medications_edit = QTextEdit(self)
-        last_medications_edit.setReadOnly(False)
-        patient_today_ix_medication_layout.addWidget(last_medications_edit, 2, 2, 1, 1)
+        today_medications_edit = QTextEdit(self)
+        today_medications_edit.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(today_medications_edit, 2, 2, 1, 1)
 
         # today investigation intelligent
         # line edit
@@ -159,7 +158,7 @@ class PatientDashBoard(QWidget):
         today_investigations_line.setPlaceholderText("Intelligent Fill")
         today_investigations_line.setReadOnly(False)
         patient_today_ix_medication_layout.addWidget(today_investigations_line, 3, 1, 1, 1)
-
+        today_investigations_line.returnPressed.connect(self.investigation_intellisense)
         # today Medication intelligent
         # line edit
         today_medication_line = QLineEdit(self)
@@ -173,21 +172,24 @@ class PatientDashBoard(QWidget):
         ##########################################################################
         # setting up the RUQ which is the patient current history and examination#
         ##########################################################################
-        #region
+        ##########################################
+        #starting writing th engine of the widget#
+        ##########################################
+        # region
+
         def load_patient_data():
             patient_file_path = self.open_path_dialog()
-
-            doc = Document(patient_file_path)
-            # in the following code
-            # splitext() returns a tuple:
-            # ("README", ".md")
-            # [0]takes the first part(without extension)
-            patient_name_edit.setText(os.path.splitext(os.path.basename(patient_file_path))[0])
-            old_history=""
-            for paragraph in doc.paragraphs:
-                old_history=old_history+paragraph.text+"\n"
-            previous_history_edit.setText(old_history)
-
+            if patient_file_path:
+                doc = Document(patient_file_path)
+                # in the following code
+                # splitext() returns a tuple:
+                # ("README", ".md")
+                # [0]takes the first part(without extension)
+                patient_name_edit.setText(os.path.splitext(os.path.basename(patient_file_path))[0])
+                old_history=""
+                for paragraph in doc.paragraphs:
+                    old_history=old_history+paragraph.text+"\n"
+                previous_history_edit.setText(old_history)
 
         def update_patient_data():
 
@@ -214,6 +216,8 @@ class PatientDashBoard(QWidget):
                 demographic_table.cell(1,4).text=patient_residence_edit.text()
 
             doc.save("PatientDashBoard.docx")
+
+
         io_widget=QWidget(self)
         io_layout = QGridLayout(io_widget)
         io_widget.setLayout(io_layout)
@@ -234,9 +238,7 @@ class PatientDashBoard(QWidget):
         main_layout.addWidget(io_widget,2,1)
 
         #endregion
-        ##########################################
-        #starting writing th engine of the widget#
-        ##########################################
+
 
 
 
@@ -251,7 +253,7 @@ class PatientDashBoard(QWidget):
         file_path, _ = QFileDialog.getOpenFileName(
             parent=None,
             caption="Select file",
-            dir=self.settings["patient_dir"],
+            dir=self.settings["patient_dir"],#settings is a dictionary read from json this dictionary hold the settings including patient files directory
             filter="All Files (*.*);;Word Files (*.docx);;PDF Files (*.pdf)"
         )
         #print(type(file_path),file_path)
@@ -264,9 +266,11 @@ class PatientDashBoard(QWidget):
         widget.setMinimumWidth(width)
 
     def set_directory_for_patient_registry_in_setting_json(self):
-        self.settings["patient_dir"]=self.pick_directory_name()
-        with open("PatientDashBoard_settings.json","w") as file:
-            json.dump(self.settings,file,indent=4)
+        temp_dir_path=self.pick_directory_name()
+        if temp_dir_path:#to check if a path was selected
+            self.settings["patient_dir"]=temp_dir_path
+            with open("PatientDashBoard_settings.json","w") as file:
+                json.dump(self.settings,file,indent=4)
 
     def pick_directory_name(self):
         dir_path = QFileDialog.getExistingDirectory(
@@ -275,8 +279,14 @@ class PatientDashBoard(QWidget):
             dir="",
 
         )
+
         print(type(dir_path),dir_path)
         return dir_path
+
+    def investigation_intellisense(self):
+        return
+
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
