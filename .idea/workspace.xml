@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="dabiling with redimentary intellisense lines methods">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PatientDashBoard.py" beforeDir="false" afterPath="$PROJECT_DIR$/PatientDashBoard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +116,7 @@
       <workItem from="1770899647635" duration="6934000" />
       <workItem from="1770911366353" duration="337000" />
       <workItem from="1770963941472" duration="9439000" />
-      <workItem from="1771013631639" duration="5133000" />
+      <workItem from="1771013631639" duration="5387000" />
     </task>
     <task id="LOCAL-00001" summary="just starting things and choosing name">
       <option name="closed" value="true" />
@@ -303,7 +302,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771007393216</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="dabiling with redimentary intellisense lines methods">
+      <option name="closed" value="true" />
+      <created>1771018780052</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1771018780053</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,7 +340,8 @@
     <MESSAGE value="started tinkering with patient dash board and desided i dont building the components and now got the idea of adopting nested qgrids as quadrant layouts&#10;finsihed 3 quadrants" />
     <MESSAGE value="starting the final quadrant" />
     <MESSAGE value="started implementing the setting json" />
-    <option name="LAST_COMMIT_MESSAGE" value="started implementing the setting json" />
+    <MESSAGE value="dabiling with redimentary intellisense lines methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="dabiling with redimentary intellisense lines methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

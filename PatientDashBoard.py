@@ -307,3 +307,11 @@ if __name__ == '__main__':
     window = PatientDashBoard()
     window.show()
     app.exec()
+
+    # if len(parsed_text) < 2:
+    #     return  # Not enough data
+    #
+    # try:
+    #     value = float(parsed_text[1])
+    # except ValueError:
+    #     return
