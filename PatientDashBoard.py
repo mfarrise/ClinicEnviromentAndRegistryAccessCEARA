@@ -28,6 +28,7 @@ class PatientDashBoard(QWidget):
         ######################################################################
         #setting up the ULQ which is the patient old history and demographics#
         ######################################################################
+        # region
         patient_demo_and_old_data_widget=QWidget(self)
         patient_demo_and_old_data_layout = QGridLayout(patient_demo_and_old_data_widget)
         patient_demo_and_old_data_widget.setLayout(patient_demo_and_old_data_layout)
@@ -72,11 +73,11 @@ class PatientDashBoard(QWidget):
         patient_demo_and_old_data_layout.addWidget(previous_history_edit, 3, 1,1,4)
 
         main_layout.addWidget(patient_demo_and_old_data_widget,1,1)
-
+        # endregion
         ##########################################################################
         # setting up the LLQ which is the patient current history and examination#
         ##########################################################################
-
+        #region
         patient_today_clinical_widget=QWidget(self)
         patient_today_clinical_layout = QGridLayout(patient_today_clinical_widget)
         patient_today_clinical_widget.setLayout(patient_today_clinical_layout)
@@ -107,11 +108,11 @@ class PatientDashBoard(QWidget):
         patient_today_clinical_layout.addWidget(today_examination_edit, 2, 2, 1 ,1)
 
         main_layout.addWidget(patient_today_clinical_widget,2,1)
-
+        #endregion
         ##########################################################################
         # setting up the RUQ which is the patient current history and examination#
         ##########################################################################
-
+        #region
         patient_today_ix_medication_widget=QWidget(self)
         patient_today_ix_medication_layout = QGridLayout(patient_today_ix_medication_widget)
         patient_today_ix_medication_widget.setLayout(patient_today_ix_medication_layout)
@@ -157,10 +158,11 @@ class PatientDashBoard(QWidget):
 
         main_layout.addWidget(patient_today_ix_medication_widget,1,2)
 
-
+        #endregion
         ##########################################################################
         # setting up the RUQ which is the patient current history and examination#
         ##########################################################################
+        #region
         def load_patient_data():
             patient_file_path = self.open_path_dialog()
 
@@ -217,7 +219,7 @@ class PatientDashBoard(QWidget):
 
         main_layout.addWidget(io_widget,2,2)
 
-
+        #endregion
         ##########################################
         #starting writing th engine of the widget#
         ##########################################
