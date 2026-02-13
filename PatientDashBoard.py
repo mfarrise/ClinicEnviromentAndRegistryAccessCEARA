@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 from datetime import datetime
 
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
@@ -10,11 +11,14 @@ from docx import Document
 class PatientDashBoard(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Patient Dashboard")
+        self.setWindowTitle("Patient_dashboard")
 
-
+        self.settings={}
         quadrant_width=540
         quadrant_height=390
+        with open("PatientDashBoard_settings.json","r") as file:
+            self.settings=json.load(file)
+
 
 
 
@@ -28,6 +32,7 @@ class PatientDashBoard(QWidget):
         menu_bar=QMenuBar()
         file_menu=menu_bar.addMenu("File")
         set_directory_action=file_menu.addAction("Set Directory")
+        set_directory_action.triggered.connect(self.set_directory_for_patient_registry_in_setting_json)
         main_layout.addWidget(menu_bar)
 
 
@@ -246,7 +251,7 @@ class PatientDashBoard(QWidget):
         file_path, _ = QFileDialog.getOpenFileName(
             parent=None,
             caption="Select file",
-            dir="",
+            dir=self.settings["patient_dir"],
             filter="All Files (*.*);;Word Files (*.docx);;PDF Files (*.pdf)"
         )
         #print(type(file_path),file_path)
@@ -258,8 +263,20 @@ class PatientDashBoard(QWidget):
         widget.setMinimumHeight(height)
         widget.setMinimumWidth(width)
 
+    def set_directory_for_patient_registry_in_setting_json(self):
+        self.settings["patient_dir"]=self.pick_directory_name()
+        with open("PatientDashBoard_settings.json","w") as file:
+            json.dump(self.settings,file,indent=4)
 
+    def pick_directory_name(self):
+        dir_path = QFileDialog.getExistingDirectory(
+            parent=None,
+            caption="Select file",
+            dir="",
 
+        )
+        print(type(dir_path),dir_path)
+        return dir_path
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
