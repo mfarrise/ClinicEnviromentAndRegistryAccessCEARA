@@ -3,7 +3,7 @@ import sys
 from datetime import datetime
 
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
-    QLabel, QRadioButton, QComboBox
+    QLabel, QRadioButton, QComboBox, QMenuBar
 
 from docx import Document
 
@@ -13,8 +13,8 @@ class PatientDashBoard(QWidget):
         self.setWindowTitle("Patient Dashboard")
 
 
-        quadrant_width=640
-        quadrant_height=490
+        quadrant_width=540
+        quadrant_height=390
 
 
 
@@ -24,6 +24,12 @@ class PatientDashBoard(QWidget):
         main_layout = QGridLayout(self)
         self.setLayout(main_layout)
         self.move(0, 0)
+
+        menu_bar=QMenuBar()
+        file_menu=menu_bar.addMenu("File")
+        set_directory_action=file_menu.addAction("Set Directory")
+        main_layout.addWidget(menu_bar)
+
 
         ######################################################################
         #setting up the ULQ which is the patient old history and demographics#
@@ -72,7 +78,7 @@ class PatientDashBoard(QWidget):
         previous_history_edit.setReadOnly(True)
         patient_demo_and_old_data_layout.addWidget(previous_history_edit, 3, 1,1,4)
 
-        main_layout.addWidget(patient_demo_and_old_data_widget,1,1)
+        main_layout.addWidget(patient_demo_and_old_data_widget,1,0)
         # endregion
         ##########################################################################
         # setting up the LLQ which is the patient current history and examination#
@@ -107,7 +113,7 @@ class PatientDashBoard(QWidget):
         today_examination_edit.setReadOnly(False)
         patient_today_clinical_layout.addWidget(today_examination_edit, 2, 2, 1 ,1)
 
-        main_layout.addWidget(patient_today_clinical_widget,2,1)
+        main_layout.addWidget(patient_today_clinical_widget,2,0)
         #endregion
         ##########################################################################
         # setting up the RUQ which is the patient current history and examination#
@@ -156,7 +162,7 @@ class PatientDashBoard(QWidget):
         today_medication_line.setReadOnly(False)
         patient_today_ix_medication_layout.addWidget(today_medication_line, 3, 2, 1, 1)
 
-        main_layout.addWidget(patient_today_ix_medication_widget,1,2)
+        main_layout.addWidget(patient_today_ix_medication_widget,1,1)
 
         #endregion
         ##########################################################################
@@ -176,28 +182,31 @@ class PatientDashBoard(QWidget):
             for paragraph in doc.paragraphs:
                 old_history=old_history+paragraph.text+"\n"
             previous_history_edit.setText(old_history)
+
+
         def update_patient_data():
+
             doc = Document()
             demographic_table=doc.add_table(2,5)
 
-            demographic_table.cell(0,0).text("Name")
+            demographic_table.cell(0,0).text="Name"
             if patient_name_edit.text() != "":
-                demographic_table.cell(1,0).text(patient_name_edit.text())
+                demographic_table.cell(1,0).text=patient_name_edit.text()
 
-            demographic_table.cell(0,1).text("DOB")
+            demographic_table.cell(0,1).text="DOB"
             if patient_name_edit.text() != "":
-                demographic_table.cell(1,1).text(patient_DOB_edit.text())
+                demographic_table.cell(1,1).text=patient_DOB_edit.text()
 
-            demographic_table.cell(0,2).text("Age")
+            demographic_table.cell(0,2).text="Age"
             if patient_name_edit.text() != "":
-                demographic_table.cell(1,1).text(str(datetime.now().year-int(patient_DOB_edit.text())))
+                demographic_table.cell(1,1).text=str(datetime.now().year-int(patient_DOB_edit.text()))
 
-            demographic_table.cell(0,3).text("Gender")
-            demographic_table.cell(1,3).text(patient_gender_combo.currentText())
+            demographic_table.cell(0,3).text="Gender"
+            demographic_table.cell(1,3).text=patient_gender_combo.currentText()
 
-            demographic_table.cell(0,4).text("Residence")
+            demographic_table.cell(0,4).text="Residence"
             if patient_name_edit.text() != "":
-                demographic_table.cell(1,4).text(patient_residence_edit.text())
+                demographic_table.cell(1,4).text=patient_residence_edit.text()
 
             doc.save("PatientDashBoard.docx")
         io_widget=QWidget(self)
@@ -217,7 +226,7 @@ class PatientDashBoard(QWidget):
 
 
 
-        main_layout.addWidget(io_widget,2,2)
+        main_layout.addWidget(io_widget,2,1)
 
         #endregion
         ##########################################
