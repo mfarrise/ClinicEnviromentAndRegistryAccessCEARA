@@ -136,9 +136,9 @@ class PatientDashBoard(QWidget):
 
         # today investigations
         # text edit
-        today_investigations_edit = QTextEdit(self)
-        today_investigations_edit.setReadOnly(False)
-        patient_today_ix_medication_layout.addWidget(today_investigations_edit, 2, 1, 1, 1)
+        self.today_investigations_edit = QTextEdit(self)
+        self.today_investigations_edit.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(self.today_investigations_edit, 2, 1, 1, 1)
 
         # Last medications == today modeications
         # label
@@ -154,11 +154,11 @@ class PatientDashBoard(QWidget):
 
         # today investigation intelligent
         # line edit
-        today_investigations_line = QLineEdit(self)
-        today_investigations_line.setPlaceholderText("Intelligent Fill")
-        today_investigations_line.setReadOnly(False)
-        patient_today_ix_medication_layout.addWidget(today_investigations_line, 3, 1, 1, 1)
-        today_investigations_line.returnPressed.connect(self.investigation_intellisense)
+        self.today_investigations_intellisense_line = QLineEdit(self)
+        self.today_investigations_intellisense_line.setPlaceholderText("Intelligent Fill")
+        self.today_investigations_intellisense_line.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(self.today_investigations_intellisense_line, 3, 1, 1, 1)
+        self.today_investigations_intellisense_line.returnPressed.connect(self.investigation_intellisense)
         # today Medication intelligent
         # line edit
         today_medication_line = QLineEdit(self)
@@ -240,14 +240,6 @@ class PatientDashBoard(QWidget):
         #endregion
 
 
-
-
-
-
-
-
-
-
     def open_path_dialog(self):
 
         file_path, _ = QFileDialog.getOpenFileName(
@@ -284,8 +276,30 @@ class PatientDashBoard(QWidget):
         return dir_path
 
     def investigation_intellisense(self):
-        return
+        unparsed_text=self.today_investigations_intellisense_line.text()
+        if not unparsed_text:
+            self.today_investigations_intellisense_line.clear()
+            return
+        parsed_text=unparsed_text.split()
+        if parsed_text[0].lower() in ["cr","creatinine","crea","creat"]:
 
+            self.append_investigation("Creatinine",float(parsed_text[1]),1.2,0.5,"mg/dl")
+        print(parsed_text)
+
+    def append_investigation(self,test_name,test_value,upper_limit,lower_limit,unit):
+        self.today_investigations_intellisense_line.clear()
+        if test_value > upper_limit:
+            self.today_investigations_edit.append(
+                f"<span style='color:rgb(200,110,110)' ><b>{test_name+' ' + str(test_value) + ' ' +unit+' (High)'}</b></span>"
+            )
+        elif test_value < lower_limit:
+            self.today_investigations_edit.append(
+                f"<span style='color:rgb(200,110,110)' ><b>{test_name + ' ' + str(test_value) + ' ' + unit + ' (Low)'}</b></span>"
+            )
+        else :
+            self.today_investigations_edit.append(
+                f"<span ><b>{test_name + ' ' + str(test_value) + ' ' + unit }</b></span>"
+            )
 
 
 if __name__ == '__main__':
