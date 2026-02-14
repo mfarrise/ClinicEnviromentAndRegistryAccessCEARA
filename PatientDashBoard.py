@@ -5,7 +5,7 @@ from datetime import datetime
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
     QLabel, QComboBox, QMenuBar
 from docx import Document
-
+from SharedWidgetsPyside6 import show_warning
 
 class PatientDashBoard(QWidget):
     def __init__(self):
@@ -277,17 +277,42 @@ class PatientDashBoard(QWidget):
 
     def investigation_intellisense(self):
         unparsed_text=self.today_investigations_intellisense_line.text()
-        if not unparsed_text:
-            self.today_investigations_intellisense_line.clear()
-            return
+        self.today_investigations_intellisense_line.clear()# clear feild after value is taken in line above
+
+
+
+
         parsed_text=unparsed_text.split()
-        if parsed_text[0].lower() in ["cr","creatinine","crea","creat"]:
+        if len(parsed_text) < 2:
+            show_warning("Not a valid test result")
+            return  # Not enough data resulting list is 1 word
+        if len (parsed_text) ==3:# if things like b urea 15 it ill parse it into b.urea 15 so it wont stay in to 3 element list ["b","urea","15"]
+            parsed_text=[parsed_text[0]+"."+parsed_text[1],parsed_text[2]]
+            print (parsed_text)
+        if not unparsed_text:# dont know why but this line is not functioning
+            return
 
-            self.append_investigation("Creatinine",float(parsed_text[1]),1.2,0.5,"mg/dl")
-        print(parsed_text)
+        try:
+            float(parsed_text[-1])
+        except ValueError:
+            show_warning("Please enter a numerical value after test name")
+            return
 
+
+        with open("InvestigationDatabase.json","r") as file:
+            InvestigationDatabase=json.load(file)
+
+        for case in InvestigationDatabase.values():
+
+            if parsed_text[0] in case["aliases"]:
+                self.append_investigation(
+                    case["display"],
+                    float(parsed_text[-1]),
+                    case["high"],
+                    case["low"],
+                    case["unit"]
+                )
     def append_investigation(self,test_name,test_value,upper_limit,lower_limit,unit):
-        self.today_investigations_intellisense_line.clear()
         if test_value > upper_limit:
             self.today_investigations_edit.append(
                 f"<span style='color:rgb(200,110,110)' ><b>{test_name+' ' + str(test_value) + ' ' +unit+' (High)'}</b></span>"
@@ -308,10 +333,3 @@ if __name__ == '__main__':
     window.show()
     app.exec()
 
-    # if len(parsed_text) < 2:
-    #     return  # Not enough data
-    #
-    # try:
-    #     value = float(parsed_text[1])
-    # except ValueError:
-    #     return

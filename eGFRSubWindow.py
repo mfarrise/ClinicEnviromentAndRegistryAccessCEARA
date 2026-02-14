@@ -1,7 +1,4 @@
-import sys                              ############################################
-                                        #      setting things for eGFR Window      #
-                                        ############################################
-
+import sys
 from nephrology_equations_module import calculate_eGFR
 from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton, QApplication
 
