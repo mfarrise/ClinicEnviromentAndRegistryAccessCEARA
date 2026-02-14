@@ -1,11 +1,10 @@
-
-                                        ############################################
+import sys                              ############################################
                                         #      setting things for eGFR Window      #
                                         ############################################
 
 from nephrology_equations_module import calculate_eGFR
-from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton, QApplication
+
 
 class eGFRSubWindow(QWidget):
     def __init__(self):
@@ -53,3 +52,8 @@ class eGFRSubWindow(QWidget):
         egfrCalculatebtn=QPushButton("Calculate")
         eGFRLayout.addWidget(egfrCalculatebtn,5,1,1,2)
         egfrCalculatebtn.clicked.connect(egfr_calculate_update_label)
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = eGFRSubWindow()
+    window.show()
+    app.exec()

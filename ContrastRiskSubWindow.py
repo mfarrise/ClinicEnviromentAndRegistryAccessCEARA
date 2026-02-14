@@ -2,9 +2,12 @@
                                                 #      setting things for CIN RISK Window      #
                                                 ################################################
 import os
+import sys
+
 from docx import Document
 from nephrology_equations_module import contrast_risk
-from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton, QCheckBox
+from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton, QCheckBox, \
+    QApplication
 
 
 class ContrastRiskSubWindow(QWidget):
@@ -129,3 +132,9 @@ class ContrastRiskSubWindow(QWidget):
         generate_report_btn.clicked.connect(generate_docx_report)
 
         print(self.width())
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = ContrastRiskSubWindow()
+    window.show()
+    app.exec()
