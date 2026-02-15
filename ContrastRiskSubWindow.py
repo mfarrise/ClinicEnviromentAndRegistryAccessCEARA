@@ -1,12 +1,10 @@
-                                                ################################################
-                                                #      setting things for CIN RISK Window      #
-                                                ################################################
 import os
 import sys
-
+import subprocess
+import time
 from docx import Document
 from nephrology_equations_module import contrast_risk
-from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton, QCheckBox, \
+from PySide6.QtWidgets import  QLineEdit, QGridLayout, QLabel,  QWidget, QPushButton, QCheckBox, \
     QApplication
 
 
@@ -33,7 +31,7 @@ class ContrastRiskSubWindow(QWidget):
             risklbl.setText("Risk for CIN "+str(risk)+"%")
             dialysislbl.setText("Risk for Dialysis "+str(dialysis)+"%")
         def handel_docx(replacements):
-            print(replacements)
+            #print(replacements)
             doc = Document("pciForm.docx")
             for paragraph in doc.paragraphs:
                 for run in paragraph.runs:
@@ -46,14 +44,21 @@ class ContrastRiskSubWindow(QWidget):
                     for cell in row.cells:
                         for paragraph in cell.paragraphs:
                             for run in paragraph.runs:
-                                print(run.text)
+                                #print(run.text)
                                 for key,value in replacements.items():
 
                                     if key in run.text:
-                                        print(run.text)
+                                        #print(run.text)
                                         run.text = run.text.replace(key, value)
             doc.save("temppci.docx")
-            os.startfile("temppci.docx")
+            time.sleep(1)
+            if sys.platform.startswith("win"):
+                os.startfile("temppci.docx")
+            elif sys.platform.startswith("darwin"):
+                subprocess.run(["open","temppci.docx"])
+            else:
+                subprocess.run(["xdg-open", "temppci.docx"])
+
         def generate_docx_report():
             score, risk, dialysis = contrast_risk(
                 egfr=float(egfrLine.text()),
@@ -131,7 +136,7 @@ class ContrastRiskSubWindow(QWidget):
         CINLayout.addWidget(generate_report_btn,11,1,1,2)
         generate_report_btn.clicked.connect(generate_docx_report)
 
-        print(self.width())
+        #print(self.width())
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

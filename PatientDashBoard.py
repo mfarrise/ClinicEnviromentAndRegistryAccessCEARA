@@ -333,3 +333,29 @@ if __name__ == '__main__':
     window.show()
     app.exec()
 
+# import re
+# from PySide6.QtGui import QTextCharFormat, QColor, QFont
+#
+# sep = r"[\/\.\-ظ]"
+#
+# date_pattern = rf"\b\d{{1,2}}{sep}\d{{1,2}}{sep}\d{{2,4}}\b|\b\d{{4}}{sep}\d{{1,2}}{sep}\d{{1,2}}\b"
+#
+# previous_history_edit.clear()
+# cursor = previous_history_edit.textCursor()
+#
+# for paragraph in doc.paragraphs:
+#     text = paragraph.text
+#
+#     parts = re.split(f"({date_pattern})", text)
+#
+#     for part in parts:
+#         if re.fullmatch(date_pattern, part):
+#             date_format = QTextCharFormat()
+#             date_format.setForeground(QColor("red"))
+#             date_format.setFontWeight(QFont.Bold)
+#
+#             cursor.insertText(part, date_format)
+#         else:
+#             cursor.insertText(part)
+#
+#     cursor.insertText("\n")

@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="dabiling with redimentary intellisense lines methods">
-      <change afterPath="$PROJECT_DIR$/SharedWidgetsPyside6.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TestsDatabaseJsonCreator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PatientDashBoard.py" beforeDir="false" afterPath="$PROJECT_DIR$/PatientDashBoard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eGFRSubWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/eGFRSubWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ContrastRiskSubWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/ContrastRiskSubWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temppci.docx" beforeDir="false" afterPath="$PROJECT_DIR$/temppci.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +36,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/mfarrise/ClinicEnviromentAndRegistryAccessCEARA.git&quot;,
-    &quot;accountId&quot;: &quot;73815481-9876-4fe8-ba70-e42a7d01e926&quot;
+    &quot;accountId&quot;: &quot;f0125cd0-f7fc-423b-b87d-659f3e5f1f4d&quot;
   }
 }</component>
   <component name="McpProjectServerCommands">
@@ -64,7 +62,6 @@
     "Python.PatientDashBoard.executor": "Run",
     "Python.PatientDashBoardLogic.executor": "Run",
     "Python.Patient_Dash_Board.executor": "Run",
-    "Python.SharedWidgetsPyside6.executor": "Run",
     "Python.TestsDatabaseJsonCreator.executor": "Run",
     "Python.eGFRSubWindow.executor": "Run",
     "Python.eGFRWindow.executor": "Run",
@@ -123,6 +120,8 @@
       <workItem from="1770911366353" duration="337000" />
       <workItem from="1770963941472" duration="9439000" />
       <workItem from="1771013631639" duration="5387000" />
+      <workItem from="1771073439624" duration="2481000" />
+      <workItem from="1771080888390" duration="2522000" />
     </task>
     <task id="LOCAL-00001" summary="just starting things and choosing name">
       <option name="closed" value="true" />
@@ -353,20 +352,20 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/ContrastRiskSubWindow.py</url>
-          <line>16</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/eGFRSubWindow.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$SharedWidgetsPyside6.coverage" NAME="SharedWidgetsPyside6 Coverage Results" MODIFIED="1771105645479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1771108312518" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1771157650594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Patient_Dash_Board.coverage" NAME="Patient_Dash_Board Coverage Results" MODIFIED="1770723813956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Main.coverage" NAME="Main Coverage Results" MODIFIED="1771090911986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$ContrastRiskSubWindow.coverage" NAME="ContrastRiskSubWindow Coverage Results" MODIFIED="1771157043173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Main.coverage" NAME="Main Coverage Results" MODIFIED="1771157597111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoardLogic.coverage" NAME="PatientDashBoardLogic Coverage Results" MODIFIED="1771014986515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$TestsDatabaseJsonCreator.coverage" NAME="TestsDatabaseJsonCreator Coverage Results" MODIFIED="1771107834813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$eGFRSubWindow.coverage" NAME="eGFRSubWindow Coverage Results" MODIFIED="1771090900343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$TestsDatabaseJsonCreator.coverage" NAME="TestsDatabaseJsonCreator Coverage Results" MODIFIED="1771156338824" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$eGFRSubWindow.coverage" NAME="eGFRSubWindow Coverage Results" MODIFIED="1771082168238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
