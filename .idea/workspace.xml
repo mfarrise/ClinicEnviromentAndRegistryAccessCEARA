@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="dabiling with redimentary intellisense lines methods">
+    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="followed the suggestions of chat in creating a dictionary">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PatientDashBoard.py" beforeDir="false" afterPath="$PROJECT_DIR$/PatientDashBoard.py" afterDir="false" />
     </list>
@@ -14,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="18" />
+    <option name="cachedIndexableFilesCount" value="27" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -120,6 +120,7 @@
       <workItem from="1770911366353" duration="337000" />
       <workItem from="1770963941472" duration="9439000" />
       <workItem from="1771013631639" duration="5387000" />
+      <workItem from="1771316975983" duration="2421000" />
     </task>
     <task id="LOCAL-00001" summary="just starting things and choosing name">
       <option name="closed" value="true" />
@@ -313,7 +314,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771018780053</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="followed the suggestions of chat in creating a dictionary">
+      <option name="closed" value="true" />
+      <created>1771316921375</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1771316921375</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,7 +353,8 @@
     <MESSAGE value="starting the final quadrant" />
     <MESSAGE value="started implementing the setting json" />
     <MESSAGE value="dabiling with redimentary intellisense lines methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="dabiling with redimentary intellisense lines methods" />
+    <MESSAGE value="followed the suggestions of chat in creating a dictionary" />
+    <option name="LAST_COMMIT_MESSAGE" value="followed the suggestions of chat in creating a dictionary" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -359,7 +369,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$SharedWidgetsPyside6.coverage" NAME="SharedWidgetsPyside6 Coverage Results" MODIFIED="1771105645479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1771316713073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1771328033893" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Patient_Dash_Board.coverage" NAME="Patient_Dash_Board Coverage Results" MODIFIED="1770723813956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Main.coverage" NAME="Main Coverage Results" MODIFIED="1771309048334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoardLogic.coverage" NAME="PatientDashBoardLogic Coverage Results" MODIFIED="1771014986515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

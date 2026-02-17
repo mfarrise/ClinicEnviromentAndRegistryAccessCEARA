@@ -150,9 +150,9 @@ class PatientDashBoard(QWidget):
 
         # today medications
         # text edit
-        today_medications_edit = QTextEdit(self)
-        today_medications_edit.setReadOnly(False)
-        patient_today_ix_medication_layout.addWidget(today_medications_edit, 2, 2, 1, 1)
+        self.today_medications_edit = QTextEdit(self)
+        self.today_medications_edit.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(self.today_medications_edit, 2, 2, 1, 1)
 
         # today investigation intelligent
         # line edit
@@ -163,11 +163,11 @@ class PatientDashBoard(QWidget):
         self.today_investigations_intellisense_line.returnPressed.connect(self.investigation_intellisense)
         # today Medication intelligent
         # line edit
-        today_medication_line = QLineEdit(self)
-        today_medication_line.setPlaceholderText("Intelligent Fill")
-        today_medication_line.setReadOnly(False)
-        patient_today_ix_medication_layout.addWidget(today_medication_line, 3, 2, 1, 1)
-
+        self.today_medication_intellisense_line = QLineEdit(self)
+        self.today_medication_intellisense_line.setPlaceholderText("Intelligent Fill")
+        self.today_medication_intellisense_line.setReadOnly(False)
+        patient_today_ix_medication_layout.addWidget(self.today_medication_intellisense_line, 3, 2, 1, 1)
+        self.today_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
         main_layout.addWidget(patient_today_ix_medication_widget,1,1)
 
         #endregion
@@ -215,7 +215,7 @@ class PatientDashBoard(QWidget):
                             cursor.setCharFormat(date_format)
                             cursor.insertText(part)
                             cursor.setCharFormat(normal_format)  # 🔥 RESET i know its redundant due to reset in else but for future unforseen changes
-                        elif re.search(r"\bcr|creat|creatinine|urea\b", part,re.IGNORECASE):
+                        elif re.search(r"\bcr|creat|creatinine|urea|pus|gue\b", part,re.IGNORECASE):
                             cursor.setCharFormat(cr_format)
                             cursor.insertText(part)
                             cursor.setCharFormat(normal_format)
@@ -313,11 +313,8 @@ class PatientDashBoard(QWidget):
     def investigation_intellisense(self):
         unparsed_text=self.today_investigations_intellisense_line.text()
         self.today_investigations_intellisense_line.clear()# clear feild after value is taken in line above
-
-
-
-
         parsed_text=unparsed_text.split()
+
         if len(parsed_text) < 2:
             show_warning("Not a valid test result")
             return  # Not enough data resulting list is 1 word
@@ -326,14 +323,11 @@ class PatientDashBoard(QWidget):
             print (parsed_text)
         if not unparsed_text:# dont know why but this line is not functioning
             return
-
         try:
             float(parsed_text[-1])
         except ValueError:
             show_warning("Please enter a numerical value after test name")
             return
-
-
         with open("InvestigationDatabase.json","r") as file:
             InvestigationDatabase=json.load(file)
 
@@ -360,6 +354,10 @@ class PatientDashBoard(QWidget):
             self.today_investigations_edit.append(
                 f"<span ><b>{test_name + ' ' + str(test_value) + ' ' + unit }</b></span>"
             )
+
+    def drug_intellisense(self):#not fully implemented yet there is no intellgence in it now
+        self.today_medications_edit.append(self.today_medication_intellisense_line.text())
+        self.today_medication_intellisense_line.clear()
 
 
 if __name__ == '__main__':
