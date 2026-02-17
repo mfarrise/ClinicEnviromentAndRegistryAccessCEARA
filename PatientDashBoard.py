@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import json
 from datetime import datetime
@@ -6,6 +7,7 @@ from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QL
     QLabel, QComboBox, QMenuBar
 from docx import Document
 from SharedWidgetsPyside6 import show_warning
+from PySide6.QtGui import QTextCharFormat, QColor, QFont
 
 class PatientDashBoard(QWidget):
     def __init__(self):
@@ -179,6 +181,12 @@ class PatientDashBoard(QWidget):
 
         def load_patient_data():
             patient_file_path = self.open_path_dialog()
+            sep = r"[\/\.\-ظ]"
+
+            date_pattern = rf"\b\d{{1,2}}{sep}\d{{1,2}}{sep}\d{{2,4}}\b|\b\d{{4}}{sep}\d{{1,2}}{sep}\d{{1,2}}\b"
+
+            previous_history_edit.clear()
+            cursor = previous_history_edit.textCursor()
             if patient_file_path:
                 doc = Document(patient_file_path)
                 # in the following code
@@ -186,10 +194,37 @@ class PatientDashBoard(QWidget):
                 # ("README", ".md")
                 # [0]takes the first part(without extension)
                 patient_name_edit.setText(os.path.splitext(os.path.basename(patient_file_path))[0])
-                old_history=""
+                # old_history=""
+                normal_format = QTextCharFormat()
+
+                date_format = QTextCharFormat()
+                date_format.setForeground(QColor("orange"))
+                date_format.setFontWeight(QFont.Bold)
+                cr_format = QTextCharFormat()
+                cr_format.setForeground(QColor("cyan"))
+                cr_format.setFontWeight(QFont.Bold)
+                aliases_list_for_oldhistory=[]
+
                 for paragraph in doc.paragraphs:
-                    old_history=old_history+paragraph.text+"\n"
-                previous_history_edit.setText(old_history)
+                    text = paragraph.text
+
+                    parts = re.split(f"({date_pattern})", text)
+
+                    for part in parts:
+                        if re.fullmatch(date_pattern, part):
+                            cursor.setCharFormat(date_format)
+                            cursor.insertText(part)
+                            cursor.setCharFormat(normal_format)  # 🔥 RESET i know its redundant due to reset in else but for future unforseen changes
+                        elif re.search(r"\bcr|creat|creatinine|urea\b", part,re.IGNORECASE):
+                            cursor.setCharFormat(cr_format)
+                            cursor.insertText(part)
+                            cursor.setCharFormat(normal_format)
+                        else:
+                            cursor.setCharFormat(normal_format)
+                            cursor.insertText(part)
+
+                    cursor.insertText("\n")
+                # previous_history_edit.setText(old_history)
 
         def update_patient_data():
 
