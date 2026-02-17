@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="followed the suggestions of chat in creating a dictionary" />
+    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="followed the suggestions of chat in creating a dictionary">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +25,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -73,7 +77,7 @@
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/moham/Google Drive/python programs/ClinicEnviromentAndRegistryAccessCEARA&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mohammed/PycharmProjects/ClinicEnviromentAndRegistryAccessCEARA&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -91,6 +95,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="C:\Users\moham\Google Drive\python programs\ClinicEnviromentAndRegistryAccessCEARA" />
     </key>
   </component>
@@ -117,7 +122,8 @@
       <workItem from="1770911366353" duration="337000" />
       <workItem from="1770963941472" duration="9439000" />
       <workItem from="1771013631639" duration="5387000" />
-      <workItem from="1771316975983" duration="3299000" />
+      <workItem from="1771316975983" duration="3407000" />
+      <workItem from="1771357432601" duration="2917000" />
     </task>
     <task id="LOCAL-00001" summary="just starting things and choosing name">
       <option name="closed" value="true" />
@@ -327,7 +333,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771328302109</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="followed the suggestions of chat in creating a dictionary">
+      <option name="closed" value="true" />
+      <created>1771329329694</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1771329329694</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,9 +388,9 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$SharedWidgetsPyside6.coverage" NAME="SharedWidgetsPyside6 Coverage Results" MODIFIED="1771105645479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1771328224735" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1771357588288" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Patient_Dash_Board.coverage" NAME="Patient_Dash_Board Coverage Results" MODIFIED="1770723813956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Main.coverage" NAME="Main Coverage Results" MODIFIED="1771309048334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Main.coverage" NAME="Main Coverage Results" MODIFIED="1771360349339" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoardLogic.coverage" NAME="PatientDashBoardLogic Coverage Results" MODIFIED="1771014986515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$TestsDatabaseJsonCreator.coverage" NAME="TestsDatabaseJsonCreator Coverage Results" MODIFIED="1771107834813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$eGFRSubWindow.coverage" NAME="eGFRSubWindow Coverage Results" MODIFIED="1771090900343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
