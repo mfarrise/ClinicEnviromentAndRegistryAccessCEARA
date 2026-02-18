@@ -1,0 +1,20 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# PyCharm
+.idea/
+
+# Temporary Word files
+~$*.docx
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
+/InvestigationDatabase.json
+/PatientDashBoard_settings.json
