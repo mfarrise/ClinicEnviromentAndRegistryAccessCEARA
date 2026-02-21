@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="dabiling with redimentary intellisense lines methods">
+    <list default="true" id="462e1b75-8e8e-4580-9717-2dcb2471a994" name="Changes" comment="already built the finances data entry section">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ContrastRiskSubWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/ContrastRiskSubWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temppci.docx" beforeDir="false" afterPath="$PROJECT_DIR$/temppci.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="18" />
+    <option name="cachedIndexableFilesCount" value="29" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -36,7 +34,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/mfarrise/ClinicEnviromentAndRegistryAccessCEARA.git&quot;,
-    &quot;accountId&quot;: &quot;f0125cd0-f7fc-423b-b87d-659f3e5f1f4d&quot;
+    &quot;accountId&quot;: &quot;73815481-9876-4fe8-ba70-e42a7d01e926&quot;
   }
 }</component>
   <component name="McpProjectServerCommands">
@@ -54,46 +52,50 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.ContrastRiskSubWindow.executor": "Run",
-    "Python.Main.executor": "Run",
-    "Python.PatientDashBoard.executor": "Run",
-    "Python.PatientDashBoardLogic.executor": "Run",
-    "Python.Patient_Dash_Board.executor": "Run",
-    "Python.TestsDatabaseJsonCreator.executor": "Run",
-    "Python.eGFRSubWindow.executor": "Run",
-    "Python.eGFRWindow.executor": "Run",
-    "Python.nephrology_equations_module.executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "ai.playground.ignore.import.keys.banner.in.settings": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "C:/Users/moham/Google Drive/python programs/ClinicEnviromentAndRegistryAccessCEARA",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Language Defaults",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.CearaFinances.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ContrastRiskSubWindow.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Finances.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.PatientDashBoard.executor&quot;: &quot;Run&quot;,
+    &quot;Python.PatientDashBoardLogic.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Patient_Dash_Board.executor&quot;: &quot;Run&quot;,
+    &quot;Python.SharedWidgetsPyside6.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TestsDatabaseJsonCreator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.eGFRSubWindow.executor&quot;: &quot;Run&quot;,
+    &quot;Python.eGFRWindow.executor&quot;: &quot;Run&quot;,
+    &quot;Python.nephrology_equations_module.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mohammed/PycharmProjects/ClinicEnviromentAndRegistryAccessCEARA&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Language Defaults&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "Python"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Python&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="C:\Users\moham\Google Drive\python programs\ClinicEnviromentAndRegistryAccessCEARA" />
     </key>
   </component>
@@ -120,8 +122,10 @@
       <workItem from="1770911366353" duration="337000" />
       <workItem from="1770963941472" duration="9439000" />
       <workItem from="1771013631639" duration="5387000" />
-      <workItem from="1771073439624" duration="2481000" />
-      <workItem from="1771080888390" duration="2522000" />
+      <workItem from="1771316975983" duration="3407000" />
+      <workItem from="1771357432601" duration="3141000" />
+      <workItem from="1771417174501" duration="10411000" />
+      <workItem from="1771496433019" duration="1259000" />
     </task>
     <task id="LOCAL-00001" summary="just starting things and choosing name">
       <option name="closed" value="true" />
@@ -315,7 +319,79 @@
       <option name="project" value="LOCAL" />
       <updated>1771018780053</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="followed the suggestions of chat in creating a dictionary">
+      <option name="closed" value="true" />
+      <created>1771316921375</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1771316921375</updated>
+    </task>
+    <task id="LOCAL-00026" summary="followed the suggestions of chat in creating a dictionary">
+      <option name="closed" value="true" />
+      <created>1771328302109</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1771328302109</updated>
+    </task>
+    <task id="LOCAL-00027" summary="followed the suggestions of chat in creating a dictionary">
+      <option name="closed" value="true" />
+      <created>1771329329694</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1771329329694</updated>
+    </task>
+    <task id="LOCAL-00028" summary="suddenly decided again that main window showing with buttons to open other windows is good idea because the number of sub windows is more than to fit all in one screeen">
+      <option name="closed" value="true" />
+      <created>1771360528907</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1771360528908</updated>
+    </task>
+    <task id="LOCAL-00029" summary="suddenly decided again that main window showing with buttons to open other windows is good idea because the number of sub windows is more than to fit all in one screeen">
+      <option name="closed" value="true" />
+      <created>1771428078718</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1771428078718</updated>
+    </task>
+    <task id="LOCAL-00030" summary="suddenly decided again that main window showing with buttons to open other windows is good idea because the number of sub windows is more than to fit all in one screeen">
+      <option name="closed" value="true" />
+      <created>1771428129966</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1771428129966</updated>
+    </task>
+    <task id="LOCAL-00031" summary="suddenly decided again that main window showing with buttons to open other windows is good idea because the number of sub windows is more than to fit all in one screeen">
+      <option name="closed" value="true" />
+      <created>1771437023986</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1771437023986</updated>
+    </task>
+    <task id="LOCAL-00032" summary="suddenly decided again that main window showing with buttons to open other windows is good idea because the number of sub windows is more than to fit all in one screeen">
+      <option name="closed" value="true" />
+      <created>1771437034967</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1771437034967</updated>
+    </task>
+    <task id="LOCAL-00033" summary="already built the finances data entry section">
+      <option name="closed" value="true" />
+      <created>1771443625465</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1771443625465</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -346,26 +422,31 @@
     <MESSAGE value="starting the final quadrant" />
     <MESSAGE value="started implementing the setting json" />
     <MESSAGE value="dabiling with redimentary intellisense lines methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="dabiling with redimentary intellisense lines methods" />
+    <MESSAGE value="followed the suggestions of chat in creating a dictionary" />
+    <MESSAGE value="suddenly decided again that main window showing with buttons to open other windows is good idea because the number of sub windows is more than to fit all in one screeen" />
+    <MESSAGE value="already built the finances data entry section" />
+    <option name="LAST_COMMIT_MESSAGE" value="already built the finances data entry section" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/eGFRSubWindow.py</url>
-          <line>1</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/ContrastRiskSubWindow.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1771157650594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$SharedWidgetsPyside6.coverage" NAME="SharedWidgetsPyside6 Coverage Results" MODIFIED="1771105645479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Finances.coverage" NAME="Finances Coverage Results" MODIFIED="1771443505333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoard.coverage" NAME="PatientDashBoard Coverage Results" MODIFIED="1771357588288" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Patient_Dash_Board.coverage" NAME="Patient_Dash_Board Coverage Results" MODIFIED="1770723813956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$ContrastRiskSubWindow.coverage" NAME="ContrastRiskSubWindow Coverage Results" MODIFIED="1771157043173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Main.coverage" NAME="Main Coverage Results" MODIFIED="1771157597111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$Main.coverage" NAME="Main Coverage Results" MODIFIED="1771497408625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$CearaFinances.coverage" NAME="CearaFinances Coverage Results" MODIFIED="1771441317703" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$PatientDashBoardLogic.coverage" NAME="PatientDashBoardLogic Coverage Results" MODIFIED="1771014986515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$TestsDatabaseJsonCreator.coverage" NAME="TestsDatabaseJsonCreator Coverage Results" MODIFIED="1771156338824" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$eGFRSubWindow.coverage" NAME="eGFRSubWindow Coverage Results" MODIFIED="1771082168238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$TestsDatabaseJsonCreator.coverage" NAME="TestsDatabaseJsonCreator Coverage Results" MODIFIED="1771107834813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ClinicEnviromentAndRegistryAccessCEARA$eGFRSubWindow.coverage" NAME="eGFRSubWindow Coverage Results" MODIFIED="1771090900343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
