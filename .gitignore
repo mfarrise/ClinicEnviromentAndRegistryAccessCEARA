@@ -20,6 +20,7 @@ __pycache__/
 # Logs
 *.log
 
+#ignore workspace its just local pycharm status
 .idea/workspace.xml
 
 /InvestigationDatabase.json
