@@ -1,5 +1,5 @@
 import sys
-
+from datetime import datetime
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QLineEdit, QPushButton, QSizePolicy
 
@@ -35,6 +35,7 @@ class Finances(QWidget):
 
         self.date_balance_line_edit = QLineEdit()
         self.date_balance_line_edit.setPlaceholderText("Date")
+        self.date_balance_line_edit.setFocusPolicy(Qt.ClickFocus)
         self.data_input_layout.addWidget(self.date_balance_line_edit, 1, 1)
 
         self.balance_line_edit = QLineEdit()
@@ -44,7 +45,7 @@ class Finances(QWidget):
         self.balance_date_today_button = QPushButton("Today")
         self.data_input_layout.addWidget(self.balance_date_today_button, 1, 3)
         self.balance_date_today_button.setFocusPolicy(Qt.ClickFocus)
-        #self.balance_date_today_button.clicked.connect()
+        self.balance_date_today_button.clicked.connect(self.set_date_balance)
 
         self.balance_push_button = QPushButton("Push")
         self.data_input_layout.addWidget(self.balance_push_button, 1, 4)
@@ -58,6 +59,7 @@ class Finances(QWidget):
 
         self.p_no_date_line_edit = QLineEdit()
         self.p_no_date_line_edit.setPlaceholderText("Date")
+        self.p_no_date_line_edit.setFocusPolicy(Qt.ClickFocus)
         self.data_input_layout.addWidget(self.p_no_date_line_edit, 2, 1)
 
         self.p_no_line_edit = QLineEdit()
@@ -67,7 +69,7 @@ class Finances(QWidget):
         self.p_no_date_today_button = QPushButton("Today")
         self.data_input_layout.addWidget(self.p_no_date_today_button, 2, 3)
         self.p_no_date_today_button.setFocusPolicy(Qt.ClickFocus)
-        #self.p_no_date_today_button.clicked.connect()
+        self.p_no_date_today_button.clicked.connect(self.set_date_patient_no)
 
         self.p_no_push_button = QPushButton("Push")
         self.data_input_layout.addWidget(self.p_no_push_button, 2, 4)
@@ -82,6 +84,7 @@ class Finances(QWidget):
 
         self.note_date_line_edit = QLineEdit()
         self.note_date_line_edit.setPlaceholderText("Date")
+        self.note_date_line_edit.setFocusPolicy(Qt.ClickFocus)
         self.data_input_layout.addWidget(self.note_date_line_edit, 3, 1)
 
         self.note_line_edit = QLineEdit()
@@ -91,7 +94,7 @@ class Finances(QWidget):
         self.note_date_today_button = QPushButton("Today")
         self.data_input_layout.addWidget(self.note_date_today_button, 3, 3)
         self.note_date_today_button.setFocusPolicy(Qt.ClickFocus)
-        #self.note_date_today_button.clicked.connect()
+        self.note_date_today_button.clicked.connect(self.set_date_note)
 
         self.note_push_button = QPushButton("Push")
         self.data_input_layout.addWidget(self.note_push_button, 3, 4)
@@ -100,7 +103,7 @@ class Finances(QWidget):
 
         self.all_date_today_button = QPushButton("Today")
         self.data_input_layout.addWidget(self.all_date_today_button, 4, 1,1,3)
-        #self.all_date_today_button.clicked.connect()
+        self.all_date_today_button.clicked.connect(self.set_date_all)
 
         self.all_push_button = QPushButton("Push")
         self.data_input_layout.addWidget(self.all_push_button, 5, 1,1,3)
@@ -114,6 +117,17 @@ class Finances(QWidget):
         )
         #endregion
 
+
+    def set_date_balance(self):
+        self.date_balance_line_edit.setText(datetime.now().date().isoformat())
+    def set_date_patient_no(self):
+        self.p_no_date_line_edit.setText(datetime.now().date().isoformat())
+    def set_date_note(self):
+        self.note_date_line_edit.setText(datetime.now().date().isoformat())
+    def set_date_all(self):
+        self.set_date_balance()
+        self.set_date_patient_no()
+        self.set_date_note()
 
 
 if __name__ == "__main__":
