@@ -19,5 +19,8 @@ __pycache__/
 
 # Logs
 *.log
+
+.idea/workspace.xml
+
 /InvestigationDatabase.json
 /PatientDashBoard_settings.json
