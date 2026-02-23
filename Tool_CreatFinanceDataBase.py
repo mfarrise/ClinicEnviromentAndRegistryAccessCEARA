@@ -11,12 +11,13 @@ def create_table():
         CREATE TABLE IF NOT EXISTS transactions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             date TEXT NOT NULL,
-            number_of_patients INTEGER NOT NULL,
+            number_of_patients INTEGER ,
             amount REAL NOT NULL,
             type TEXT CHECK(type IN('income','expense')) NOT NULL,
             category TEXT,
             payment_method TEXT,
             note TEXT,
+            fee_per_visit INTEGER ,
             created_at TEXT NOT NULL
             )
             """)
@@ -49,3 +50,5 @@ def add_transaction(
         note_value,
         datetime.now().isoformat()
         ))
+if __name__=="__main__":
+    create_table()
