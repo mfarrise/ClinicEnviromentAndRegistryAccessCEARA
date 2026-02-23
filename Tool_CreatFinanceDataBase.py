@@ -31,14 +31,15 @@ def add_transaction(
         type_value,
         category_value,
         payment_method_value,
-        note_value):
+        note_value,
+        fee_value):
 
     conn = sqlite3.connect("ceara.db")
     cursor = conn.cursor()
 
     cursor.execute("""
     INSERT INTO transactions
-    (date, amount, type, category, payment_method, note, created_at)
+    (date, amount, type, category, payment_method, note,fee_per_visit , created_at)
     VALUES (?, ?, ?, ?, ?, ?, ?)
     """, (
         date_value,
@@ -48,6 +49,7 @@ def add_transaction(
         category_value,
         payment_method_value,
         note_value,
+        fee_value,
         datetime.now().isoformat()
         ))
 if __name__=="__main__":
