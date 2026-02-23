@@ -65,7 +65,8 @@ class Finances(QWidget):
         self.amount_line_edit = QLineEdit()
         self.amount_line_edit.setPlaceholderText("insert amount")
         self.amount_line_edit.setAlignment(Qt.AlignCenter)
-        self.amount_line_edit.setValidator(QDoubleValidator(0.0, 1_000_000.0, 2))
+        self.amount_line_edit.setValidator(
+            QDoubleValidator(0.0, 1_000_000.0, 2).setLocale(QLocale.English))
         self.data_input_layout.addWidget(self.amount_line_edit, 1, 2)
 
         self.type_label = QLabel("Type")
@@ -81,7 +82,8 @@ class Finances(QWidget):
         self.data_input_layout.addWidget(self.category_label, 0, 4)
 
         self.category_combo=QComboBox()
-        self.category_combo.addItems(["visit","staff","cleaning","rent","shopping","equipment","furniture","tax","other"])
+        self.category_combo.addItems(["visit","staff","cleaning","rent","shopping",
+                                      "equipment","furniture","tax","other"])
         self.data_input_layout.addWidget(self.category_combo, 1, 4)
 
         self.method_label = QLabel("Method")

@@ -1,4 +1,8 @@
 import sys
+
+from PySide6.QtCore import QLocale
+from PySide6.QtGui import QDoubleValidator, QIntValidator
+
 from nephrology_equations_module import calculate_eGFR
 from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox, QWidget, QPushButton, QApplication
 
@@ -6,49 +10,70 @@ from PySide6.QtWidgets import QWidget, QLineEdit, QGridLayout, QLabel, QComboBox
 class eGFRSubWindow(QWidget):
     def __init__(self):
         super().__init__()
-        def egfr_calculate_update_label():
-            if egfrAgeLine.text()=="" or egfrAgeLine.text()=="":
-                return
-            egfr=calculate_eGFR(age=float(egfrAgeLine.text()),cr=float(egfrCrLine.text()),gender=egfrGendercbx.currentText())
-            egfrResult2lbl.setText(str(int(egfr))+" cc/min/1.7m\u00B2")
+        self.clipboard = QApplication.clipboard()
 
 
         self.setWindowTitle("eGFR Calculator")
 
         #self.resize(300,150)
-        eGFRLayout=QGridLayout(self)
-        self.setLayout(eGFRLayout)
-        egfrCrlbl=QLabel("Creatinine in mg/dl")
-        eGFRLayout.addWidget(egfrCrlbl,1,1)
+        self.eGFRLayout=QGridLayout()
+        self.setLayout(self.eGFRLayout)
+        self.egfrCrlbl=QLabel("Creatinine in mg/dl")
+        self.eGFRLayout.addWidget(self.egfrCrlbl,1,1)
 
-        egfrCrLine=QLineEdit()
+        self.egfrCrLine=QLineEdit()
+        double_validator = QDoubleValidator(0.00,40.00,2)
+        double_validator.setLocale(QLocale(QLocale.English))
+        self.egfrCrLine.setValidator(double_validator)
+        self.eGFRLayout.addWidget(self.egfrCrLine,1,2,1,1)
+        self.egfrCrLine.textChanged.connect(self.egfr_calculate_update_label)
 
-        eGFRLayout.addWidget(egfrCrLine,1,2,1,1)
-        egfrCrLine.textChanged.connect(egfr_calculate_update_label)
+        self.egfrAgelbl=QLabel("Age in Years")
+        self.eGFRLayout.addWidget(self.egfrAgelbl,2,1)
+        self.egfrAgeLine=QLineEdit()
+        self.egfrAgeLine.setValidator(QIntValidator(15,120))
+        self.eGFRLayout.addWidget(self.egfrAgeLine,2,2,1,1)
+        self.egfrAgeLine.textChanged.connect(self.egfr_calculate_update_label)
 
-        egfrAgelbl=QLabel("Age in Years")
-        eGFRLayout.addWidget(egfrAgelbl,2,1)
-        egfrAgeLine=QLineEdit()
+        self.egfrGenderlbl=QLabel("Gender")
+        self.eGFRLayout.addWidget(self.egfrGenderlbl,3,1)
+        self.egfrGendercbx=QComboBox()
+        self.egfrGendercbx.addItem("Female")
+        self.egfrGendercbx.addItem("Male")
+        self.eGFRLayout.addWidget(self.egfrGendercbx,3,2)
+        self.egfrGendercbx.currentIndexChanged.connect(self.egfr_calculate_update_label)
 
-        eGFRLayout.addWidget(egfrAgeLine,2,2,1,1)
-        egfrAgeLine.textChanged.connect(egfr_calculate_update_label)
+        self.egfrResult1lbl=QLabel("eGFR =")
+        self.egfrResult2lbl=QLabel("-- cc/min/1.7m\u00B2")
+        self.eGFRLayout.addWidget(self.egfrResult1lbl,4,1)
+        self.eGFRLayout.addWidget(self.egfrResult2lbl,4,2)
 
-        egfrGenderlbl=QLabel("Gender")
-        eGFRLayout.addWidget(egfrGenderlbl,3,1)
-        egfrGendercbx=QComboBox()
-        egfrGendercbx.addItem("Female")
-        egfrGendercbx.addItem("Male")
-        eGFRLayout.addWidget(egfrGendercbx,3,2)
-        egfrGendercbx.currentIndexChanged.connect(egfr_calculate_update_label)
+        self.egfrCalculatebtn=QPushButton("Copy and Clear")
+        self.eGFRLayout.addWidget(self.egfrCalculatebtn,5,1,1,2)
+        self.egfrCalculatebtn.clicked.connect(self.clear)
 
-        egfrResult1lbl=QLabel("eGFR =")
-        egfrResult2lbl=QLabel("-- cc/min/1.7m\u00B2")
-        eGFRLayout.addWidget(egfrResult1lbl,4,1)
-        eGFRLayout.addWidget(egfrResult2lbl,4,2)
+    def egfr_calculate_update_label(self):
+        if not self.egfrAgeLine.text()  or not self.egfrCrLine.text():
+            return
+        egfr = calculate_eGFR(age=float(self.egfrAgeLine.text()), cr=float(self.egfrCrLine.text()),
+                              gender=self.egfrGendercbx.currentText())
+        self.egfrResult2lbl.setText(str(int(egfr)) + " cc/min/1.7m\u00B2")
+        self.clipboard.setText(str(int(egfr)))
 
-        egfrCalculatebtn=QPushButton("Calculate")
-        eGFRLayout.addWidget(egfrCalculatebtn,5,1,1,2)
-        egfrCalculatebtn.clicked.connect(egfr_calculate_update_label)
+
+    def clear(self):
+
+        if not self.egfrAgeLine.text()  or not self.egfrCrLine.text():
+            return
+        egfr = calculate_eGFR(age=float(self.egfrAgeLine.text()), cr=float(self.egfrCrLine.text()),
+                              gender=self.egfrGendercbx.currentText())
+        self.clipboard.setText(str(int(egfr))) #redundant because its already in clipboard but for safety
+        self.egfrResult2lbl.setText("--"+" cc/min/1.7m\u00B2")
+        self.egfrAgeLine.setText("")
+        self.egfrCrLine.setText("")
+
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = eGFRSubWindow()
