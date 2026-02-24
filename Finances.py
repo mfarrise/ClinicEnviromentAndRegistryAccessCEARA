@@ -5,12 +5,16 @@ from PySide6.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QLineE
 from PySide6.QtWidgets import QDateEdit
 from PySide6.QtCore import QDate
 from PySide6.QtGui import QTextCharFormat, QBrush, QIntValidator, QDoubleValidator
+from Tool_CreatFinanceDataBase import *
 
 
 #ill also creat sub layouts that sit inside the finances_layout for the sake of sanity of my mind
 class Finances(QWidget):
     def __init__(self):
         super().__init__()
+
+        #check if DB is present and if not creat one
+        create_open_DB_table() #imported from Tool_creatFinance data base module
 
         self.setWindowTitle("Finance")
         self.finances_layout = QGridLayout()
@@ -110,7 +114,7 @@ class Finances(QWidget):
 
         self.all_push_button = QPushButton("Push")
         self.data_input_layout.addWidget(self.all_push_button, 5, 2,1,3)
-        # self.all_push_button.clicked.connect()
+        self.all_push_button.clicked.connect(self.push_data_in_DB)
 
 
 
@@ -124,6 +128,11 @@ class Finances(QWidget):
 
     def set_date_today(self):
         self.date_edit.setDate(QDate.currentDate())
+
+    def push_data_in_DB(self):
+        if not self.p_no_line_edit.text() or not self.amount_line_edit.text():
+            return  #check if Edit Lines above are empty if any one of them is empty then return ,ill implement warning message later
+
 
 
 

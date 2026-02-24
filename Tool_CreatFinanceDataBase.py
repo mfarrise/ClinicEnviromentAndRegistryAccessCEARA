@@ -2,7 +2,7 @@ import sqlite3
 from datetime import datetime
 
 
-def create_table():
+def create_open_DB_table():
     conn=sqlite3.connect("ceara.db")
 
     cursor=conn.cursor()
@@ -24,7 +24,7 @@ def create_table():
     conn.commit()
     conn.close()
 
-def add_transaction(
+def add_DB_transaction(
         date_value,
         number_of_patients_value,
         amount_value,
