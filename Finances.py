@@ -123,8 +123,8 @@ class Finances(QWidget):
         self.action_done_table.setRowCount(0)
         self.action_done_table.setColumnCount(8)
         self.data_input_layout.addWidget(self.action_done_table, 6, 0, 1, 7)
-        self.action_done_table.setHorizontalHeaderLabels(["date","patients","amount","type","category",
-                                                          "method","fee","note"])
+        self.action_done_table.setHorizontalHeaderLabels(["Date","Patients","Amount","Type","Category",
+                                                          "Method","Fee","Note"])
         self.row=0
 
 
@@ -200,13 +200,6 @@ class Finances(QWidget):
                     item.setTextAlignment(Qt.AlignCenter)
                     self.action_done_table.setItem(self.row,i,item)
                 self.row+=1
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
