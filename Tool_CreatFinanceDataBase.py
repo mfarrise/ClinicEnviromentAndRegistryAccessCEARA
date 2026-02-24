@@ -24,7 +24,7 @@ def create_open_DB_table():
     conn.commit()
     conn.close()
 
-def add_DB_transaction(
+def add_DB_transaction_income(
         date_value,
         number_of_patients_value,
         amount_value,
@@ -34,23 +34,48 @@ def add_DB_transaction(
         note_value,
         fee_value):
 
-    conn = sqlite3.connect("ceara.db")
-    cursor = conn.cursor()
+    with sqlite3.connect("ceara.db") as db:
+        cursor = db.cursor()
 
-    cursor.execute("""
-    INSERT INTO transactions
-    (date, amount, type, category, payment_method, note,fee_per_visit , created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-    """, (
+        cursor.execute("""
+        INSERT INTO transactions
+        (date,number_of_patients, amount, type, category, payment_method, note,fee_per_visit , created_at)
+        VALUES (?, ?,?, ?, ?, ?, ?, ?,?)
+        """, (
+            date_value,
+            number_of_patients_value,
+            amount_value,
+            type_value,
+            category_value,
+            payment_method_value,
+            note_value,
+            fee_value,
+            datetime.now().replace(microsecond=0).isoformat()
+
+        ))
+
+def add_DB_transaction_expense(
         date_value,
-        number_of_patients_value,
         amount_value,
         type_value,
         category_value,
         payment_method_value,
-        note_value,
-        fee_value,
-        datetime.now().isoformat()
-        ))
+        note_value):
+
+    with sqlite3.connect("ceara.db") as db:
+        cursor = db.cursor()
+        cursor.execute("""
+        INSERT INTO transactions
+        (date,number_of_patients, amount, type, category, payment_method, note,fee_per_visit , created_at)
+        VALUES (?, NULL,?, ?, ?, ?, ?, NULL,?)
+        """, (
+            date_value,
+            amount_value,
+            type_value,
+            category_value,
+            payment_method_value,
+            note_value,
+            datetime.now().replace(microsecond=0).isoformat()
+            ))
 if __name__=="__main__":
-    create_table()
+    create_open_DB_table()

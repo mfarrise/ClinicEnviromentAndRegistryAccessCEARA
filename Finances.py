@@ -1,10 +1,13 @@
 import sys
 from datetime import datetime
 from PySide6.QtCore import Qt, QLocale
-from PySide6.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QLineEdit, QPushButton, QSizePolicy, QComboBox
+from PySide6.QtWidgets import QWidget, QGridLayout, QLabel, QApplication, QLineEdit, QPushButton, QSizePolicy, \
+    QComboBox, QTextEdit, QTableWidget, QTableWidgetItem
 from PySide6.QtWidgets import QDateEdit
 from PySide6.QtCore import QDate
 from PySide6.QtGui import QTextCharFormat, QBrush, QIntValidator, QDoubleValidator
+from docx.table import Table
+
 from Tool_CreatFinanceDataBase import *
 
 
@@ -12,7 +15,7 @@ from Tool_CreatFinanceDataBase import *
 class Finances(QWidget):
     def __init__(self):
         super().__init__()
-
+        self.fee="30"
         #check if DB is present and if not creat one
         create_open_DB_table() #imported from Tool_creatFinance data base module
 
@@ -86,7 +89,7 @@ class Finances(QWidget):
         self.data_input_layout.addWidget(self.category_label, 0, 4)
 
         self.category_combo=QComboBox()
-        self.category_combo.addItems(["visit","staff","cleaning","rent","shopping",
+        self.category_combo.addItems(["visit","staff","cleaning","rent","printing","shopping",
                                       "equipment","furniture","tax","other"])
         self.data_input_layout.addWidget(self.category_combo, 1, 4)
 
@@ -116,6 +119,14 @@ class Finances(QWidget):
         self.data_input_layout.addWidget(self.all_push_button, 5, 2,1,3)
         self.all_push_button.clicked.connect(self.push_data_in_DB)
 
+        self.action_done_table =QTableWidget()
+        self.action_done_table.setRowCount(0)
+        self.action_done_table.setColumnCount(8)
+        self.data_input_layout.addWidget(self.action_done_table, 6, 0, 1, 7)
+        self.action_done_table.setHorizontalHeaderLabels(["date","patients","amount","type","category",
+                                                          "method","fee","note"])
+        self.row=0
+
 
 
         self.finances_layout.addWidget(self.data_input_section,0,0)#change position later when other sublayout are added
@@ -130,8 +141,69 @@ class Finances(QWidget):
         self.date_edit.setDate(QDate.currentDate())
 
     def push_data_in_DB(self):
-        if not self.p_no_line_edit.text() or not self.amount_line_edit.text():
-            return  #check if Edit Lines above are empty if any one of them is empty then return ,ill implement warning message later
+        if self.p_no_line_edit.text() and self.amount_line_edit.text():
+
+            if self.type_combo.currentText() == "income" and self.category_combo.currentText() == "visit":
+                add_DB_transaction_income(
+                    self.date_edit.text(),
+                    int(self.p_no_line_edit.text()),
+                    float(self.amount_line_edit.text()),
+                    self.type_combo.currentText(),
+                    self.category_combo.currentText(),
+                    self.method_combo.currentText(),
+                    self.note_line_edit.text(),
+                    int(self.fee)
+                )
+                cells=[
+                    self.date_edit.text(),
+                    self.p_no_line_edit.text(),
+                    self.amount_line_edit.text(),
+                    self.type_combo.currentText(),
+                    self.category_combo.currentText(),
+                    self.method_combo.currentText(),
+                    self.fee,
+                    self.note_line_edit.text()
+                    ]
+                self.action_done_table.insertRow(self.row)
+                for i in range(0,len(cells)):
+                    item=QTableWidgetItem(cells[i])
+                    item.setTextAlignment(Qt.AlignCenter)
+                    self.action_done_table.setItem(self.row,i,item)
+                self.row+=1
+
+
+        if self.type_combo.currentText() == "expense" and self.amount_line_edit.text():
+            if self.category_combo.currentText() !="visit":# sorry can be resolved with AND in parent if statement but too lazy to fix it
+                add_DB_transaction_expense(
+                    self.date_edit.text(),
+
+                    float(self.amount_line_edit.text()),
+                    self.type_combo.currentText(),
+                    self.category_combo.currentText(),
+                    self.method_combo.currentText(),
+                    self.note_line_edit.text(),
+
+                )
+                cells=[
+                    self.date_edit.text(),
+                    "nill",
+                    self.amount_line_edit.text(),
+                    self.type_combo.currentText(),
+                    self.category_combo.currentText(),
+                    self.method_combo.currentText(),
+                    "nill",
+                    self.note_line_edit.text()
+                    ]
+                self.action_done_table.insertRow(self.row)
+                for i in range(0,len(cells)):
+                    item=QTableWidgetItem(cells[i])
+                    item.setTextAlignment(Qt.AlignCenter)
+                    self.action_done_table.setItem(self.row,i,item)
+                self.row+=1
+
+
+
+
 
 
 
