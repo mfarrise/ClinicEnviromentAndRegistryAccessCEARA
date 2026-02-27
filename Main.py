@@ -1,4 +1,6 @@
 import os,sys
+import sqlite3
+
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QGridLayout, QWidget, QPushButton
 from PySide6.QtGui import QGuiApplication
 from eGFRSubWindow import eGFRSubWindow
@@ -9,6 +11,8 @@ from Finances import Finances
 class MainWindow_class(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        self.connect = sqlite3.connect("ceara.db")
         self.screen_geometry = QGuiApplication.primaryScreen().availableGeometry()
         self.setWindowTitle("C.E.A.R.A. v0.3")
         central_widget = QWidget()
@@ -34,7 +38,7 @@ class MainWindow_class(QMainWindow):
         self.setCentralWidget(central_widget)
         self.eGFRWindow = eGFRSubWindow()
         self.CINWindow = ContrastRiskSubWindow()
-        self.PatientWindow = PatientDashBoard()
+
         self.financesWindow = Finances()
 
         self.screen_size=QGuiApplication.primaryScreen().availableGeometry()#availablesize() ignores task bar geometry account for task bar height
@@ -47,7 +51,9 @@ class MainWindow_class(QMainWindow):
         window_geometry.moveCenter(self.screen_geometry.center())
         self.move(window_geometry.topLeft())
 
-
+        #just testing passing dn connect and passing window title in multiple windows
+        self.patient_dashboard_windows=[]
+        self.title_int=1
         # self.resize(self.screen_width,self.screen_height)
     def call_standard(self):
         self.call_patient_dashboard()
@@ -73,8 +79,11 @@ class MainWindow_class(QMainWindow):
 
 
     def call_patient_dashboard(self):
-        self.PatientWindow.show()
-        self.PatientWindow.raise_()
+        self.title_int +=1
+        new_patientWindow = PatientDashBoard(self.connect,"patient no "+str(self.title_int))
+        self.patient_dashboard_windows.append(new_patientWindow)
+        new_patientWindow.show()
+        new_patientWindow.raise_()
 
     def call_finances(self):
         self.financesWindow.show()

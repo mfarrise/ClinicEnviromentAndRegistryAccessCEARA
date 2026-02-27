@@ -7,12 +7,13 @@ from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QL
     QLabel, QComboBox, QMenuBar
 from docx import Document
 from SharedWidgetsPyside6 import show_warning
-from PySide6.QtGui import QTextCharFormat, QColor, QFont
+from PySide6.QtGui import QTextCharFormat, QColor, QFont, QIntValidator, Qt
+
 
 class PatientDashBoard(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Patient_dashboard")
+        self.setWindowTitle("title")
 
         self.settings={}
         quadrant_width=540
@@ -20,9 +21,26 @@ class PatientDashBoard(QWidget):
         with open("PatientDashBoard_settings.json","r") as file:
             self.settings=json.load(file)
 
-
-
-
+        iraq_governorates = [
+            "Baghdad",
+            "Basra",
+            "Nineveh",
+            "Erbil",
+            "Sulaymaniyah",
+            "Duhok",
+            "Kirkuk",
+            "Anbar",
+            "Babil",
+            "Karbala",
+            "Najaf",
+            "Wasit",
+            "Diyala",
+            "Salah al-Din",
+            "Maysan",
+            "Dhi Qar",
+            "Al-Muthanna",
+            "Al-Qadisiyyah"
+        ]
         ##############################################################################
         #setting main lay out that will contain 4 Qgridlayouts each for each quadrant#
         ##############################################################################
@@ -41,50 +59,79 @@ class PatientDashBoard(QWidget):
         #setting up the ULQ which is the patient old history and demographics#
         ######################################################################
         # region
-        patient_demo_and_old_data_widget=QWidget(self)
-        patient_demo_and_old_data_layout = QGridLayout(patient_demo_and_old_data_widget)
-        patient_demo_and_old_data_widget.setLayout(patient_demo_and_old_data_layout)
-        self.set_quadrants_size(patient_demo_and_old_data_widget,quadrant_width,quadrant_height)
+        self.patient_demo_and_old_data_widget=QWidget()
+        self.patient_demo_and_old_data_layout = QGridLayout(self.patient_demo_and_old_data_widget)
+        self.patient_demo_and_old_data_widget.setLayout(self.patient_demo_and_old_data_layout)
+        self.set_quadrants_size(self.patient_demo_and_old_data_widget,quadrant_width,quadrant_height)
+
+        self.patient_id_line_edit=QLineEdit()
+        self.patient_id_line_edit.setPlaceholderText("Patient ID")
+        self.patient_id_line_edit.setReadOnly(True)
+        self.patient_id_line_edit.setFocusPolicy(Qt.ClickFocus)
+
+        self.patient_name_edit = QLineEdit()
+        self.patient_name_edit.setPlaceholderText("Patient Name")
+
+        self.patient_DOB_edit = QLineEdit()
+        self.patient_DOB_edit.setPlaceholderText("DOB")
+        now=datetime.now().year
+        self.patient_DOB_edit.setValidator(QIntValidator(1900,now))
+
+        self.patient_gender_combo=QComboBox()
+        self.patient_gender_combo.addItems(["Male","Female"])
+
+        self.patient_marital_combo=QComboBox()
+        self.patient_marital_combo.addItems(["Single","Married","Divorced","Widowed"])
+
+        self.patient_education_combo=QComboBox()
+        self.patient_education_combo.addItems(["University","PostGraduate","Institute","Secondary","Primary","None"])
+
+        self.patient_job_edit = QLineEdit()
+        self.patient_job_edit.setPlaceholderText("Job")
+
+        self.patient_governorates_combo = QComboBox()
+        self.patient_governorates_combo.addItems(iraq_governorates)
+
+        self.patient_residence_free_form_edit=QLineEdit()
+        self.patient_residence_free_form_edit.setPlaceholderText("residence")
+
+        self.patient_residence_type_combo = QComboBox()
+        self.patient_residence_type_combo.addItems(["center","periphery","rural"])
 
 
-        patient_name_edit = QLineEdit(self)
-        patient_name_edit.setPlaceholderText("Patient Name")
-        patient_demo_and_old_data_layout.addWidget(patient_name_edit,1,1)
-        # create patient_... variable and assign text to it
-        patient_name_edit.textChanged.connect(lambda text: setattr(self,"patient_name",text))
 
-        patient_DOB_edit = QLineEdit(self)
-        patient_DOB_edit.setPlaceholderText("DOB")
-        patient_demo_and_old_data_layout.addWidget(patient_DOB_edit, 1, 2)
-        # create patient_... variable and assign text to it
-        patient_DOB_edit.textChanged.connect(lambda text: setattr(self, "patient_DOB", int(text)))
-
-        patient_residence_edit = QLineEdit(self)
-        patient_residence_edit.setPlaceholderText("ٌResidence")
-        patient_demo_and_old_data_layout.addWidget(patient_residence_edit, 1, 3)
-
-        patient_gender_combo=QComboBox()
-        patient_gender_combo.addItems(["Male","Female"])
-        patient_demo_and_old_data_layout.addWidget(patient_gender_combo, 1, 4)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_id_line_edit,0,0)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_name_edit,0,1)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_DOB_edit,0,2)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_gender_combo,0,3)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_marital_combo,0,4)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_education_combo,1,0)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_job_edit,1,1)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_governorates_combo, 1, 2)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_residence_free_form_edit, 1, 3)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_residence_type_combo,1,4)
 
 
 
-        # create patient_... variable and assign text to it
-        patient_residence_edit.textChanged.connect(lambda text: setattr(self, "patient_residence", text))
+
+
+
+
+
 
         #previous history
         # label
         previous_history_label = QLabel(self)
         previous_history_label.setText("Previous History")
-        patient_demo_and_old_data_layout.addWidget(previous_history_label,2,1)
+        self.patient_demo_and_old_data_layout.addWidget(previous_history_label,2,1)
 
         # previous history
         # text edit
         previous_history_edit = QTextEdit(self)
         previous_history_edit.setReadOnly(True)
-        patient_demo_and_old_data_layout.addWidget(previous_history_edit, 3, 1,1,4)
+        self.patient_demo_and_old_data_layout.addWidget(previous_history_edit, 3, 1,1,4)
 
-        main_layout.addWidget(patient_demo_and_old_data_widget,1,0)
+        main_layout.addWidget(self.patient_demo_and_old_data_widget,1,0)
         # endregion
         ##########################################################################
         # setting up the LLQ which is the patient current history and examination#
