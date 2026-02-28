@@ -145,26 +145,21 @@ class PatientDashBoard(QWidget):
         #Today history
         #label
         today_history_label = QLabel(self)
-        today_history_label.setText("Today History")
-        patient_today_clinical_layout.addWidget(today_history_label, 1, 1)
+        today_history_label.setText("Today clinical")
+        patient_today_clinical_layout.addWidget(today_history_label, 0, 0)
 
         # Today history
         #text Edit
         today_history_edit = QTextEdit(self)
         today_history_edit.setReadOnly(False)
-        patient_today_clinical_layout.addWidget(today_history_edit, 2, 1, 1, 1)
+        patient_today_clinical_layout.addWidget(today_history_edit, 1, 0)
+        for t in range(1,5):
+            for i in range(0,7):
+                label=QLabel()
+                label.setText("Quadrant "+str(i))
+                patient_today_clinical_layout.addWidget(label, i, t)
 
-        #Today Examination
-        #label
-        today_examination_label = QLabel(self)
-        today_examination_label.setText("Today Examination")
-        patient_today_clinical_layout.addWidget(today_examination_label, 1, 2)
 
-        # Today Examination
-        #text edit
-        today_examination_edit = QTextEdit(self)
-        today_examination_edit.setReadOnly(False)
-        patient_today_clinical_layout.addWidget(today_examination_edit, 2, 2, 1 ,1)
 
         main_layout.addWidget(patient_today_clinical_widget,2,0)
         #endregion
@@ -232,15 +227,15 @@ class PatientDashBoard(QWidget):
 
             date_pattern = rf"\b\d{{1,2}}{sep}\d{{1,2}}{sep}\d{{2,4}}\b|\b\d{{4}}{sep}\d{{1,2}}{sep}\d{{1,2}}\b"
 
-            previous_history_edit.clear()
-            cursor = previous_history_edit.textCursor()
+            self.previous_history_edit.clear()
+            cursor = self.previous_history_edit.textCursor()
             if patient_file_path:
                 doc = Document(patient_file_path)
                 # in the following code
                 # splitext() returns a tuple:
                 # ("README", ".md")
                 # [0]takes the first part(without extension)
-                patient_name_edit.setText(os.path.splitext(os.path.basename(patient_file_path))[0])
+                self.patient_name_edit.setText(os.path.splitext(os.path.basename(patient_file_path))[0])
                 # old_history=""
                 normal_format = QTextCharFormat()
 
@@ -279,23 +274,23 @@ class PatientDashBoard(QWidget):
             demographic_table=doc.add_table(2,5)
 
             demographic_table.cell(0,0).text="Name"
-            if patient_name_edit.text() != "":
-                demographic_table.cell(1,0).text=patient_name_edit.text()
+            if self.patient_name_edit.text() != "":
+                demographic_table.cell(1,0).text=self.patient_name_edit.text()
 
             demographic_table.cell(0,1).text="DOB"
-            if patient_name_edit.text() != "":
-                demographic_table.cell(1,1).text=patient_DOB_edit.text()
+            if self.patient_name_edit.text() != "":
+                demographic_table.cell(1,1).text=self.patient_DOB_edit.text()
 
             demographic_table.cell(0,2).text="Age"
-            if patient_name_edit.text() != "":
-                demographic_table.cell(1,1).text=str(datetime.now().year-int(patient_DOB_edit.text()))
+            if self.patient_name_edit.text() != "":
+                demographic_table.cell(1,1).text=str(datetime.now().year-int(self.patient_DOB_edit.text()))
 
             demographic_table.cell(0,3).text="Gender"
-            demographic_table.cell(1,3).text=patient_gender_combo.currentText()
+            demographic_table.cell(1,3).text=self.patient_gender_combo.currentText()
 
             demographic_table.cell(0,4).text="Residence"
-            if patient_name_edit.text() != "":
-                demographic_table.cell(1,4).text=patient_residence_edit.text()
+            if self.patient_name_edit.text() != "":
+                demographic_table.cell(1,4).text=self.patient_residence_free_form_edit.text()
 
             doc.save("PatientDashBoard.docx")
 
