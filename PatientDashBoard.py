@@ -17,7 +17,7 @@ class PatientDashBoard(QWidget):
 
         self.settings={}
         quadrant_width=540
-        quadrant_height=390
+        quadrant_height=300
         with open("PatientDashBoard_settings.json","r") as file:
             self.settings=json.load(file)
 
@@ -121,15 +121,15 @@ class PatientDashBoard(QWidget):
 
         #previous history
         # label
-        previous_history_label = QLabel(self)
-        previous_history_label.setText("Previous History")
-        self.patient_demo_and_old_data_layout.addWidget(previous_history_label,2,1)
+        self.previous_history_label = QLabel()
+        self.previous_history_label.setText("Previous History")
+        self.patient_demo_and_old_data_layout.addWidget(self.previous_history_label,2,0)
 
         # previous history
         # text edit
-        previous_history_edit = QTextEdit(self)
-        previous_history_edit.setReadOnly(True)
-        self.patient_demo_and_old_data_layout.addWidget(previous_history_edit, 3, 1,1,4)
+        self.previous_history_edit = QTextEdit()
+        self.previous_history_edit.setReadOnly(True)
+        self.patient_demo_and_old_data_layout.addWidget(self.previous_history_edit, 3, 0,1,5)
 
         main_layout.addWidget(self.patient_demo_and_old_data_widget,1,0)
         # endregion
@@ -412,30 +412,3 @@ if __name__ == '__main__':
     window = PatientDashBoard()
     window.show()
     app.exec()
-
-# import re
-# from PySide6.QtGui import QTextCharFormat, QColor, QFont
-#
-# sep = r"[\/\.\-ظ]"
-#
-# date_pattern = rf"\b\d{{1,2}}{sep}\d{{1,2}}{sep}\d{{2,4}}\b|\b\d{{4}}{sep}\d{{1,2}}{sep}\d{{1,2}}\b"
-#
-# previous_history_edit.clear()
-# cursor = previous_history_edit.textCursor()
-#
-# for paragraph in doc.paragraphs:
-#     text = paragraph.text
-#
-#     parts = re.split(f"({date_pattern})", text)
-#
-#     for part in parts:
-#         if re.fullmatch(date_pattern, part):
-#             date_format = QTextCharFormat()
-#             date_format.setForeground(QColor("red"))
-#             date_format.setFontWeight(QFont.Bold)
-#
-#             cursor.insertText(part, date_format)
-#         else:
-#             cursor.insertText(part)
-#
-#     cursor.insertText("\n")
