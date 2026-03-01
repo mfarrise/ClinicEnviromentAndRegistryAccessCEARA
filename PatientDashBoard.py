@@ -137,31 +137,49 @@ class PatientDashBoard(QWidget):
         # setting up the LLQ which is the patient current history and examination#
         ##########################################################################
         #region
-        patient_today_clinical_widget=QWidget(self)
-        patient_today_clinical_layout = QGridLayout(patient_today_clinical_widget)
-        patient_today_clinical_widget.setLayout(patient_today_clinical_layout)
-        self.set_quadrants_size(patient_today_clinical_widget,quadrant_width,quadrant_height)
+        # creat 2nd degree nested two layouts and widget inside the left lower quadrant llQ layout
+        self.llql_widget=QWidget()
+        self.set_quadrants_size(self.llql_widget, int(quadrant_width / 2), quadrant_height)
+        self.llql_layout = QGridLayout()
+        self.llql_widget.setLayout(self.llql_layout)
+
+        self.llqr_widget=QWidget()
+        self.set_quadrants_size(self.llqr_widget, int(quadrant_width / 2), quadrant_height)
+        self.llqr_layout = QGridLayout()
+        self.llqr_widget.setLayout(self.llqr_layout)
+
+
+        self.patient_today_clinical_widget=QWidget()
+        self.patient_today_clinical_layout = QGridLayout()
+        self.patient_today_clinical_widget.setLayout(self.patient_today_clinical_layout)
+        self.set_quadrants_size(self.patient_today_clinical_widget,quadrant_width,quadrant_height)
+
+        self.patient_today_clinical_layout.addWidget(self.llql_widget,0,0)
+        self.patient_today_clinical_layout.addWidget(self.llqr_widget, 0, 1)
 
         #Today history
         #label
         today_history_label = QLabel(self)
         today_history_label.setText("Today clinical")
-        patient_today_clinical_layout.addWidget(today_history_label, 0, 0)
+        self.llql_layout.addWidget(today_history_label, 0, 0)
 
         # Today history
         #text Edit
         today_history_edit = QTextEdit(self)
         today_history_edit.setReadOnly(False)
-        patient_today_clinical_layout.addWidget(today_history_edit, 1, 0)
-        for t in range(1,5):
+        self.llql_layout.addWidget(today_history_edit, 1, 0)
+        self.symptoms_line_edit=[]
+
+        for t in range(1,4):
             for i in range(0,7):
-                label=QLabel()
-                label.setText("Quadrant "+str(i))
-                patient_today_clinical_layout.addWidget(label, i, t)
+                line_edit=QLineEdit()
+                line_edit.setPlaceholderText("entry")
+                self.llqr_layout.addWidget(line_edit, i, t)
+                self.symptoms_line_edit.append(line_edit)
+        # print(len(self.symptoms_line_edit))
 
 
-
-        main_layout.addWidget(patient_today_clinical_widget,2,0)
+        main_layout.addWidget(self.patient_today_clinical_widget,2,0)
         #endregion
         ##########################################################################
         # setting up the RUQ which is the patient current history and examination#
