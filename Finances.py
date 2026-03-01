@@ -22,12 +22,13 @@ class Finances(QWidget):
         self.setWindowTitle("Finance")
         self.finances_layout = QGridLayout()
         self.setLayout(self.finances_layout)
-
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         #################         data input section     ###############
         #region
 
         self.data_input_section=QWidget()
         self.data_input_layout = QGridLayout()
+        self.data_input_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.data_input_section.setLayout(self.data_input_layout)
 
         self.date_label = QLabel("Date")
@@ -44,7 +45,7 @@ class Finances(QWidget):
         # Default to today
         self.date_edit.setDate(QDate.currentDate())
         calendar = self.date_edit.calendarWidget()
-        #reseting the colour of all days to get rid from red font for sat and sunday
+        #reseting the color of all days to get rid from red font for sat and sunday
         default_format = QTextCharFormat()
         for day in range(1, 8):  # Qt weekday numbers 1=Mon ... 7=Sun
             calendar.setWeekdayTextFormat(Qt.DayOfWeek(day), default_format)
@@ -130,10 +131,7 @@ class Finances(QWidget):
 
 
         self.finances_layout.addWidget(self.data_input_section,0,0)#change position later when other sublayout are added
-        self.data_input_section.setSizePolicy(
-            QSizePolicy.Fixed,
-            QSizePolicy.Fixed
-        )
+        self.data_input_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         #endregion
 
 

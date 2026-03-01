@@ -80,7 +80,8 @@ class MainWindow_class(QMainWindow):
 
     def call_patient_dashboard(self):
         self.title_int +=1
-        new_patientWindow = PatientDashBoard(self.connect,"patient no "+str(self.title_int))
+        # new_patientWindow = PatientDashBoard(self.connect,"patient no "+str(self.title_int))
+        new_patientWindow = PatientDashBoard()
         self.patient_dashboard_windows.append(new_patientWindow)
         new_patientWindow.show()
         new_patientWindow.raise_()
