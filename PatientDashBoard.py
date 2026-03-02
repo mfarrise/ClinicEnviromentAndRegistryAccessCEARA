@@ -291,7 +291,7 @@ class PatientDashBoard(QWidget):
         # today Medication intelligent
         # line edit
         self.today_medication_intellisense_line = QLineEdit(self)
-        self.today_medication_intellisense_line.setPlaceholderText("Intellisense")
+        self.today_medication_intellisense_line.setPlaceholderText("ciprofloxacin (acino) tab 500 mg 1x1 dis 10 after meal")
         self.today_medication_intellisense_line.setReadOnly(False)
         self.patient_today_medication_layout.addWidget(self.today_medication_intellisense_line, 2, 0, 1, 2)
         self.today_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
@@ -481,9 +481,53 @@ class PatientDashBoard(QWidget):
                 f"<span ><b>{test_name + ' ' + str(test_value) + ' ' + unit }</b></span>"
             )
 
-    def drug_intellisense(self):#not fully implemented yet there is no intellgence in it now
-        self.today_medications_edit.append(self.today_medication_intellisense_line.text())
+    def drug_intellisense(self):
+
+        drug_name_DIC = {
+            "name": "",
+            "Brand": "",
+            "Form": "",
+            "Dose": "",
+            "Freq": "",
+            "Amount": "",
+            "Note": ""
+        }
+
+        unparsed_phrase = self.today_medication_intellisense_line.text()
         self.today_medication_intellisense_line.clear()
+
+        if unparsed_phrase:
+            parsed_drug = unparsed_phrase.split()
+            drug_name_DIC["name"] = parsed_drug[0]
+            print(unparsed_phrase)
+            dose_picked = False
+
+            for i, word in enumerate(parsed_drug):
+                if word[0] == "(" and word[-1] == ")":
+                    drug_name_DIC["Brand"] = word.strip("()")
+
+                if word.lower() in ["tab", "vial", "ampule", "cap", "capsule", "tsf", "efferviscent", "satchet"]:
+                    drug_name_DIC["Form"] = word
+
+                if word.isdigit() and not dose_picked:
+                    drug_name_DIC["Dose"] = word + " " + parsed_drug[i + 1]
+                    dose_picked = True  # avoid picking any digit words in the notes or number for dis
+
+                if "x" in word.lower() and word[0].isdigit() and word[-1].isdigit() and len(word) == 3:
+                    drug_name_DIC["Freq"] = word
+                if word.lower() == "dis":
+                    drug_name_DIC["Amount"] = parsed_drug[i + 1]
+                    note = ""
+                    for t in range(i + 2, len(parsed_drug)):
+                        note += parsed_drug[t]
+                        note += " "
+                    drug_name_DIC["Note"] = note
+                    pass
+            self.medication_table.insertRow(0)
+            print("new row created")
+            row_number=self.medication_table.rowCount()
+
+            #ill implement transfering the dictionary to the new row using row_number in row place
 
 
 if __name__ == '__main__':
