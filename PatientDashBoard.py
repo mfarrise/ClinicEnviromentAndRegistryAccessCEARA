@@ -4,7 +4,7 @@ import sys
 import json
 from datetime import datetime
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
-    QLabel, QComboBox, QMenuBar
+    QLabel, QComboBox, QMenuBar, QTableWidget
 from docx import Document
 from SharedWidgetsPyside6 import show_warning
 from PySide6.QtGui import QTextCharFormat, QColor, QFont, QIntValidator, Qt
@@ -220,60 +220,82 @@ class PatientDashBoard(QWidget):
         self.main_layout.addWidget(self.patient_today_clinical_widget,2,0)
         #endregion
         ##########################################################################
-        # setting up the RUQ which is the patient current history and examination#
+        # setting up the RUQ which is the patient current investigation          #
         ##########################################################################
         #region
-        self.patient_today_ix_medication_widget=QWidget(self)
-        self.patient_today_ix_medication_layout = QGridLayout()
-        self.patient_today_ix_medication_widget.setLayout(self.patient_today_ix_medication_layout)
-        self.set_quadrants_size(self.patient_today_ix_medication_widget,quadrant_width,quadrant_height)
 
-        # today investigations
-        # label
+        self.patient_today_investigations_widget = QWidget(self)
+        self.patient_today_investigations_layout = QGridLayout()
+        self.patient_today_investigations_widget.setLayout(self.patient_today_investigations_layout)
+        self.set_quadrants_size(self.patient_today_investigations_widget, quadrant_width, quadrant_height)
+
         self.today_investigations_label = QLabel(self)
         self.today_investigations_label.setText("Today Investigations")
-        self.patient_today_ix_medication_layout.addWidget(self.today_investigations_label, 1, 1)
+        self.patient_today_investigations_layout.addWidget(self.today_investigations_label, 1, 1)
 
         # today investigations
         # text edit
         self.today_investigations_edit = QTextEdit(self)
         self.today_investigations_edit.setReadOnly(False)
         self.today_investigations_edit.setFocusPolicy(Qt.ClickFocus)
-        self.patient_today_ix_medication_layout.addWidget(self.today_investigations_edit, 2, 1, 1, 1)
-
-        # Last medications == today modeications
-        # label
-        self.today_medications_label = QLabel(self)
-        self.today_medications_label.setText("Today Medications")
-        self.patient_today_ix_medication_layout.addWidget(self.today_medications_label, 1, 2)
-
-        # today medications
-        # text edit
-        self.today_medications_edit = QTextEdit(self)
-        self.today_medications_edit.setReadOnly(False)
-        self.today_medications_edit.setFocusPolicy(Qt.ClickFocus)
-        self.patient_today_ix_medication_layout.addWidget(self.today_medications_edit, 2, 2, 1, 1)
+        self.patient_today_investigations_layout.addWidget(self.today_investigations_edit, 2, 1, 1, 1)
 
         # today investigation intelligent
         # line edit
         self.today_investigations_intellisense_line = QLineEdit(self)
         self.today_investigations_intellisense_line.setPlaceholderText("Intellisense")
         self.today_investigations_intellisense_line.setReadOnly(False)
-        self.patient_today_ix_medication_layout.addWidget(self.today_investigations_intellisense_line, 3, 1, 1, 1)
+        self.patient_today_investigations_layout.addWidget(self.today_investigations_intellisense_line, 3, 1, 1, 1)
         self.today_investigations_intellisense_line.returnPressed.connect(self.investigation_intellisense)
+
+        self.main_layout.addWidget(self.patient_today_investigations_widget, 1, 1)
+
+        self.random_button1=QPushButton("Random")
+        self.patient_today_investigations_layout.addWidget(self.random_button1, 1, 2)
+        self.random_button2 = QPushButton("Random")
+        self.patient_today_investigations_layout.addWidget(self.random_button2, 1, 3)
+        #endregion
+        ##########################################################################
+        # setting up the RlQ which is the patient current medication             #
+        ##########################################################################
+
+        # today medication
+        # label
+
+        self.patient_today_medication_widget = QWidget(self)
+        self.patient_today_medication_layout = QGridLayout()
+        self.patient_today_medication_widget.setLayout(self.patient_today_medication_layout)
+        self.set_quadrants_size(self.patient_today_medication_widget, 740, quadrant_height)
+
+        # Last medications == today medications
+        # label
+
+        self.today_medications_label = QLabel()
+        self.today_medications_label.setText("Today Medications")
+        self.patient_today_medication_layout.addWidget(self.today_medications_label, 0, 0)
+
+        # today medications
+        # text edit
+        # self.today_medications_edit = QTextEdit(self)
+        # self.today_medications_edit.setReadOnly(False)
+        # self.today_medications_edit.setFocusPolicy(Qt.ClickFocus)
+        # self.patient_today_medication_layout.addWidget(self.today_medications_edit, 2, 2, 1, 1)
+
+        self.medication_table=QTableWidget()
+        self.medication_table.setRowCount(0)
+        self.medication_table.setColumnCount(7)
+        self.medication_table.setAlternatingRowColors(True)
+        self.patient_today_medication_layout.addWidget(self.medication_table, 1, 0)
+        self.medication_table.setHorizontalHeaderLabels(["Name","Brand","Form","Dose","Freq","Amount","Note"])
+
         # today Medication intelligent
         # line edit
         self.today_medication_intellisense_line = QLineEdit(self)
         self.today_medication_intellisense_line.setPlaceholderText("Intellisense")
         self.today_medication_intellisense_line.setReadOnly(False)
-        self.patient_today_ix_medication_layout.addWidget(self.today_medication_intellisense_line, 3, 2, 1, 1)
+        self.patient_today_medication_layout.addWidget(self.today_medication_intellisense_line, 2, 0, 1, 2)
         self.today_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
-        self.main_layout.addWidget(self.patient_today_ix_medication_widget,1,1)
-
-        #endregion
-        ##########################################################################
-        # setting up the RUQ which is the patient current history and examination#
-        ##########################################################################
+        self.main_layout.addWidget(self.patient_today_medication_widget, 2, 1)
 
 
         ##########################################
@@ -355,24 +377,24 @@ class PatientDashBoard(QWidget):
             doc.save("PatientDashBoard.docx")
 
 
-        io_widget=QWidget(self)
-        io_layout = QGridLayout(io_widget)
-        io_widget.setLayout(io_layout)
-        self.set_quadrants_size(io_widget,quadrant_width,quadrant_height)
+        # io_widget=QWidget(self)
+        # io_layout = QGridLayout(io_widget)
+        # io_widget.setLayout(io_layout)
+        # self.set_quadrants_size(io_widget,quadrant_width,quadrant_height)
+        #
+        # #load patient button
+        # load_patient_button=QPushButton("Load Patient")
+        # io_layout.addWidget(load_patient_button,0,0)
+        # load_patient_button.clicked.connect(load_patient_data)
+        #
+        # #update new data button
+        # update_patient_button=QPushButton("Update Patient")
+        # io_layout.addWidget(update_patient_button,0,1)
+        # update_patient_button.clicked.connect(update_patient_data)
 
-        #load patient button
-        load_patient_button=QPushButton("Load Patient")
-        io_layout.addWidget(load_patient_button,0,0)
-        load_patient_button.clicked.connect(load_patient_data)
-
-        #update new data button
-        update_patient_button=QPushButton("Update Patient")
-        io_layout.addWidget(update_patient_button,0,1)
-        update_patient_button.clicked.connect(update_patient_data)
 
 
-
-        self.main_layout.addWidget(io_widget,2,1)
+        # self.main_layout.addWidget(io_widget,2,1)
 
         #endregion
 
@@ -425,11 +447,11 @@ class PatientDashBoard(QWidget):
             print (parsed_text)
         if not unparsed_text:# dont know why but this line is not functioning
             return
-        try:
-            float(parsed_text[-1])
-        except ValueError:
-            show_warning("Please enter a numerical value after test name")
-            return
+        # try:
+        #     float(parsed_text[-1])
+        # except ValueError:
+        #     show_warning("Please enter a numerical value after test name")
+        #     return
         with open("InvestigationDatabase.json","r") as file:
             InvestigationDatabase=json.load(file)
 
@@ -443,6 +465,8 @@ class PatientDashBoard(QWidget):
                     case["low"],
                     case["unit"]
                 )
+                return
+        self.today_investigations_edit.append(unparsed_text)
     def append_investigation(self,test_name,test_value,upper_limit,lower_limit,unit):
         if test_value > upper_limit:
             self.today_investigations_edit.append(
