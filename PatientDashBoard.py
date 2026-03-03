@@ -4,7 +4,7 @@ import sys
 import json
 from datetime import datetime
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
-    QLabel, QComboBox, QMenuBar, QTableWidget
+    QLabel, QComboBox, QMenuBar, QTableWidget, QTableWidgetItem, QHBoxLayout
 from docx import Document
 from SharedWidgetsPyside6 import show_warning
 from PySide6.QtGui import QTextCharFormat, QColor, QFont, QIntValidator, Qt
@@ -218,42 +218,83 @@ class PatientDashBoard(QWidget):
 
 
         self.main_layout.addWidget(self.patient_today_clinical_widget,2,0)
+
         #endregion
-        ##########################################################################
-        # setting up the RUQ which is the patient current investigation          #
-        ##########################################################################
+        ###################################################################################
+        # setting up the RUQ which is the patient old medication and today investigation  #
+        ###################################################################################
         #region
 
-        self.patient_today_investigations_widget = QWidget(self)
-        self.patient_today_investigations_layout = QGridLayout()
-        self.patient_today_investigations_widget.setLayout(self.patient_today_investigations_layout)
-        self.set_quadrants_size(self.patient_today_investigations_widget, quadrant_width, quadrant_height)
+        ##########################################################################################
+        #setting up sub sub layout widget called old medication to be on the left half of the RUQ#
+        ##########################################################################################
 
-        self.today_investigations_label = QLabel(self)
+        self.patient_old_medication_and_today_investigations_widget = QWidget(self)
+        self.patient_old_medication_and_today_investigations_layout = QGridLayout()
+        self.patient_old_medication_and_today_investigations_widget.setLayout(self.patient_old_medication_and_today_investigations_layout)
+        self.set_quadrants_size(self.patient_old_medication_and_today_investigations_widget, quadrant_width, quadrant_height)
+
+        self.old_medication_widget = QWidget()
+        self.old_medication_layout = QGridLayout()
+        self.old_medication_widget.setLayout(self.old_medication_layout)
+        self.set_quadrants_size(self.old_medication_widget, quadrant_width, quadrant_height)
+
+        self.old_medications_label = QLabel()
+        self.old_medications_label.setText("Old Medications")
+        self.old_medication_layout.addWidget(self.old_medications_label, 0, 0)
+
+        self.old_medication_table=QTableWidget()
+        self.old_medication_table.setRowCount(0)
+        self.old_medication_table.setColumnCount(7)
+        self.old_medication_table.setAlternatingRowColors(True)
+
+        self.old_medication_table.setHorizontalHeaderLabels(["Name","Brand","Form","Dose","Freq","Amount","Note"])
+        self.old_medication_layout.addWidget(self.old_medication_table,1,0)
+        # old Medication intelligent
+        # line edit
+        self.old_medication_intellisense_line = QLineEdit(self)
+        self.old_medication_intellisense_line.setPlaceholderText("ciprofloxacin (acino) tab 500 mg 1x1 dis 10 after meal")
+        self.old_medication_intellisense_line.setReadOnly(False)
+        self.old_medication_layout.addWidget(self.old_medication_intellisense_line, 2, 0, 1, 2)
+        # self.old_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
+        self.patient_old_medication_and_today_investigations_layout.addWidget(self.old_medication_widget,1,1)
+
+        ######################################################################
+        # setting up sub sub layout widget to be on the right half of the RUQ#
+        ######################################################################
+        self.today_investigations_widget = QWidget()
+        self.today_investigations_layout = QGridLayout()
+        self.today_investigations_widget.setLayout(self.today_investigations_layout)
+        self.set_quadrants_size(self.today_investigations_widget, quadrant_width, quadrant_height)
+
+        # today investigations
+        # label
+        self.today_investigations_label = QLabel()
         self.today_investigations_label.setText("Today Investigations")
-        self.patient_today_investigations_layout.addWidget(self.today_investigations_label, 1, 1)
+        self.today_investigations_layout.addWidget(self.today_investigations_label, 0, 0)
 
         # today investigations
         # text edit
         self.today_investigations_edit = QTextEdit(self)
         self.today_investigations_edit.setReadOnly(False)
         self.today_investigations_edit.setFocusPolicy(Qt.ClickFocus)
-        self.patient_today_investigations_layout.addWidget(self.today_investigations_edit, 2, 1, 1, 1)
+        self.today_investigations_layout.addWidget(self.today_investigations_edit, 1,0)
 
         # today investigation intelligent
         # line edit
         self.today_investigations_intellisense_line = QLineEdit(self)
         self.today_investigations_intellisense_line.setPlaceholderText("Intellisense")
         self.today_investigations_intellisense_line.setReadOnly(False)
-        self.patient_today_investigations_layout.addWidget(self.today_investigations_intellisense_line, 3, 1, 1, 1)
+        self.today_investigations_layout.addWidget(self.today_investigations_intellisense_line, 2,0)
         self.today_investigations_intellisense_line.returnPressed.connect(self.investigation_intellisense)
 
-        self.main_layout.addWidget(self.patient_today_investigations_widget, 1, 1)
+        self.patient_old_medication_and_today_investigations_layout.addWidget(
+            self.today_investigations_widget ,1,0)
+        self.main_layout.addWidget(self.patient_old_medication_and_today_investigations_widget, 1, 1)
 
-        self.random_button1=QPushButton("Random")
-        self.patient_today_investigations_layout.addWidget(self.random_button1, 1, 2)
-        self.random_button2 = QPushButton("Random")
-        self.patient_today_investigations_layout.addWidget(self.random_button2, 1, 3)
+
+
+
         #endregion
         ##########################################################################
         # setting up the RlQ which is the patient current medication             #
@@ -273,13 +314,6 @@ class PatientDashBoard(QWidget):
         self.today_medications_label = QLabel()
         self.today_medications_label.setText("Today Medications")
         self.patient_today_medication_layout.addWidget(self.today_medications_label, 0, 0)
-
-        # today medications
-        # text edit
-        # self.today_medications_edit = QTextEdit(self)
-        # self.today_medications_edit.setReadOnly(False)
-        # self.today_medications_edit.setFocusPolicy(Qt.ClickFocus)
-        # self.patient_today_medication_layout.addWidget(self.today_medications_edit, 2, 2, 1, 1)
 
         self.medication_table=QTableWidget()
         self.medication_table.setRowCount(0)
@@ -499,17 +533,18 @@ class PatientDashBoard(QWidget):
         if unparsed_phrase:
             parsed_drug = unparsed_phrase.split()
             drug_name_DIC["name"] = parsed_drug[0]
-            print(unparsed_phrase)
+            # print(unparsed_phrase)
             dose_picked = False
 
             for i, word in enumerate(parsed_drug):
                 if word[0] == "(" and word[-1] == ")":
                     drug_name_DIC["Brand"] = word.strip("()")
 
-                if word.lower() in ["tab", "vial", "ampule", "cap", "capsule", "tsf", "efferviscent", "satchet"]:
+                if word.lower() in ["tab", "vial", "ampule", "cap", "capsule", "tsf", "effervescent", "satchet"]:
                     drug_name_DIC["Form"] = word
 
-                if word.isdigit() and not dose_picked:
+                dose_pattern = r'^-?\d+(\.\d+)?$'
+                if re.match(dose_pattern, word) and not dose_picked:
                     drug_name_DIC["Dose"] = word + " " + parsed_drug[i + 1]
                     dose_picked = True  # avoid picking any digit words in the notes or number for dis
 
@@ -523,9 +558,18 @@ class PatientDashBoard(QWidget):
                         note += " "
                     drug_name_DIC["Note"] = note
                     pass
-            self.medication_table.insertRow(0)
+
+
             print("new row created")
             row_number=self.medication_table.rowCount()
+            self.medication_table.insertRow(row_number)
+
+            for i,key in enumerate(drug_name_DIC.keys()):
+                item = QTableWidgetItem(drug_name_DIC[key])
+                item.setTextAlignment(Qt.AlignCenter)
+                self.medication_table.setItem(row_number, i, item)
+
+
 
             #ill implement transfering the dictionary to the new row using row_number in row place
 
