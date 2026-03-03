@@ -14,9 +14,12 @@ class MainWindow_class(QMainWindow):
 
         self.connect = sqlite3.connect("ceara.db")
         self.screen_geometry = QGuiApplication.primaryScreen().availableGeometry()
-        self.setWindowTitle("C.E.A.R.A. v0.3")
+
         central_widget = QWidget()
         layout = QVBoxLayout()
+        central_widget.setLayout(layout)
+        self.setFixedSize(280,295)
+        self.setCentralWidget(central_widget)
 
         standard_button=QPushButton("Standard")
         standard_button.clicked.connect(self.call_standard)
@@ -56,9 +59,19 @@ class MainWindow_class(QMainWindow):
         self.title_int=1
         # self.resize(self.screen_width,self.screen_height)
     def call_standard(self):
+        screen = QGuiApplication.primaryScreen()
+        available_geometry = screen.availableGeometry()
+
+        width = available_geometry.width()
+        height = available_geometry.height()
+        frame_rect = self.frameGeometry()
+        frame_rect.moveCenter(self.screen_geometry.bottomRight())
+        self.move(width,height-695)
+
         self.call_patient_dashboard()
         self.call_gfr()
         self.call_cin()
+
     def call_gfr(self):
         #calling egfr calculator window
 
@@ -95,7 +108,7 @@ class MainWindow_class(QMainWindow):
 
 App = QApplication(sys.argv)
 MainWindow = MainWindow_class()
-MainWindow.setWindowTitle("C.E.A.R.A. v0.5")
+MainWindow.setWindowTitle("C.E.A.R.A. v0.6")
 
 
 

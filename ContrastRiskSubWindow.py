@@ -2,6 +2,8 @@ import os
 import sys
 import subprocess
 import time
+
+from PySide6.QtGui import QIntValidator
 from docx import Document
 from nephrology_equations_module import contrast_risk
 from PySide6.QtWidgets import  QLineEdit, QGridLayout, QLabel,  QWidget, QPushButton, QCheckBox, \
@@ -79,23 +81,38 @@ class ContrastRiskSubWindow(QWidget):
             risklbl.setText("Risk for CIN " + str(risk) + "%")
             dialysislbl.setText("Risk for Dialysis " + str(dialysis) + "%")
 
+        def clear_fields():
+            egfrLine.clear()
+            ageLine.clear()
+            contrastLine.clear()
+            hfcbx.setChecked(False)
+            balooncbx.setChecked(False)
+            shockcbx.setChecked(False)
+            diabeticcbx.setChecked(False)
+            anemialcbx.setChecked(False)
+
+
         CINLayout = QGridLayout(self)
         self.setLayout(CINLayout)
+        self.setFixedSize(280,340)
         self.setWindowTitle("Contrast Risk Calculator")
 
         egfrlbl=QLabel("eGFR")
         CINLayout.addWidget(egfrlbl,1,1)
         egfrLine=QLineEdit()
+        egfrLine.setValidator(QIntValidator())
         CINLayout.addWidget(egfrLine,1,2)
 
         agelbl=QLabel("Age")
         CINLayout.addWidget(agelbl,2,1)
         ageLine=QLineEdit()
+        ageLine.setValidator(QIntValidator())
         CINLayout.addWidget(ageLine,2,2)
 
         contrastlbl=QLabel("Contrast volume")
         CINLayout.addWidget(contrastlbl,3,1)
         contrastLine=QLineEdit()
+        contrastLine.setValidator(QIntValidator())
         CINLayout.addWidget(contrastLine,3,2)
 
         hflbl=QLabel("Heart Failure")
@@ -136,7 +153,10 @@ class ContrastRiskSubWindow(QWidget):
         CINLayout.addWidget(generate_report_btn,11,1,1,2)
         generate_report_btn.clicked.connect(generate_docx_report)
 
-        #print(self.width())
+        clear_btn=QPushButton("Clear")
+        CINLayout.addWidget(clear_btn,12,1,1,2)
+        clear_btn.clicked.connect(clear_fields)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

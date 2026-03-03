@@ -150,6 +150,7 @@ class PatientDashBoard(QWidget):
         # label
         self.previous_history_label = QLabel()
         self.previous_history_label.setText("Previous History")
+        self.previous_history_label.setAlignment(Qt.AlignHCenter)
         self.patient_demo_and_old_data_layout.addWidget(self.previous_history_label,2,0)
 
         # previous history
@@ -187,6 +188,7 @@ class PatientDashBoard(QWidget):
         #label
         self.today_history_label = QLabel(self)
         self.today_history_label.setText("Today clinical")
+        self.today_history_label.setAlignment(Qt.AlignHCenter)
         self.llql_layout.addWidget(self.today_history_label, 0, 0)
 
         # Today history
@@ -229,35 +231,37 @@ class PatientDashBoard(QWidget):
         #setting up sub sub layout widget called old medication to be on the left half of the RUQ#
         ##########################################################################################
 
-        self.patient_old_medication_and_today_investigations_widget = QWidget(self)
+        self.patient_old_medication_and_today_investigations_widget = QWidget()
         self.patient_old_medication_and_today_investigations_layout = QGridLayout()
-        self.patient_old_medication_and_today_investigations_widget.setLayout(self.patient_old_medication_and_today_investigations_layout)
-        self.set_quadrants_size(self.patient_old_medication_and_today_investigations_widget, quadrant_width, quadrant_height)
+        self.patient_old_medication_and_today_investigations_widget.setLayout(
+            self.patient_old_medication_and_today_investigations_layout)
+        self.set_quadrants_size(self.patient_old_medication_and_today_investigations_widget, 740, quadrant_height)
 
         self.old_medication_widget = QWidget()
         self.old_medication_layout = QGridLayout()
         self.old_medication_widget.setLayout(self.old_medication_layout)
-        self.set_quadrants_size(self.old_medication_widget, quadrant_width, quadrant_height)
+        self.set_quadrants_size(self.old_medication_widget, int(786*2/3), quadrant_height)
 
         self.old_medications_label = QLabel()
         self.old_medications_label.setText("Old Medications")
+        self.old_medications_label.setAlignment(Qt.AlignHCenter)
         self.old_medication_layout.addWidget(self.old_medications_label, 0, 0)
 
         self.old_medication_table=QTableWidget()
         self.old_medication_table.setRowCount(0)
-        self.old_medication_table.setColumnCount(7)
+        self.old_medication_table.setColumnCount(5)
         self.old_medication_table.setAlternatingRowColors(True)
 
-        self.old_medication_table.setHorizontalHeaderLabels(["Name","Brand","Form","Dose","Freq","Amount","Note"])
+        self.old_medication_table.setHorizontalHeaderLabels(["Name","Form","Dose","Freq","Note"])
         self.old_medication_layout.addWidget(self.old_medication_table,1,0)
         # old Medication intelligent
         # line edit
         self.old_medication_intellisense_line = QLineEdit(self)
         self.old_medication_intellisense_line.setPlaceholderText("ciprofloxacin (acino) tab 500 mg 1x1 dis 10 after meal")
         self.old_medication_intellisense_line.setReadOnly(False)
-        self.old_medication_layout.addWidget(self.old_medication_intellisense_line, 2, 0, 1, 2)
+        self.old_medication_layout.addWidget(self.old_medication_intellisense_line, 2, 0, 1, 1)
         # self.old_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
-        self.patient_old_medication_and_today_investigations_layout.addWidget(self.old_medication_widget,1,1)
+        self.patient_old_medication_and_today_investigations_layout.addWidget(self.old_medication_widget,1,0)
 
         ######################################################################
         # setting up sub sub layout widget to be on the right half of the RUQ#
@@ -265,12 +269,13 @@ class PatientDashBoard(QWidget):
         self.today_investigations_widget = QWidget()
         self.today_investigations_layout = QGridLayout()
         self.today_investigations_widget.setLayout(self.today_investigations_layout)
-        self.set_quadrants_size(self.today_investigations_widget, quadrant_width, quadrant_height)
+        self.set_quadrants_size(self.today_investigations_widget, int(600*1/3), quadrant_height)
 
         # today investigations
         # label
         self.today_investigations_label = QLabel()
         self.today_investigations_label.setText("Today Investigations")
+        self.today_investigations_label.setAlignment(Qt.AlignHCenter)
         self.today_investigations_layout.addWidget(self.today_investigations_label, 0, 0)
 
         # today investigations
@@ -289,7 +294,7 @@ class PatientDashBoard(QWidget):
         self.today_investigations_intellisense_line.returnPressed.connect(self.investigation_intellisense)
 
         self.patient_old_medication_and_today_investigations_layout.addWidget(
-            self.today_investigations_widget ,1,0)
+            self.today_investigations_widget ,1,1)
         self.main_layout.addWidget(self.patient_old_medication_and_today_investigations_widget, 1, 1)
 
 
@@ -313,6 +318,7 @@ class PatientDashBoard(QWidget):
 
         self.today_medications_label = QLabel()
         self.today_medications_label.setText("Today Medications")
+        self.today_medications_label.setAlignment(Qt.AlignHCenter)
         self.patient_today_medication_layout.addWidget(self.today_medications_label, 0, 0)
 
         self.medication_table=QTableWidget()
@@ -331,7 +337,7 @@ class PatientDashBoard(QWidget):
         self.today_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
         self.main_layout.addWidget(self.patient_today_medication_widget, 2, 1)
 
-
+        self.setFixedSize(self.sizeHint())
         ##########################################
         #starting writing th engine of the widget#
         ##########################################

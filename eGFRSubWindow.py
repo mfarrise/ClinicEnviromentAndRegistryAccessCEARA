@@ -18,6 +18,7 @@ class eGFRSubWindow(QWidget):
         #self.resize(300,150)
         self.eGFRLayout=QGridLayout()
         self.setLayout(self.eGFRLayout)
+        self.setFixedSize(280, 140)
         self.egfrCrlbl=QLabel("Creatinine in mg/dl")
         self.eGFRLayout.addWidget(self.egfrCrlbl,1,1)
 
