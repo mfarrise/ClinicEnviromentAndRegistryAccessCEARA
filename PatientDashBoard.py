@@ -37,6 +37,7 @@ class PatientDashBoard(QWidget):
         #     background-color: #505050;
         # }
         # """)
+
         self.setWindowTitle("title")
 
         self.settings={}
@@ -125,8 +126,6 @@ class PatientDashBoard(QWidget):
         self.patient_residence_type_combo = QComboBox()
         self.patient_residence_type_combo.addItems(["center","periphery","rural"])
 
-
-
         self.patient_demo_and_old_data_layout.addWidget(self.patient_id_line_edit,0,0)
         self.patient_demo_and_old_data_layout.addWidget(self.patient_name_edit,0,1)
         self.patient_demo_and_old_data_layout.addWidget(self.patient_DOB_edit,0,2)
@@ -137,14 +136,6 @@ class PatientDashBoard(QWidget):
         self.patient_demo_and_old_data_layout.addWidget(self.patient_governorates_combo, 1, 2)
         self.patient_demo_and_old_data_layout.addWidget(self.patient_residence_free_form_edit, 1, 3)
         self.patient_demo_and_old_data_layout.addWidget(self.patient_residence_type_combo,1,4)
-
-
-
-
-
-
-
-
 
         #previous history
         # label
@@ -160,6 +151,8 @@ class PatientDashBoard(QWidget):
         self.patient_demo_and_old_data_layout.addWidget(self.previous_history_edit, 3, 0,1,5)
 
         self.main_layout.addWidget(self.patient_demo_and_old_data_widget,1,0)
+
+
         # endregion
         ##########################################################################
         # setting up the LLQ which is the patient current history and examination#
@@ -257,10 +250,10 @@ class PatientDashBoard(QWidget):
         # old Medication intelligent
         # line edit
         self.old_medication_intellisense_line = QLineEdit(self)
-        self.old_medication_intellisense_line.setPlaceholderText("ciprofloxacin (acino) tab 500 mg 1x1 dis 10 after meal")
+        self.old_medication_intellisense_line.setPlaceholderText("ciprofloxacin tab 500 mg 1x1 ")
         self.old_medication_intellisense_line.setReadOnly(False)
         self.old_medication_layout.addWidget(self.old_medication_intellisense_line, 2, 0, 1, 1)
-        # self.old_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
+        self.old_medication_intellisense_line.returnPressed.connect(self.old_drug_intellisense)
         self.patient_old_medication_and_today_investigations_layout.addWidget(self.old_medication_widget,1,0)
 
         ######################################################################
@@ -331,7 +324,7 @@ class PatientDashBoard(QWidget):
         # today Medication intelligent
         # line edit
         self.today_medication_intellisense_line = QLineEdit(self)
-        self.today_medication_intellisense_line.setPlaceholderText("ciprofloxacin (acino) tab 500 mg 1x1 dis 10 after meal")
+        self.today_medication_intellisense_line.setPlaceholderText("ciprofloxacin (acino) tab 500 mg 1x1 dis 10 after meal ")
         self.today_medication_intellisense_line.setReadOnly(False)
         self.patient_today_medication_layout.addWidget(self.today_medication_intellisense_line, 2, 0, 1, 2)
         self.today_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
@@ -570,14 +563,57 @@ class PatientDashBoard(QWidget):
             row_number=self.medication_table.rowCount()
             self.medication_table.insertRow(row_number)
 
+            #ill implement transfering the dictionary to the new row using row_number in row place
             for i,key in enumerate(drug_name_DIC.keys()):
                 item = QTableWidgetItem(drug_name_DIC[key])
                 item.setTextAlignment(Qt.AlignCenter)
                 self.medication_table.setItem(row_number, i, item)
 
+    def old_drug_intellisense(self):
 
+        drug_name_DIC = {
+            "name": "",
+            "Form": "",
+            "Dose": "",
+            "Freq": ""
+        }
+
+        unparsed_phrase = self.old_medication_intellisense_line.text()
+        self.old_medication_intellisense_line.clear()
+
+        if unparsed_phrase:
+            parsed_drug = unparsed_phrase.split()
+            drug_name_DIC["name"] = parsed_drug[0]
+            # print(unparsed_phrase)
+            dose_picked = False
+
+            for i, word in enumerate(parsed_drug):
+
+                if word.lower() in ["tab", "vial", "ampule", "cap", "capsule", "tsf", "effervescent", "satchet"]:
+                    drug_name_DIC["Form"] = word
+
+                dose_pattern = r'^-?\d+(\.\d+)?$'
+                if re.match(dose_pattern, word) and not dose_picked:
+                    drug_name_DIC["Dose"] = word + " " + parsed_drug[i + 1]
+                    dose_picked = True  # avoid picking any digit words in the notes or number for dis
+
+                if "x" in word.lower() and word[0].isdigit() and word[-1].isdigit() and len(word) == 3:
+                    drug_name_DIC["Freq"] = word
+
+
+
+
+            print("new row created")
+            row_number=self.old_medication_table.rowCount()
+            self.old_medication_table.insertRow(row_number)
 
             #ill implement transfering the dictionary to the new row using row_number in row place
+            for i,key in enumerate(drug_name_DIC.keys()):
+                item = QTableWidgetItem(drug_name_DIC[key])
+                item.setTextAlignment(Qt.AlignCenter)
+                self.old_medication_table.setItem(row_number, i, item)
+
+
 
 
 if __name__ == '__main__':
