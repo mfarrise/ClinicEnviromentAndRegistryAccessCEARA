@@ -1,3 +1,15 @@
+"""
+
+
+
+Future refinement
+
+    better windows location when are called ((non fixed and breakable))
+
+    better main window move integrate with standered option button wndows((also non breakable))
+"""
+
+
 import os,sys
 import sqlite3
 
@@ -7,6 +19,9 @@ from eGFRSubWindow import eGFRSubWindow
 from ContrastRiskSubWindow import ContrastRiskSubWindow
 from PatientDashBoard import PatientDashBoard
 from Finances import Finances
+
+
+
 
 class MainWindow_class(QMainWindow):
     def __init__(self):
@@ -119,3 +134,16 @@ MainWindow.setWindowTitle("C.E.A.R.A. v0.6")
 
 
 App.exec()
+
+
+"""
+Funtion
+########
+the main window from which u can call all the functional windows
+and when u call the standard layout which contain 3 windows the main window move it self from 
+the center to the right to integrate with other windows
+
+Possible improvements
+######################
+implement better routines for positioning of the windows and the movement of the main window to the right
+"""

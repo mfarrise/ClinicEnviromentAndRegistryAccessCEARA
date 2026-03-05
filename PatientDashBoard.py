@@ -198,8 +198,8 @@ class PatientDashBoard(QWidget):
         self.llql_layout.addWidget(self.clinical_intellisense_line_edit, 2, 0)
 
         #quick population of intellisense autofill feilds when u type something recognizable in the feild
-        #its is populated in the for loop with destructable reference but its is handed into a list of line edits
-        #that will keep the reference for future for loops to read their content into DB
+        #its is populated in the for loop with destructable reference but its reference is handed into a list of line edits
+        #that will keep the reference for future for loops to write their content into sqlite DB
 
         self.symptoms_line_edit = []
         for t in range(1,4):
