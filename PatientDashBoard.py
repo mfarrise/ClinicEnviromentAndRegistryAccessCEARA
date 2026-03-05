@@ -1,11 +1,4 @@
-"""
-TODO
-    implement the symptoms module
 
-
-
-
-"""
 
 import os
 import re
@@ -623,6 +616,9 @@ class PatientDashBoard(QWidget):
                 self.old_medication_table.setItem(row_number, i, item)
 
 
+#TODO implement the symptoms module
+#NOTE use the dictionary twice one to pick from the intellisense and second when reading the soft lineedits and
+#NOTE add them to the db as visitID KEYWORD  LINE mentioned in
 
 
 if __name__ == '__main__':
