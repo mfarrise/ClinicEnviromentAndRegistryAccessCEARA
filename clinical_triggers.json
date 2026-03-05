@@ -1,0 +1,153 @@
+{
+    "edema": [
+        "edema",
+        "oedema",
+        "odema",
+        "leg edema",
+        "leg swelling",
+        "pedal edema",
+        "ankle edema",
+        "facial edema",
+        "periorbital edema",
+        "pitting edema",
+        "anasarca"
+    ],
+    "dyspnea": [
+        "sob",
+        "shortness of breath",
+        "dyspnea",
+        "dyspnoea",
+        "orthopnea",
+        "orthopnoea",
+        "orthopenea",
+        "pnd",
+        "paroxysmal nocturnal dyspnea",
+        "breathlessness"
+    ],
+    "cardiac": [
+        "chest pain",
+        "angina",
+        "chest tightness",
+        "palpitation",
+        "palpitations",
+        "tachycardia",
+        "bradycardia",
+        "irregular pulse"
+    ],
+    "urinary": [
+        "dysuria",
+        "burning urination",
+        "frequency",
+        "urinary frequency",
+        "urgency",
+        "nocturia",
+        "hematuria",
+        "gross hematuria",
+        "microscopic hematuria",
+        "frothy urine",
+        "foamy urine",
+        "oliguria",
+        "anuria",
+        "polyuria"
+    ],
+    "renal_pain": [
+        "loin pain",
+        "flank pain",
+        "renal colic",
+        "kidney pain"
+    ],
+    "constitutional": [
+        "fatigue",
+        "tiredness",
+        "weakness",
+        "fever",
+        "night sweats",
+        "weight loss",
+        "weight gain"
+    ],
+    "gi": [
+        "nausea",
+        "nausia",
+        "vomiting",
+        "vomitting",
+        "diarrhea",
+        "diarrhoea",
+        "constipation",
+        "abdominal pain"
+    ],
+    "skin": [
+        "pallor",
+        "pale",
+        "cyanosis",
+        "earthy color",
+        "sallow",
+        "pruritus",
+        "itching"
+    ],
+    "musculoskeletal": [
+        "joint pain",
+        "arthralgia",
+        "joint swelling",
+        "muscle pain",
+        "myalgia",
+        "muscle cramps"
+    ],
+    "neurologic": [
+        "headache",
+        "dizziness",
+        "vertigo",
+        "syncope",
+        "confusion",
+        "seizure"
+    ],
+    "resp_exam": [
+        "crackles",
+        "basal crackles",
+        "rales",
+        "wheezing",
+        "clear chest",
+        "reduced air entry"
+    ],
+    "cardiac_exam": [
+        "murmur",
+        "gallop",
+        "s3",
+        "s4",
+        "normal heart sounds"
+    ],
+    "abd_exam": [
+        "ascites",
+        "distended abdomen",
+        "tender abdomen",
+        "hepatomegaly",
+        "splenomegaly"
+    ],
+    "vascular": [
+        "raised jvp",
+        "elevated jvp",
+        "jvp elevated"
+    ],
+    "vitals": [
+        "bp",
+        "blood pressure",
+        "hr",
+        "heart rate",
+        "pulse",
+        "rr",
+        "respiratory rate",
+        "temp",
+        "temperature",
+        "spo2",
+        "o2 sat",
+        "oxygen sat",
+        "weight",
+        "kg"
+    ],
+    "lifestyle": [
+        "smoker",
+        "smoking",
+        "drinker",
+        "alcohol",
+        "drug use"
+    ]
+}
