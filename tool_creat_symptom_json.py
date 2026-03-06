@@ -115,6 +115,12 @@ clinical_triggers = {
 "smoker","smoking",
 "drinker","alcohol",
 "drug use"
+],
+
+"biopsy":[
+"renal biopsy","biopsy",
+"biobsy","boipsy",
+"biospy"
 ]
 
 }
