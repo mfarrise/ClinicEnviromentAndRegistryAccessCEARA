@@ -48,6 +48,11 @@ class PatientDashBoard(QWidget):
         with open("PatientDashBoard_settings.json","r") as file:
             self.settings=json.load(file)
 
+        with open("clinical_triggers.json","r") as read_json:
+            self.clinical_triggers=json.load(read_json)
+        print (self.clinical_triggers)
+
+
         iraq_governorates = [
             "Baghdad",
             "Basra",
@@ -182,7 +187,7 @@ class PatientDashBoard(QWidget):
         #Today history
         #label
         self.today_history_label = QLabel(self)
-        self.today_history_label.setText("Today clinical")
+        self.today_history_label.setText("Today Clinical")
         self.today_history_label.setAlignment(Qt.AlignHCenter)
         self.llql_layout.addWidget(self.today_history_label, 0, 0)
 
@@ -197,22 +202,19 @@ class PatientDashBoard(QWidget):
         #line edit
         self.clinical_intellisense_line_edit = QLineEdit()
         self.clinical_intellisense_line_edit.setPlaceholderText("Intellisense")
+        self.clinical_intellisense_line_edit.returnPressed.connect(self.clinical_intellisense)
         self.llql_layout.addWidget(self.clinical_intellisense_line_edit, 2, 0)
 
-        #quick population of intellisense autofill feilds when u type something recognizable in the feild
-        #its is populated in the for loop with destructable reference but its reference is handed into a list of line edits
-        #that will keep the reference for future for loops to write their content into sqlite DB
+        #the shell for picked S/S
+        self.picked_symptom_label = QLabel(self)
+        self.picked_symptom_label.setText("Picked Symptom")
+        self.picked_symptom_label.setAlignment(Qt.AlignCenter)
 
-        self.symptoms_line_edit = []
-        for t in range(1,4):
-            for i in range(0,10):
-                line_edit=QLineEdit()
-                line_edit.setPlaceholderText("entry")
-                self.llqr_layout.addWidget(line_edit, i, t)
-                line_edit.setFocusPolicy(Qt.ClickFocus)
-                self.symptoms_line_edit.append(line_edit)
-        # print(len(self.symptoms_line_edit))
+        self.picked_symptom_text_edit = QTextEdit()
 
+
+        self.llqr_layout.addWidget(self.picked_symptom_label, 0, 0)
+        self.llqr_layout.addWidget(self.picked_symptom_text_edit, 1, 0)
 
         self.main_layout.addWidget(self.patient_today_clinical_widget,2,0)
 
@@ -385,31 +387,31 @@ class PatientDashBoard(QWidget):
                     cursor.insertText("\n")
                 # previous_history_edit.setText(old_history)
 
-        def update_patient_data():
-
-            doc = Document()
-            demographic_table=doc.add_table(2,5)
-
-            demographic_table.cell(0,0).text="Name"
-            if self.patient_name_edit.text() != "":
-                demographic_table.cell(1,0).text=self.patient_name_edit.text()
-
-            demographic_table.cell(0,1).text="DOB"
-            if self.patient_name_edit.text() != "":
-                demographic_table.cell(1,1).text=self.patient_DOB_edit.text()
-
-            demographic_table.cell(0,2).text="Age"
-            if self.patient_name_edit.text() != "":
-                demographic_table.cell(1,1).text=str(datetime.now().year-int(self.patient_DOB_edit.text()))
-
-            demographic_table.cell(0,3).text="Gender"
-            demographic_table.cell(1,3).text=self.patient_gender_combo.currentText()
-
-            demographic_table.cell(0,4).text="Residence"
-            if self.patient_name_edit.text() != "":
-                demographic_table.cell(1,4).text=self.patient_residence_free_form_edit.text()
-
-            doc.save("PatientDashBoard.docx")
+        # def update_patient_data():
+        #
+        #     doc = Document()
+        #     demographic_table=doc.add_table(2,5)
+        #
+        #     demographic_table.cell(0,0).text="Name"
+        #     if self.patient_name_edit.text() != "":
+        #         demographic_table.cell(1,0).text=self.patient_name_edit.text()
+        #
+        #     demographic_table.cell(0,1).text="DOB"
+        #     if self.patient_name_edit.text() != "":
+        #         demographic_table.cell(1,1).text=self.patient_DOB_edit.text()
+        #
+        #     demographic_table.cell(0,2).text="Age"
+        #     if self.patient_name_edit.text() != "":
+        #         demographic_table.cell(1,1).text=str(datetime.now().year-int(self.patient_DOB_edit.text()))
+        #
+        #     demographic_table.cell(0,3).text="Gender"
+        #     demographic_table.cell(1,3).text=self.patient_gender_combo.currentText()
+        #
+        #     demographic_table.cell(0,4).text="Residence"
+        #     if self.patient_name_edit.text() != "":
+        #         demographic_table.cell(1,4).text=self.patient_residence_free_form_edit.text()
+        #
+        #     doc.save("PatientDashBoard.docx")
 
 
         # io_widget=QWidget(self)
@@ -615,9 +617,33 @@ class PatientDashBoard(QWidget):
                 item.setTextAlignment(Qt.AlignCenter)
                 self.old_medication_table.setItem(row_number, i, item)
 
+    def clinical_intellisense(self):
 
-#TODO implement the symptoms module
-#NOTE use the dictionary twice one to pick from the intellisense and second when reading the soft lineedits and
+        temp_clinical_phrase=self.clinical_intellisense_line_edit.text().lower()
+        print(temp_clinical_phrase)
+        self.today_history_edit.append(temp_clinical_phrase)
+        for key in self.clinical_triggers.keys():
+            for value in self.clinical_triggers[key]:
+                lower_value = value.lower()
+                if lower_value in temp_clinical_phrase:
+                    # temp_clinical_phrase = temp_clinical_phrase.replace(lower_value, "")
+                    # temp_clinical_phrase = " ".join(temp_clinical_phrase.split())
+                    if key=="blood_pressure":
+                        blood_pressure=temp_clinical_phrase.replace(lower_value,"")
+                        blood_pressures = blood_pressure.split("/")
+                        self.picked_symptom_text_edit.append("<span style=color:#ED7672><b>systolic bp: </b></span>"+blood_pressures[0])
+                        self.picked_symptom_text_edit.append("<span style=color:#ED7672><b>diastolic bp: </b></span>" + blood_pressures[1])
+                        break
+                    self.picked_symptom_text_edit.append(f"<span style=color:#ED7672><b>{key}: </b></span>"+temp_clinical_phrase)
+
+                    break
+        self.clinical_intellisense_line_edit.clear()
+
+
+
+
+#TODO ((done but))mental note to expand and revist the dictionary in json creation tool for the symptoms
+#NOTE use the dictionary twice one to pick from the intellisense and second when reading the soft line edits and
 #NOTE add them to the db as visitID KEYWORD  LINE mentioned in
 
 

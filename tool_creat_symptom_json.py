@@ -2,125 +2,276 @@ import json
 
 clinical_triggers = {
 
-"edema":[
-"edema","oedema","odema",
-"leg edema","leg swelling",
-"pedal edema","ankle edema",
-"facial edema","periorbital edema",
-"pitting edema","anasarca"
+"pain":[
+"pain","ache","aching"
 ],
 
 "dyspnea":[
-"sob","shortness of breath",
-"dyspnea","dyspnoea",
-"orthopnea","orthopnoea","orthopenea",
-"pnd","paroxysmal nocturnal dyspnea",
-"breathlessness"
+"dyspnea","dyspnoea","sob","breathlessness"
 ],
 
-"cardiac":[
-"chest pain","angina",
-"chest tightness","palpitation",
-"palpitations","tachycardia",
-"bradycardia","irregular pulse"
+"orthopnea":[
+"orthopnea","orthopnoea"
 ],
 
-"urinary":[
-"dysuria","burning urination",
-"frequency","urinary frequency",
-"urgency","nocturia",
-"hematuria","gross hematuria",
-"microscopic hematuria",
-"frothy urine","foamy urine",
-"oliguria","anuria","polyuria"
+"pnd":[
+"pnd"
 ],
 
-"renal_pain":[
-"loin pain","flank pain",
-"renal colic","kidney pain"
+"cough":[
+"cough"
 ],
 
-"constitutional":[
-"fatigue","tiredness","weakness",
-"fever","night sweats",
-"weight loss","weight gain"
+"hemoptysis":[
+"hemoptysis"
 ],
 
-"gi":[
-"nausea","nausia",
-"vomiting","vomitting",
-"diarrhea","diarrhoea",
-"constipation",
-"abdominal pain"
+"wheeze":[
+"wheeze","wheezing"
 ],
 
-"skin":[
-"pallor","pale",
-"cyanosis",
-"earthy color","sallow",
-"pruritus","itching"
+"stridor":[
+"stridor"
 ],
 
-"musculoskeletal":[
-"joint pain","arthralgia",
-"joint swelling",
-"muscle pain","myalgia",
-"muscle cramps"
+"palpitations":[
+"palpitations"
 ],
 
-"neurologic":[
-"headache","dizziness",
-"vertigo","syncope",
-"confusion","seizure"
+"syncope":[
+"syncope","faint","fainting","blackout"
 ],
 
-"resp_exam":[
-"crackles","basal crackles",
-"rales","wheezing",
-"clear chest",
-"reduced air entry"
+"presyncope":[
+"presyncope","near syncope"
 ],
 
-"cardiac_exam":[
-"murmur",
-"gallop",
-"s3","s4",
-"normal heart sounds"
+"edema":[
+"edema","oedema","odema"
 ],
 
-"abd_exam":[
-"ascites",
-"distended abdomen",
-"tender abdomen",
-"hepatomegaly",
+"anasarca":[
+"anasarca"
+],
+
+"ascites":[
+"ascites"
+],
+
+"dysuria":[
+"dysuria"
+],
+
+"hematuria":[
+"hematuria"
+],
+
+"frequency":[
+"frequency"
+],
+
+"urgency":[
+"urgency"
+],
+
+"nocturia":[
+"nocturia"
+],
+
+"polyuria":[
+"polyuria"
+],
+
+"oliguria":[
+"oliguria"
+],
+
+"anuria":[
+"anuria"
+],
+
+"incontinence":[
+"incontinence"
+],
+
+"frothy_urine":[
+"frothy","foamy"
+],
+
+"nausea":[
+"nausea","nausia"
+],
+
+"vomiting":[
+"vomiting","vomitting","emesis"
+],
+
+"diarrhea":[
+"diarrhea","diarrhoea"
+],
+
+"constipation":[
+"constipation"
+],
+
+"hematemesis":[
+"hematemesis"
+],
+
+"melena":[
+"melena"
+],
+
+"hematochezia":[
+"hematochezia"
+],
+
+"fever":[
+"fever","pyrexia","febrile"
+],
+
+"fatigue":[
+"fatigue","tiredness","tired"
+],
+
+"weakness":[
+"weakness"
+],
+
+"night_sweats":[
+"sweats","sweating"
+],
+
+"weight_loss":[
+"weight loss"
+],
+
+"weight_gain":[
+"weight gain"
+],
+
+"anorexia":[
+"anorexia"
+],
+
+"rash":[
+"rash"
+],
+
+"pruritus":[
+"pruritus","itching","itch"
+],
+
+"pallor":[
+"pallor","pale"
+],
+
+"cyanosis":[
+"cyanosis"
+],
+
+"jaundice":[
+"jaundice","icterus"
+],
+
+"bruising":[
+"bruising","bruise"
+],
+
+"petechiae":[
+"petechiae"
+],
+
+"dizziness":[
+"dizziness","dizzy"
+],
+
+"vertigo":[
+"vertigo"
+],
+
+"confusion":[
+"confusion","confused"
+],
+
+"seizure":[
+"seizure","convulsion","fit"
+],
+
+"numbness":[
+"numbness","paresthesia","tingling"
+],
+
+"cramps":[
+"cramps","cramping"
+],
+
+"stiffness":[
+"stiffness"
+],
+
+"swelling":[
+"swelling","swollen"
+],
+
+"crackles":[
+"crackles","rales"
+],
+
+"murmur":[
+"murmur"
+],
+
+"s3":[
+"s3"
+],
+
+"s4":[
+"s4"
+],
+
+"hepatomegaly":[
+"hepatomegaly"
+],
+
+"splenomegaly":[
 "splenomegaly"
 ],
 
-"vascular":[
-"raised jvp","elevated jvp",
-"jvp elevated"
+"jvp":[
+"jvp"
 ],
 
-"vitals":[
-"bp","blood pressure",
-"hr","heart rate",
-"pulse",
-"rr","respiratory rate",
-"temp","temperature",
-"spo2","o2 sat","oxygen sat",
+"tenderness":[
+"tender","tenderness"
+],
+
+"distension":[
+"distension","distended"
+],
+
+"blood_pressure":[
+"bp","pressure"
+],
+
+"pulse":[
+"pulse","hr"
+],
+
+"respiratory_rate":[
+"rr"
+],
+
+"temperature":[
+"temp","temperature"
+],
+
+"oxygen_saturation":[
+"spo2","sat"
+],
+
+"weight":[
 "weight","kg"
-],
-
-"lifestyle":[
-"smoker","smoking",
-"drinker","alcohol",
-"drug use"
-],
-
-"biopsy":[
-"renal biopsy","biopsy",
-"biobsy","boipsy",
-"biospy"
 ]
 
 }

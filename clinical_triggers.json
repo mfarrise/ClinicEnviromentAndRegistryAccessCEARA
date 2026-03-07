@@ -1,160 +1,250 @@
 {
+    "pain": [
+        "pain",
+        "ache",
+        "aching"
+    ],
+    "dyspnea": [
+        "dyspnea",
+        "dyspnoea",
+        "sob",
+        "breathlessness"
+    ],
+    "orthopnea": [
+        "orthopnea",
+        "orthopnoea"
+    ],
+    "pnd": [
+        "pnd"
+    ],
+    "cough": [
+        "cough"
+    ],
+    "hemoptysis": [
+        "hemoptysis"
+    ],
+    "wheeze": [
+        "wheeze",
+        "wheezing"
+    ],
+    "stridor": [
+        "stridor"
+    ],
+    "palpitations": [
+        "palpitations"
+    ],
+    "syncope": [
+        "syncope",
+        "faint",
+        "fainting",
+        "blackout"
+    ],
+    "presyncope": [
+        "presyncope",
+        "near syncope"
+    ],
     "edema": [
         "edema",
         "oedema",
-        "odema",
-        "leg edema",
-        "leg swelling",
-        "pedal edema",
-        "ankle edema",
-        "facial edema",
-        "periorbital edema",
-        "pitting edema",
+        "odema"
+    ],
+    "anasarca": [
         "anasarca"
     ],
-    "dyspnea": [
-        "sob",
-        "shortness of breath",
-        "dyspnea",
-        "dyspnoea",
-        "orthopnea",
-        "orthopnoea",
-        "orthopenea",
-        "pnd",
-        "paroxysmal nocturnal dyspnea",
-        "breathlessness"
+    "ascites": [
+        "ascites"
     ],
-    "cardiac": [
-        "chest pain",
-        "angina",
-        "chest tightness",
-        "palpitation",
-        "palpitations",
-        "tachycardia",
-        "bradycardia",
-        "irregular pulse"
+    "dysuria": [
+        "dysuria"
     ],
-    "urinary": [
-        "dysuria",
-        "burning urination",
-        "frequency",
-        "urinary frequency",
-        "urgency",
-        "nocturia",
-        "hematuria",
-        "gross hematuria",
-        "microscopic hematuria",
-        "frothy urine",
-        "foamy urine",
-        "oliguria",
-        "anuria",
+    "hematuria": [
+        "hematuria"
+    ],
+    "frequency": [
+        "frequency"
+    ],
+    "urgency": [
+        "urgency"
+    ],
+    "nocturia": [
+        "nocturia"
+    ],
+    "polyuria": [
         "polyuria"
     ],
-    "renal_pain": [
-        "loin pain",
-        "flank pain",
-        "renal colic",
-        "kidney pain"
+    "oliguria": [
+        "oliguria"
     ],
-    "constitutional": [
-        "fatigue",
-        "tiredness",
-        "weakness",
-        "fever",
-        "night sweats",
-        "weight loss",
-        "weight gain"
+    "anuria": [
+        "anuria"
     ],
-    "gi": [
+    "incontinence": [
+        "incontinence"
+    ],
+    "frothy_urine": [
+        "frothy",
+        "foamy"
+    ],
+    "nausea": [
         "nausea",
-        "nausia",
+        "nausia"
+    ],
+    "vomiting": [
         "vomiting",
         "vomitting",
+        "emesis"
+    ],
+    "diarrhea": [
         "diarrhea",
-        "diarrhoea",
-        "constipation",
-        "abdominal pain"
+        "diarrhoea"
     ],
-    "skin": [
-        "pallor",
-        "pale",
-        "cyanosis",
-        "earthy color",
-        "sallow",
+    "constipation": [
+        "constipation"
+    ],
+    "hematemesis": [
+        "hematemesis"
+    ],
+    "melena": [
+        "melena"
+    ],
+    "hematochezia": [
+        "hematochezia"
+    ],
+    "fever": [
+        "fever",
+        "pyrexia",
+        "febrile"
+    ],
+    "fatigue": [
+        "fatigue",
+        "tiredness",
+        "tired"
+    ],
+    "weakness": [
+        "weakness"
+    ],
+    "night_sweats": [
+        "sweats",
+        "sweating"
+    ],
+    "weight_loss": [
+        "weight loss"
+    ],
+    "weight_gain": [
+        "weight gain"
+    ],
+    "anorexia": [
+        "anorexia"
+    ],
+    "rash": [
+        "rash"
+    ],
+    "pruritus": [
         "pruritus",
-        "itching"
+        "itching",
+        "itch"
     ],
-    "musculoskeletal": [
-        "joint pain",
-        "arthralgia",
-        "joint swelling",
-        "muscle pain",
-        "myalgia",
-        "muscle cramps"
+    "pallor": [
+        "pallor",
+        "pale"
     ],
-    "neurologic": [
-        "headache",
+    "cyanosis": [
+        "cyanosis"
+    ],
+    "jaundice": [
+        "jaundice",
+        "icterus"
+    ],
+    "bruising": [
+        "bruising",
+        "bruise"
+    ],
+    "petechiae": [
+        "petechiae"
+    ],
+    "dizziness": [
         "dizziness",
-        "vertigo",
-        "syncope",
+        "dizzy"
+    ],
+    "vertigo": [
+        "vertigo"
+    ],
+    "confusion": [
         "confusion",
-        "seizure"
+        "confused"
     ],
-    "resp_exam": [
+    "seizure": [
+        "seizure",
+        "convulsion",
+        "fit"
+    ],
+    "numbness": [
+        "numbness",
+        "paresthesia",
+        "tingling"
+    ],
+    "cramps": [
+        "cramps",
+        "cramping"
+    ],
+    "stiffness": [
+        "stiffness"
+    ],
+    "swelling": [
+        "swelling",
+        "swollen"
+    ],
+    "crackles": [
         "crackles",
-        "basal crackles",
-        "rales",
-        "wheezing",
-        "clear chest",
-        "reduced air entry"
+        "rales"
     ],
-    "cardiac_exam": [
-        "murmur",
-        "gallop",
-        "s3",
-        "s4",
-        "normal heart sounds"
+    "murmur": [
+        "murmur"
     ],
-    "abd_exam": [
-        "ascites",
-        "distended abdomen",
-        "tender abdomen",
-        "hepatomegaly",
+    "s3": [
+        "s3"
+    ],
+    "s4": [
+        "s4"
+    ],
+    "hepatomegaly": [
+        "hepatomegaly"
+    ],
+    "splenomegaly": [
         "splenomegaly"
     ],
-    "vascular": [
-        "raised jvp",
-        "elevated jvp",
-        "jvp elevated"
+    "jvp": [
+        "jvp"
     ],
-    "vitals": [
+    "tenderness": [
+        "tender",
+        "tenderness"
+    ],
+    "distension": [
+        "distension",
+        "distended"
+    ],
+    "blood_pressure": [
         "bp",
-        "blood pressure",
-        "hr",
-        "heart rate",
+        "pressure"
+    ],
+    "pulse": [
         "pulse",
-        "rr",
-        "respiratory rate",
+        "hr"
+    ],
+    "respiratory_rate": [
+        "rr"
+    ],
+    "temperature": [
         "temp",
-        "temperature",
+        "temperature"
+    ],
+    "oxygen_saturation": [
         "spo2",
-        "o2 sat",
-        "oxygen sat",
+        "sat"
+    ],
+    "weight": [
         "weight",
         "kg"
-    ],
-    "lifestyle": [
-        "smoker",
-        "smoking",
-        "drinker",
-        "alcohol",
-        "drug use"
-    ],
-    "biopsy": [
-        "renal biopsy",
-        "biopsy",
-        "biobsy",
-        "boipsy",
-        "biospy"
     ]
 }
