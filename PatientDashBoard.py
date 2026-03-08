@@ -43,7 +43,7 @@ class PatientDashBoard(QWidget):
         # """)
 
         self.setWindowTitle("title")
-
+        #NOTE global declarations
         self.settings={}
         quadrant_width=540
         quadrant_height=300
@@ -76,6 +76,7 @@ class PatientDashBoard(QWidget):
             "Al-Qadisiyyah",
             "other"
         ]
+        #NOTE main Layout
         ##############################################################################
         #setting main lay out that will contain 4 Qgridlayouts each for each quadrant#
         ##############################################################################
@@ -92,7 +93,7 @@ class PatientDashBoard(QWidget):
         set_directory_action.triggered.connect(self.set_directory_for_patient_registry_in_setting_json)
         self.main_layout.addWidget(menu_bar)
 
-
+        #NOTE ULQ Demographics
         ######################################################################
         #setting up the ULQ which is the patient old history and demographics#
         ######################################################################
@@ -179,6 +180,7 @@ class PatientDashBoard(QWidget):
 
 
         # endregion
+        #NOTE LLQ current clinical
         ##########################################################################
         # setting up the LLQ which is the patient current history and examination#
         ##########################################################################
@@ -237,6 +239,7 @@ class PatientDashBoard(QWidget):
         self.main_layout.addWidget(self.patient_today_clinical_widget,2,0)
 
         #endregion
+        #NOTE RUQ old drugs and investigations
         ###################################################################################
         # setting up the RUQ which is the patient old medication and today investigation  #
         ###################################################################################
@@ -316,6 +319,7 @@ class PatientDashBoard(QWidget):
 
 
         #endregion
+        #NOTE RLQ medications
         ##########################################################################
         # setting up the RlQ which is the patient current medication             #
         ##########################################################################
@@ -359,6 +363,8 @@ class PatientDashBoard(QWidget):
         ######################
         creat_DB_patinet_demographic_table()
 
+        #NOTE engine and functions
+        #NOTE
         ##########################################
         #starting writing th engine of the widget#
         ##########################################
