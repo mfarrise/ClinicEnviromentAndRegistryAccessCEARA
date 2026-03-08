@@ -109,8 +109,14 @@ class PatientDashBoard(QWidget):
 
         self.patient_DOB_edit = QLineEdit()
         self.patient_DOB_edit.setPlaceholderText("DOB")
-        now=datetime.now().year
-        self.patient_DOB_edit.setValidator(QIntValidator(1900,now))
+        self.now=datetime.now().year
+        self.patient_DOB_edit.setValidator(QIntValidator(1900,self.now))
+        self.patient_DOB_edit.textChanged.connect(self.calculate_set_age)
+
+        self.patient_age_edit = QLineEdit()
+        self.patient_age_edit.setPlaceholderText("Age")
+        self.patient_age_edit.setReadOnly(True)
+        self.patient_age_edit.setFocusPolicy(Qt.ClickFocus)
 
         self.patient_gender_combo=QComboBox()
         self.patient_gender_combo.addItems(["Male","Female"])
@@ -118,44 +124,53 @@ class PatientDashBoard(QWidget):
         self.patient_marital_combo=QComboBox()
         self.patient_marital_combo.addItems(["Single","Married","Divorced","Widowed"])
 
+        self.patient_tel_line_edit=QLineEdit()
+        self.patient_tel_line_edit.setPlaceholderText("Telephone")
+
+        self.patient_residence_free_form_edit=QLineEdit()
+        self.patient_residence_free_form_edit.setPlaceholderText("residence")
+
+        self.patient_governorates_combo = QComboBox()
+        self.patient_governorates_combo.addItems(iraq_governorates)
+
+        self.patient_residence_type_combo = QComboBox()
+        self.patient_residence_type_combo.addItems(["center","periphery","rural"])
+
         self.patient_education_combo=QComboBox()
         self.patient_education_combo.addItems(["University","PostGraduate","Institute","Secondary","Primary","None"])
 
         self.patient_job_edit = QLineEdit()
         self.patient_job_edit.setPlaceholderText("Job")
 
-        self.patient_governorates_combo = QComboBox()
-        self.patient_governorates_combo.addItems(iraq_governorates)
-
-        self.patient_residence_free_form_edit=QLineEdit()
-        self.patient_residence_free_form_edit.setPlaceholderText("residence")
-
-        self.patient_residence_type_combo = QComboBox()
-        self.patient_residence_type_combo.addItems(["center","periphery","rural"])
+        self.patient_job_type_combo=QComboBox()
+        self.patient_job_type_combo.addItems(["retired","desk/sedentary","light/outdoor","heavy labour","student"])
 
         self.patient_demo_and_old_data_layout.addWidget(self.patient_id_line_edit,0,0)
         self.patient_demo_and_old_data_layout.addWidget(self.patient_name_edit,0,1)
         self.patient_demo_and_old_data_layout.addWidget(self.patient_DOB_edit,0,2)
-        self.patient_demo_and_old_data_layout.addWidget(self.patient_gender_combo,0,3)
-        self.patient_demo_and_old_data_layout.addWidget(self.patient_marital_combo,0,4)
-        self.patient_demo_and_old_data_layout.addWidget(self.patient_education_combo,1,0)
-        self.patient_demo_and_old_data_layout.addWidget(self.patient_job_edit,1,1)
-        self.patient_demo_and_old_data_layout.addWidget(self.patient_governorates_combo, 1, 2)
-        self.patient_demo_and_old_data_layout.addWidget(self.patient_residence_free_form_edit, 1, 3)
-        self.patient_demo_and_old_data_layout.addWidget(self.patient_residence_type_combo,1,4)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_age_edit,0,3)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_gender_combo,0,4)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_marital_combo,1,0)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_education_combo,1,1)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_job_edit,1,2,1,2)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_job_type_combo,1,4)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_governorates_combo, 2, 0)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_residence_free_form_edit, 2, 1,1,2)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_residence_type_combo,2,3)
+        self.patient_demo_and_old_data_layout.addWidget(self.patient_tel_line_edit,2,4)
 
         #previous history
         # label
         self.previous_history_label = QLabel()
         self.previous_history_label.setText("Previous History")
         self.previous_history_label.setAlignment(Qt.AlignHCenter)
-        self.patient_demo_and_old_data_layout.addWidget(self.previous_history_label,2,0)
+        self.patient_demo_and_old_data_layout.addWidget(self.previous_history_label,3,0)
 
         # previous history
         # text edit
         self.previous_history_edit = QTextEdit()
         self.previous_history_edit.setReadOnly(True)
-        self.patient_demo_and_old_data_layout.addWidget(self.previous_history_edit, 3, 0,1,5)
+        self.patient_demo_and_old_data_layout.addWidget(self.previous_history_edit, 4, 0,1,5)
 
         self.main_layout.addWidget(self.patient_demo_and_old_data_widget,1,0)
 
@@ -435,6 +450,9 @@ class PatientDashBoard(QWidget):
 
         #endregion
 
+    def calculate_set_age(self):
+        age=self.now-int(self.patient_DOB_edit.text())
+        self.patient_age_edit.setText(str(age))
 
     def open_path_dialog(self):
 

@@ -8,7 +8,7 @@ from PySide6.QtCore import QDate
 from PySide6.QtGui import QTextCharFormat, QBrush, QIntValidator, QDoubleValidator
 from docx.table import Table
 
-from Tool_CreatFinanceDataBase import *
+from Tool_CreatDataBase import *
 
 
 #ill also creat sub layouts that sit inside the finances_layout for the sake of sanity of my mind
@@ -17,7 +17,7 @@ class Finances(QWidget):
         super().__init__()
         self.fee="30"
         #check if DB is present and if not creat one
-        create_open_DB_table() #imported from Tool_creatFinance data base module
+        create_transactions_DB_table() #imported from Tool_creatFinance data base module
 
         self.setWindowTitle("Finance")
         self.finances_layout = QGridLayout()

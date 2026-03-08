@@ -2,7 +2,7 @@ import sqlite3
 from datetime import datetime
 
 
-def create_open_DB_table():
+def create_transactions_DB_table():
     conn=sqlite3.connect("ceara.db")
 
     cursor=conn.cursor()
@@ -77,5 +77,25 @@ def add_DB_transaction_expense(
             note_value,
             datetime.now().replace(microsecond=0).isoformat()
             ))
+def creat_DB_patinet_demographic_table():
+    conn = sqlite3.connect("ceara.db")
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+                   CREATE TABLE IF NOT EXISTS transactions
+                   (
+                       id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+                       date               TEXT                                       NOT NULL,
+                       number_of_patients INTEGER,
+                       amount             REAL                                       NOT NULL,
+                       type               TEXT CHECK (type IN ('income', 'expense')) NOT NULL,
+                       category           TEXT,
+                       payment_method     TEXT,
+                       note               TEXT,
+                       fee_per_visit      INTEGER,
+                       created_at         TEXT                                       NOT NULL
+                   )
+                   """)
 if __name__=="__main__":
-    create_open_DB_table()
+    create_transactions_DB_table()
