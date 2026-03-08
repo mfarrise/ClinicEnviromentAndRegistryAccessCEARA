@@ -11,6 +11,8 @@ from docx import Document
 from SharedWidgetsPyside6 import show_warning
 from PySide6.QtGui import QTextCharFormat, QColor, QFont, QIntValidator, Qt
 
+from Tool_CreatDataBase import *
+
 
 class PatientDashBoard(QWidget):
     def __init__(self):
@@ -71,7 +73,8 @@ class PatientDashBoard(QWidget):
             "Maysan",
             "Dhi Qar",
             "Al-Muthanna",
-            "Al-Qadisiyyah"
+            "Al-Qadisiyyah",
+            "other"
         ]
         ##############################################################################
         #setting main lay out that will contain 4 Qgridlayouts each for each quadrant#
@@ -350,6 +353,12 @@ class PatientDashBoard(QWidget):
         self.main_layout.addWidget(self.patient_today_medication_widget, 2, 1)
 
         self.setFixedSize(self.sizeHint())
+
+        ######################
+        #NOTE creat db tables#
+        ######################
+        creat_DB_patinet_demographic_table()
+
         ##########################################
         #starting writing th engine of the widget#
         ##########################################

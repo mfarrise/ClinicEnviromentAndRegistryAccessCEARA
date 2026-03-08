@@ -83,19 +83,26 @@ def creat_DB_patinet_demographic_table():
     cursor = conn.cursor()
 
     cursor.execute("""
-                   CREATE TABLE IF NOT EXISTS transactions
+                   CREATE TABLE IF NOT EXISTS demographics
                    (
                        id                 INTEGER PRIMARY KEY AUTOINCREMENT,
-                       date               TEXT                                       NOT NULL,
-                       number_of_patients INTEGER,
-                       amount             REAL                                       NOT NULL,
-                       type               TEXT CHECK (type IN ('income', 'expense')) NOT NULL,
-                       category           TEXT,
-                       payment_method     TEXT,
-                       note               TEXT,
-                       fee_per_visit      INTEGER,
+                       patient_name       TEXT                                       NOT NULL,
+                       DOB                INTEGER                                    NOT NULL,
+                       gender             TEXT CHECK (gender IN ('Male','Female'))     NOT NULL,
+                       marital_state      TEXT CHECK (marital_state IN ('Single','Married','Divorced','Widowed')) NOT NULL,
+                       education          TEXT CHECK (education IN ('University','PostGraduate','Institute','Secondary','Primary','None')) NOT NULL,
+                       job                TEXT,
+                       job_type           TEXT CHECK (job_type IN ('retired','desk/sedentary','light/outdoor','heavy labour','student')) NOT NULL,
+                       governorate        TEXT CHECK (governorate IN ('Baghdad','Basra','Nineveh','Erbil','Sulaymaniyah','Duhok','Kirkuk','Anbar','Babil',
+                           'Karbala','Najaf','Wasit','Diyala','Salah al-Din','Maysan','Dhi Qar','Al-Muthanna','Al-Qadisiyyah','other')) NOT NULL,
+                       residence          TEXT ,
+                       residence_type     TEXT CHECK(residence_type IN ('center','periphery','rural')) NOT NULL ,
+                       telephone          TEXT , 
                        created_at         TEXT                                       NOT NULL
                    )
                    """)
+    conn.commit()
+    conn.close()
 if __name__=="__main__":
     create_transactions_DB_table()
+    creat_DB_patinet_demographic_table()
