@@ -1,8 +1,6 @@
 # Pillars of Workflow
 
-1. Finish intelligence of symptoms
-2. Finish the demographics data
-3. Start designing the DB according to the dashboard
+
 4. Implement visit logic  
    (first, ongoing, locked)
 5. Test extensively
@@ -24,16 +22,10 @@
 
 ### Demographics
 
-- Add patient phone number
-- Find a way to incorporate job category  
-  (labour / retired / desk job)
+
 
 ### db table
-
-- dont forget to add sets and subtraction to keep track of stopped medications
-- collect all old medication ad new medications in single table hat can be edited 
-- to resut in the final medication and the subtraction is the stopped medications
-- but u have to keep a set of the list of drugs that was loaded from old to use it in the subtraction
+-use note section to implement STOP message for drug and the full note as the reason
 
 # Finances
 
