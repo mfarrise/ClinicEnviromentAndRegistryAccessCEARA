@@ -4,10 +4,10 @@ from datetime import datetime
 
 def create_transactions_DB_table():
     conn=sqlite3.connect("ceara.db")
-
+    conn.execute("PRAGMA foreign_keys = ON")
     cursor=conn.cursor()
 
-    cursor.execute("""
+    cursor.executescript("""
         CREATE TABLE IF NOT EXISTS transactions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             date TEXT NOT NULL,
@@ -19,7 +19,8 @@ def create_transactions_DB_table():
             note TEXT,
             fee_per_visit INTEGER ,
             created_at TEXT NOT NULL
-            )
+            );
+            CREATE INDEX IF NOT EXISTS idx_transactions_date ON transactions(date);
             """)
     conn.commit()
     conn.close()
@@ -35,6 +36,7 @@ def add_DB_transaction_income(
         fee_value):
 
     with sqlite3.connect("ceara.db") as db:
+        db.execute("PRAGMA foreign_keys = ON")
         cursor = db.cursor()
 
         cursor.execute("""
@@ -63,6 +65,7 @@ def add_DB_transaction_expense(
         note_value):
 
     with sqlite3.connect("ceara.db") as db:
+        db.execute("PRAGMA foreign_keys = ON")
         cursor = db.cursor()
         cursor.execute("""
         INSERT INTO transactions
@@ -77,13 +80,13 @@ def add_DB_transaction_expense(
             note_value,
             datetime.now().replace(microsecond=0).isoformat()
             ))
-def creat_DB_patinet_demographic_table():
+def creat_DB_patients_tables():
     conn = sqlite3.connect("ceara.db")
-
+    conn.execute("PRAGMA foreign_keys = ON")
     cursor = conn.cursor()
 
-    cursor.execute("""
-                   CREATE TABLE IF NOT EXISTS demographics
+    cursor.executescript("""
+                   CREATE TABLE IF NOT EXISTS patients
                    (
                        id                 INTEGER PRIMARY KEY AUTOINCREMENT,
                        patient_name       TEXT                                       NOT NULL,
@@ -99,10 +102,173 @@ def creat_DB_patinet_demographic_table():
                        residence_type     TEXT CHECK(residence_type IN ('center','periphery','rural')) NOT NULL ,
                        telephone          TEXT , 
                        created_at         TEXT                                       NOT NULL
-                   )
+                   );
+                       
+                   CREATE TABLE IF NOT EXISTS visits
+                   (
+                       id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+                       patient_id         INTEGER                                       NOT NULL,
+                       visit_date         TEXT                                          NOT NULL,
+                       locked             INTEGER DEFAULT 0 CHECK(locked IN(0,1))       NOT NULL,
+                       created_at         TEXT                                          NOT NULL,
+                       FOREIGN KEY(patient_id) REFERENCES patients(id) ON DELETE CASCADE
+                   );
+                   CREATE TABLE IF NOT EXISTS visit_findings
+                   (
+                       id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+                       visit_id           INTEGER                                       NOT NULL,
+                       keyword            TEXT                                          NOT NULL,
+                       context            TEXT                                                  ,
+                       created_at         TEXT                                          NOT NULL,
+                       FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
+                   );
+                   CREATE TABLE IF NOT EXISTS visit_investigations
+                    (
+                        id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                        visit_id   INTEGER NOT NULL,
+                        test_name  TEXT    NOT NULL,
+                        value      REAL    NOT NULL,
+                        unit       TEXT    NOT NULL,
+                        flag       TEXT    CHECK (flag IN('high','low','normal','abnormal')) NOT NULL,
+                        created_at TEXT    NOT NULL,
+                        FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
+                    );
+                    CREATE TABLE IF NOT EXISTS visit_medications
+                    (
+                        id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                        visit_id   INTEGER   NOT NULL,
+                        name       TEXT      NOT NULL,
+                        brand      TEXT              ,
+                        form       TEXT      NOT NULL,
+                        dose       TEXT      NOT NULL,
+                        freq       TEXT      NOT NULL,
+                        amount     TEXT      NOT NULL,
+                        note       TEXT              ,
+                        created_at TEXT      NOT NULL,
+                        FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
+                    );
+                    CREATE TABLE IF NOT EXISTS visit_stopped_medications
+                    (
+                        id         INTEGER PRIMARY KEY AUTOINCREMENT,
+                        visit_id   INTEGER   NOT NULL,
+                        drug_name  TEXT      NOT NULL,
+                        dose       TEXT      NOT NULL,
+                        freq       TEXT      NOT NULL,
+                        reason     TEXT       ,
+                        created_at TEXT      NOT NULL,
+                        FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
+                    );
+                     
+                    CREATE INDEX IF NOT EXISTS idx_visits_patient ON visits(patient_id);
+                    CREATE INDEX IF NOT EXISTS idx_findings_visit ON visit_findings(visit_id);
+                    CREATE INDEX IF NOT EXISTS idx_investigations_visit ON visit_investigations(visit_id);
+                    CREATE INDEX IF NOT EXISTS idx_medications_visit ON visit_medications(visit_id);
+                    CREATE INDEX IF NOT EXISTS idx_visits_date ON visits(visit_date);
+                    CREATE INDEX IF NOT EXISTS idx_stopped_visit ON visit_stopped_medications(visit_id);
+                    CREATE INDEX IF NOT EXISTS idx_patients_name ON patients(patient_name);
                    """)
     conn.commit()
     conn.close()
+
+# def creat_DB_visits_table():
+#     conn = sqlite3.connect("ceara.db")
+#
+#     cursor = conn.cursor()
+#
+#     cursor.execute("""
+#                    CREATE TABLE IF NOT EXISTS visits
+#                    (
+#                        id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+#                        patient_id         INTEGER                                       NOT NULL,
+#                        visit_date         TEXT                                          NOT NULL,
+#                        locked             INTEGER DEFAULT 0                             NOT NULL,
+#                        created_at         TEXT                                          NOT NULL,
+#                        FOREIGN KEY(patient_id) REFERENCES patients(id)
+#                    )
+#                    """)
+#     conn.commit()
+#     conn.close()
+
+# def creat_DB_visit_findings_table():
+#     conn = sqlite3.connect("ceara.db")
+#
+#     cursor = conn.cursor()
+#
+#     cursor.execute("""
+#                    CREATE TABLE IF NOT EXISTS visit_findings
+#                    (
+#                        id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+#                        visit_id           INTEGER                                       NOT NULL,
+#                        keyword            TEXT                                          NOT NULL,
+#                        context            TEXT                                                  ,
+#                        created_at         TEXT                                          NOT NULL
+#                    )
+#                    """)
+#     conn.commit()
+#     conn.close()
+
+# def creat_DB_visit_investigations_table():
+#     conn = sqlite3.connect("ceara.db")
+#
+#     cursor = conn.cursor()
+#
+#     cursor.execute("""
+#                     CREATE TABLE IF NOT EXISTS visit_investigations
+#                     (
+#                         id         INTEGER PRIMARY KEY AUTOINCREMENT,
+#                         visit_id   INTEGER NOT NULL,
+#                         test_name  TEXT    NOT NULL,
+#                         value      TEXT    NOT NULL,
+#                         unit       TEXT    NOT NULL,
+#                         flag       TEXT    CHECK (flag IN('high','low','normal','abnormal')) NOT NULL,
+#                         created_at TEXT    NOT NULL
+#                     )
+#                     """)
+#     conn.commit()
+#     conn.close()
+
+# def creat_DB_visit_medications_table():
+#     conn = sqlite3.connect("ceara.db")
+#
+#     cursor = conn.cursor()
+#
+#     cursor.execute("""
+#                     CREATE TABLE IF NOT EXISTS visit_medications
+#                     (
+#                         id         INTEGER PRIMARY KEY AUTOINCREMENT,
+#                         visit_id   INTEGER   NOT NULL,
+#                         name       TEXT      NOT NULL,
+#                         brand      TEXT              ,
+#                         form       TEXT      NOT NULL,
+#                         dose       REAL      NOT NULL,
+#                         freq       TEXT      NOT NULL,
+#                         amount     REAL      NOT NULL,
+#                         note       TEXT      NOT NULL,
+#                         created_at TEXT      NOT NULL
+#                     )
+#                     """)
+#     conn.commit()
+#     conn.close()
+
+# def creat_DB_visit_stopped_medications_table():
+#     conn = sqlite3.connect("ceara.db")
+#
+#     cursor = conn.cursor()
+#
+#     cursor.execute("""
+#                     CREATE TABLE IF NOT EXISTS visit_stopped_medications
+#                     (
+#                         id         INTEGER PRIMARY KEY AUTOINCREMENT,
+#                         visit_id   INTEGER   NOT NULL,
+#                         drug_name  TEXT      NOT NULL,
+#                         dose       REAL      NOT NULL,
+#                         freq       TEXT      NOT NULL,
+#                         reason     TEXT       ,
+#                         created_at TEXT      NOT NULL
+#                     )
+#                     """)
+#     conn.commit()
+#     conn.close()
 if __name__=="__main__":
     create_transactions_DB_table()
-    creat_DB_patinet_demographic_table()
+    creat_DB_patients_tables()
