@@ -28,6 +28,12 @@
 - Find a way to incorporate job category  
   (labour / retired / desk job)
 
+### db table
+
+- dont forget to add sets and subtraction to keep track of stopped medications
+- collect all old medication ad new medications in single table hat can be edited 
+- to resut in the final medication and the subtraction is the stopped medications
+- but u have to keep a set of the list of drugs that was loaded from old to use it in the subtraction
 
 # Finances
 
