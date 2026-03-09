@@ -122,6 +122,14 @@ def creat_DB_patients_tables():
                        created_at         TEXT                                          NOT NULL,
                        FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
                    );
+                   CREATE TABLE IF NOT EXISTS visit_free_form_findings
+                   (
+                       id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+                       visit_id           INTEGER                                       NOT NULL,
+                       free_form          TEXT                                          NOT NULL,
+                       created_at         TEXT                                          NOT NULL,
+                       FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
+                   );
                    CREATE TABLE IF NOT EXISTS visit_investigations
                     (
                         id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -166,6 +174,7 @@ def creat_DB_patients_tables():
                     CREATE INDEX IF NOT EXISTS idx_visits_date ON visits(visit_date);
                     CREATE INDEX IF NOT EXISTS idx_stopped_visit ON visit_stopped_medications(visit_id);
                     CREATE INDEX IF NOT EXISTS idx_patients_name ON patients(patient_name);
+                    CREATE INDEX IF NOT EXISTS idx_free_form_findings_visit ON visit_free_form_findings(visit_id);
                    """)
     conn.commit()
     conn.close()
