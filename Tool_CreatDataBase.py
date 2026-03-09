@@ -155,13 +155,14 @@ def creat_DB_patients_tables():
                         created_at TEXT      NOT NULL,
                         FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
                     );
-                    CREATE TABLE IF NOT EXISTS visit_stopped_medications
+                    CREATE TABLE IF NOT EXISTS visit_adjusted_medications
                     (
                         id         INTEGER PRIMARY KEY AUTOINCREMENT,
                         visit_id   INTEGER   NOT NULL,
                         drug_name  TEXT      NOT NULL,
                         dose       TEXT      NOT NULL,
                         freq       TEXT      NOT NULL,
+                        flag       TEXT CHECK(flag IN('stopped','reduced','increased')) NOT NULL,
                         reason     TEXT       ,
                         created_at TEXT      NOT NULL,
                         FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
@@ -172,7 +173,7 @@ def creat_DB_patients_tables():
                     CREATE INDEX IF NOT EXISTS idx_investigations_visit ON visit_investigations(visit_id);
                     CREATE INDEX IF NOT EXISTS idx_medications_visit ON visit_medications(visit_id);
                     CREATE INDEX IF NOT EXISTS idx_visits_date ON visits(visit_date);
-                    CREATE INDEX IF NOT EXISTS idx_stopped_visit ON visit_stopped_medications(visit_id);
+                    CREATE INDEX IF NOT EXISTS idx_adjust_drug_visit ON visit_adjusted_medications(visit_id);
                     CREATE INDEX IF NOT EXISTS idx_patients_name ON patients(patient_name);
                     CREATE INDEX IF NOT EXISTS idx_free_form_findings_visit ON visit_free_form_findings(visit_id);
                    """)

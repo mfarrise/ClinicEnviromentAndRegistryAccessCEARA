@@ -361,7 +361,7 @@ class PatientDashBoard(QWidget):
         ######################
         #NOTE creat db tables#
         ######################
-        creat_DB_patinet_demographic_table()
+
 
         #NOTE engine and functions
         #NOTE

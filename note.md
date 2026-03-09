@@ -1,6 +1,7 @@
 # Pillars of Workflow
 
-
+3. IMPORTANT use with call the data base,use try catch e on top level,TEST FOR FEILD BEFORE U CALL THE SPECIFIC TABLE UPDATE EMTHOD
+4. 
 4. Implement visit logic  
    (first, ongoing, locked)
 5. Test extensively
