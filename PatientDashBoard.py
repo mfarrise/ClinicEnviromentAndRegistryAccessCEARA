@@ -170,6 +170,11 @@ class PatientDashBoard(QWidget):
         self.previous_history_label.setAlignment(Qt.AlignHCenter)
         self.patient_demo_and_old_data_layout.addWidget(self.previous_history_label,3,0)
 
+        #chronic disease lined edit
+        self.chronic_disease_line_edit=QLineEdit()
+        self.chronic_disease_line_edit.setPlaceholderText("IHD HT DM CKD ESRD CVA")
+        self.patient_demo_and_old_data_layout.addWidget(self.chronic_disease_line_edit,3,1,1,4)
+
         # previous history
         # text edit
         self.previous_history_edit = QTextEdit()
