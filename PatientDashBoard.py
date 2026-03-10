@@ -56,7 +56,7 @@ class PatientDashBoard(QWidget):
 
         with open("clinical_triggers.json","r") as read_json:
             self.clinical_triggers=json.load(read_json)
-        print (self.clinical_triggers)
+        # print (self.clinical_triggers)
 
 
         iraq_governorates = [
@@ -449,19 +449,19 @@ class PatientDashBoard(QWidget):
             if self.picked_symptom_text_edit.toPlainText().strip():
                 print("picked symptom pushed")
                 for raw_finding in picked_findings_list:
-
-                    keyword,context=raw_finding.split(":")
-                    cursor.execute("""
-                    INSERT INTO visit_findings
-                         (visit_id,keyword,context,created_at)
-                        VALUES (?,?,?,?)
-                                   """,
-                                   (
-                                       self.visit_id,
-                                       keyword,
-                                       context,
-                                       datetime.now().replace(microsecond=0).isoformat()
-                                   ))
+                    if raw_finding.strip():#rule out accidental empty lines from manual editing the text edit box
+                        keyword,context=raw_finding.split(":")
+                        cursor.execute("""
+                        INSERT INTO visit_findings
+                             (visit_id,keyword,context,created_at)
+                            VALUES (?,?,?,?)
+                                       """,
+                                       (
+                                           self.visit_id,
+                                           keyword,
+                                           context,
+                                           datetime.now().replace(microsecond=0).isoformat()
+                                       ))
 
 
 
