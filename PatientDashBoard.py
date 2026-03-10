@@ -430,8 +430,46 @@ class PatientDashBoard(QWidget):
             datetime.now().replace(microsecond=0).isoformat()
             ))
             self.visit_id=cursor.lastrowid
-            print(self.visit_id,self.patient_id)
+            # print(self.visit_id,self.patient_id)
+            if self.today_history_edit.toPlainText().strip():
+                print("today history pushed")
+                cursor.execute("""
+                INSERT INTO visit_free_form_findings
+                    (visit_id,free_form,created_at)
+                    VALUES(?,?,?)
+                        """,
+                               (
+                                   self.visit_id,
+                                   self.today_history_edit.toPlainText(),
+                                   datetime.now().replace(microsecond=0).isoformat()
+                               ))
+            picked_findings_str=self.picked_symptom_text_edit.toPlainText()
+            picked_findings_list=picked_findings_str.split("\n")
 
+            if self.picked_symptom_text_edit.toPlainText().strip():
+                print("picked symptom pushed")
+                for raw_finding in picked_findings_list:
+
+                    keyword,context=raw_finding.split(":")
+                    cursor.execute("""
+                    INSERT INTO visit_findings
+                         (visit_id,keyword,context,created_at)
+                        VALUES (?,?,?,?)
+                                   """,
+                                   (
+                                       self.visit_id,
+                                       keyword,
+                                       context,
+                                       datetime.now().replace(microsecond=0).isoformat()
+                                   ))
+
+
+
+
+
+
+
+            
     def calculate_set_age(self):
         age=self.now-int(self.patient_DOB_edit.text())
         self.patient_age_edit.setText(str(age))
