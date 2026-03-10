@@ -4,6 +4,7 @@ import os
 import re
 import sys
 import json
+from SharedWidgetsPyside6 import show_warning
 from datetime import datetime
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
     QLabel, QComboBox, QMenuBar, QTableWidget, QTableWidgetItem, QHBoxLayout
@@ -44,6 +45,9 @@ class PatientDashBoard(QWidget):
 
         self.setWindowTitle("title")
         #NOTE global declarations
+        self.patient_id=0
+        self.visit_id=0
+
         self.settings={}
         quadrant_width=540
         quadrant_height=300
@@ -251,7 +255,7 @@ class PatientDashBoard(QWidget):
         #region
 
         ##########################################################################################
-        #setting up sub sub layout widget called old medication to be on the left half of the RUQ#
+        #setting up sub sub layout widget called controls to be on the left half of the RUQ#
         ##########################################################################################
 
         self.patient_old_medication_and_today_investigations_widget = QWidget()
@@ -265,25 +269,28 @@ class PatientDashBoard(QWidget):
         self.old_medication_widget.setLayout(self.old_medication_layout)
         self.set_quadrants_size(self.old_medication_widget, int(786*2/3), quadrant_height)
 
-        self.old_medications_label = QLabel()
-        self.old_medications_label.setText("Old Medications")
-        self.old_medications_label.setAlignment(Qt.AlignHCenter)
-        self.old_medication_layout.addWidget(self.old_medications_label, 0, 0)
-
-        self.old_medication_table=QTableWidget()
-        self.old_medication_table.setRowCount(0)
-        self.old_medication_table.setColumnCount(5)
-        self.old_medication_table.setAlternatingRowColors(True)
-
-        self.old_medication_table.setHorizontalHeaderLabels(["Name","Form","Dose","Freq","Note"])
-        self.old_medication_layout.addWidget(self.old_medication_table,1,0)
-        # old Medication intelligent
-        # line edit
-        self.old_medication_intellisense_line = QLineEdit(self)
-        self.old_medication_intellisense_line.setPlaceholderText("ciprofloxacin tab 500 mg 1x1 ")
-        self.old_medication_intellisense_line.setReadOnly(False)
-        self.old_medication_layout.addWidget(self.old_medication_intellisense_line, 2, 0, 1, 1)
-        self.old_medication_intellisense_line.returnPressed.connect(self.old_drug_intellisense)
+        self.creat_new_patient_in_db_button = QPushButton("Create New Patient")
+        self.creat_new_patient_in_db_button.clicked.connect(self.creat_new_patient_in_db)
+        self.patient_old_medication_and_today_investigations_layout.addWidget(self.creat_new_patient_in_db_button, 0, 0)
+        # self.old_medications_label = QLabel()
+        # self.old_medications_label.setText("Old Medications")
+        # self.old_medications_label.setAlignment(Qt.AlignHCenter)
+        # self.old_medication_layout.addWidget(self.old_medications_label, 0, 0)
+        #
+        # self.old_medication_table=QTableWidget()
+        # self.old_medication_table.setRowCount(0)
+        # self.old_medication_table.setColumnCount(5)
+        # self.old_medication_table.setAlternatingRowColors(True)
+        #
+        # self.old_medication_table.setHorizontalHeaderLabels(["Name","Form","Dose","Freq","Note"])
+        # self.old_medication_layout.addWidget(self.old_medication_table,1,0)
+        # # old Medication intelligent
+        # # line edit
+        # self.old_medication_intellisense_line = QLineEdit(self)
+        # self.old_medication_intellisense_line.setPlaceholderText("ciprofloxacin tab 500 mg 1x1 ")
+        # self.old_medication_intellisense_line.setReadOnly(False)
+        # self.old_medication_layout.addWidget(self.old_medication_intellisense_line, 2, 0, 1, 1)
+        # self.old_medication_intellisense_line.returnPressed.connect(self.old_drug_intellisense)
         self.patient_old_medication_and_today_investigations_layout.addWidget(self.old_medication_widget,1,0)
 
         ######################################################################
@@ -361,6 +368,8 @@ class PatientDashBoard(QWidget):
         self.today_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
         self.main_layout.addWidget(self.patient_today_medication_widget, 2, 1)
 
+
+
         self.setFixedSize(self.sizeHint())
 
         ######################
@@ -374,101 +383,54 @@ class PatientDashBoard(QWidget):
         #starting writing th engine of the widget#
         ##########################################
         # region
+        #NOTE add new patient to data base
+    def creat_new_patient_in_db(self):
+        #checking if NOT NULL feilds are empty
+        if not self.patient_name_edit.text().strip():
+            show_warning("patinet name is missing")
+            return
+        if not self.patient_DOB_edit.text().strip():
+            show_warning("patient DOB is missing")
+            return
+        if not self.today_history_edit.toPlainText().strip():
+            show_warning("today history is missing")
+            return
 
-        def load_patient_data():
-            patient_file_path = self.open_path_dialog()
-            sep = r"[\/\.\-ظ]"
-
-            date_pattern = rf"\b\d{{1,2}}{sep}\d{{1,2}}{sep}\d{{2,4}}\b|\b\d{{4}}{sep}\d{{1,2}}{sep}\d{{1,2}}\b"
-
-            self.previous_history_edit.clear()
-            cursor = self.previous_history_edit.textCursor()
-            if patient_file_path:
-                doc = Document(patient_file_path)
-                # in the following code
-                # splitext() returns a tuple:
-                # ("README", ".md")
-                # [0]takes the first part(without extension)
-                self.patient_name_edit.setText(os.path.splitext(os.path.basename(patient_file_path))[0])
-                # old_history=""
-                normal_format = QTextCharFormat()
-
-                date_format = QTextCharFormat()
-                date_format.setForeground(QColor("orange"))
-                date_format.setFontWeight(QFont.Bold)
-                cr_format = QTextCharFormat()
-                cr_format.setForeground(QColor("cyan"))
-                cr_format.setFontWeight(QFont.Bold)
-                aliases_list_for_oldhistory=[]
-
-                for paragraph in doc.paragraphs:
-                    text = paragraph.text
-
-                    parts = re.split(f"({date_pattern})", text)
-
-                    for part in parts:
-                        if re.fullmatch(date_pattern, part):
-                            cursor.setCharFormat(date_format)
-                            cursor.insertText(part)
-                            cursor.setCharFormat(normal_format)  # 🔥 RESET i know its redundant due to reset in else but for future unforseen changes
-                        elif re.search(r"\bcr|creat|creatinine|urea|pus|gue\b", part,re.IGNORECASE):
-                            cursor.setCharFormat(cr_format)
-                            cursor.insertText(part)
-                            cursor.setCharFormat(normal_format)
-                        else:
-                            cursor.setCharFormat(normal_format)
-                            cursor.insertText(part)
-
-                    cursor.insertText("\n")
-                # previous_history_edit.setText(old_history)
-
-        # def update_patient_data():
-        #
-        #     doc = Document()
-        #     demographic_table=doc.add_table(2,5)
-        #
-        #     demographic_table.cell(0,0).text="Name"
-        #     if self.patient_name_edit.text() != "":
-        #         demographic_table.cell(1,0).text=self.patient_name_edit.text()
-        #
-        #     demographic_table.cell(0,1).text="DOB"
-        #     if self.patient_name_edit.text() != "":
-        #         demographic_table.cell(1,1).text=self.patient_DOB_edit.text()
-        #
-        #     demographic_table.cell(0,2).text="Age"
-        #     if self.patient_name_edit.text() != "":
-        #         demographic_table.cell(1,1).text=str(datetime.now().year-int(self.patient_DOB_edit.text()))
-        #
-        #     demographic_table.cell(0,3).text="Gender"
-        #     demographic_table.cell(1,3).text=self.patient_gender_combo.currentText()
-        #
-        #     demographic_table.cell(0,4).text="Residence"
-        #     if self.patient_name_edit.text() != "":
-        #         demographic_table.cell(1,4).text=self.patient_residence_free_form_edit.text()
-        #
-        #     doc.save("PatientDashBoard.docx")
-
-
-        # io_widget=QWidget(self)
-        # io_layout = QGridLayout(io_widget)
-        # io_widget.setLayout(io_layout)
-        # self.set_quadrants_size(io_widget,quadrant_width,quadrant_height)
-        #
-        # #load patient button
-        # load_patient_button=QPushButton("Load Patient")
-        # io_layout.addWidget(load_patient_button,0,0)
-        # load_patient_button.clicked.connect(load_patient_data)
-        #
-        # #update new data button
-        # update_patient_button=QPushButton("Update Patient")
-        # io_layout.addWidget(update_patient_button,0,1)
-        # update_patient_button.clicked.connect(update_patient_data)
-
-
-
-        # self.main_layout.addWidget(io_widget,2,1)
-
-        #endregion
+        with sqlite3.connect("ceara.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+        INSERT INTO patients
+        (patient_name,DOB, gender, marital_state, education, job, job_type,governorate , residence,
+        residence_type,telephone,chronic_disease,created_at)
+        VALUES (?, ?,?, ?, ?, ?, ?, ?,?,?,?,?,?)
+        """, (
+            self.patient_name_edit.text(),
+            int(self.patient_DOB_edit.text()),
+            self.patient_gender_combo.currentText(),
+            self.patient_marital_combo.currentText(),
+            self.patient_education_combo.currentText(),
+            self.patient_job_edit.text(),
+            self.patient_job_type_combo.currentText(),
+            self.patient_governorates_combo.currentText(),
+            self.patient_residence_free_form_edit.text(),
+            self.patient_residence_type_combo.currentText(),
+            self.patient_tel_line_edit.text(),
+            self.chronic_disease_line_edit.text(),
+            datetime.now().replace(microsecond=0).isoformat()
+            ))
+            self.patient_id=cursor.lastrowid
+            cursor.execute("""
+            INSERT INTO visits
+            (patient_id,visit_date,locked,created_at)
+            VALUES(?,?,?,?)
+        """,(
+            self.patient_id,
+            datetime.now().date().isoformat(),
+            0,
+            datetime.now().replace(microsecond=0).isoformat()
+            ))
+            self.visit_id=cursor.lastrowid
+            print(self.visit_id,self.patient_id)
 
     def calculate_set_age(self):
         age=self.now-int(self.patient_DOB_edit.text())

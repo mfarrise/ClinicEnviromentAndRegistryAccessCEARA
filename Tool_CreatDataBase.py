@@ -101,6 +101,7 @@ def creat_DB_patients_tables():
                        residence          TEXT ,
                        residence_type     TEXT CHECK(residence_type IN ('center','periphery','rural')) NOT NULL ,
                        telephone          TEXT , 
+                       chronic_disease     TEXT,
                        created_at         TEXT                                       NOT NULL
                    );
                        
