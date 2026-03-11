@@ -15,7 +15,7 @@ from PySide6.QtGui import QTextCharFormat, QColor, QFont, QIntValidator, Qt
 from Tool_CreatDataBase import *
 
 
-class PatientDashBoard(QWidget):
+class NewPatientDashBoard(QWidget):
     def __init__(self):
         super().__init__()
         # self.setStyleSheet("""
@@ -43,7 +43,7 @@ class PatientDashBoard(QWidget):
         # }
         # """)
 
-        self.setWindowTitle("title")
+        self.setWindowTitle("Add New Patient")
         #NOTE global declarations
         self.patient_id=0
         self.visit_id=0
@@ -114,6 +114,7 @@ class PatientDashBoard(QWidget):
 
         self.patient_name_edit = QLineEdit()
         self.patient_name_edit.setPlaceholderText("Patient Name")
+        self.patient_name_edit.editingFinished.connect(self.change_title)
 
         self.patient_DOB_edit = QLineEdit()
         self.patient_DOB_edit.setPlaceholderText("DOB")
@@ -225,6 +226,7 @@ class PatientDashBoard(QWidget):
         self.today_history_edit = QTextEdit(self)
         self.today_history_edit.setReadOnly(False)
         self.today_history_edit.setFocusPolicy(Qt.ClickFocus)
+        self.today_history_edit.setTabChangesFocus(True)
         self.llql_layout.addWidget(self.today_history_edit, 1, 0)
 
         #clinica intellisense GUI not logic
@@ -240,7 +242,8 @@ class PatientDashBoard(QWidget):
         self.picked_symptom_label.setAlignment(Qt.AlignCenter)
 
         self.picked_symptom_text_edit = QTextEdit()
-
+        self.picked_symptom_text_edit.setFocusPolicy(Qt.ClickFocus)
+        self.picked_symptom_text_edit.setTabChangesFocus(True)
 
         self.llqr_layout.addWidget(self.picked_symptom_label, 0, 0)
         self.llqr_layout.addWidget(self.picked_symptom_text_edit, 1, 0)
@@ -270,27 +273,10 @@ class PatientDashBoard(QWidget):
         self.set_quadrants_size(self.old_medication_widget, int(786*2/3), quadrant_height)
 
         self.creat_new_patient_in_db_button = QPushButton("Create New Patient")
+        self.creat_new_patient_in_db_button.setFocusPolicy(Qt.ClickFocus)
         self.creat_new_patient_in_db_button.clicked.connect(self.creat_new_patient_in_db)
         self.patient_old_medication_and_today_investigations_layout.addWidget(self.creat_new_patient_in_db_button, 0, 0)
-        # self.old_medications_label = QLabel()
-        # self.old_medications_label.setText("Old Medications")
-        # self.old_medications_label.setAlignment(Qt.AlignHCenter)
-        # self.old_medication_layout.addWidget(self.old_medications_label, 0, 0)
-        #
-        # self.old_medication_table=QTableWidget()
-        # self.old_medication_table.setRowCount(0)
-        # self.old_medication_table.setColumnCount(5)
-        # self.old_medication_table.setAlternatingRowColors(True)
-        #
-        # self.old_medication_table.setHorizontalHeaderLabels(["Name","Form","Dose","Freq","Note"])
-        # self.old_medication_layout.addWidget(self.old_medication_table,1,0)
-        # # old Medication intelligent
-        # # line edit
-        # self.old_medication_intellisense_line = QLineEdit(self)
-        # self.old_medication_intellisense_line.setPlaceholderText("ciprofloxacin tab 500 mg 1x1 ")
-        # self.old_medication_intellisense_line.setReadOnly(False)
-        # self.old_medication_layout.addWidget(self.old_medication_intellisense_line, 2, 0, 1, 1)
-        # self.old_medication_intellisense_line.returnPressed.connect(self.old_drug_intellisense)
+
         self.patient_old_medication_and_today_investigations_layout.addWidget(self.old_medication_widget,1,0)
 
         ######################################################################
@@ -313,6 +299,7 @@ class PatientDashBoard(QWidget):
         self.today_investigations_edit = QTextEdit(self)
         self.today_investigations_edit.setReadOnly(False)
         self.today_investigations_edit.setFocusPolicy(Qt.ClickFocus)
+        self.today_investigations_edit.setTabChangesFocus(True)
         self.today_investigations_layout.addWidget(self.today_investigations_edit, 1,0)
 
         # today investigation intelligent
@@ -368,8 +355,13 @@ class PatientDashBoard(QWidget):
         self.today_medication_intellisense_line.returnPressed.connect(self.drug_intellisense)
         self.main_layout.addWidget(self.patient_today_medication_widget, 2, 1)
 
-
-
+        #NOTE setting tab focus move order
+        self.setTabOrder(self.chronic_disease_line_edit, self.clinical_intellisense_line_edit)
+        self.setTabOrder( self.clinical_intellisense_line_edit,self.today_investigations_intellisense_line)
+        self.setTabOrder(self.today_history_edit, self.clinical_intellisense_line_edit)
+        self.setTabOrder(self.picked_symptom_text_edit, self.today_investigations_intellisense_line)
+        self.setTabOrder(self.today_investigations_edit, self.today_investigations_intellisense_line)
+        self.setTabOrder( self.today_investigations_intellisense_line,self.today_medication_intellisense_line)
         self.setFixedSize(self.sizeHint())
 
         ######################
@@ -485,7 +477,7 @@ class PatientDashBoard(QWidget):
                                        (
                                            self.visit_id,
                                            parsed_investigation_list[0],
-                                           float(parsed_investigation_list[1]),
+                                           parsed_investigation_list[1],
                                            parsed_investigation_list[2],
                                            parsed_investigation_list[3].strip("()"),
                                            datetime.now().replace(microsecond=0).isoformat()
@@ -496,15 +488,29 @@ class PatientDashBoard(QWidget):
                 column_count=self.medication_table.columnCount()
 
                 for row in range(row_count):
-                    row_cells_list=[]
+                    current_cells_list=[]
                     for column in range(column_count):
-                        row_cells_list.append(self.medication_table.item(row,column).text())
-                        for i in range(len(row_cells_list)):  # fail safe for empty ,,,replace with " "
+                        current_cells_list.append(self.medication_table.item(row, column).text())
+                        for i in range(len(current_cells_list)):  # fail safe for empty ,,,replace with " "
                             # print(row_cells_list[i])
-                            if not row_cells_list[i].strip():
-                                row_cells_list[i] = "omitted"
+                            if not current_cells_list[i].strip():
+                                current_cells_list[i] = "omitted"
                             # print(row_cells_list[i])
-                    #NOTE implement stop reduced ,increased logic HERE
+                    # the logic in the (((IN))) in the following if statements will include words with ed and without
+                    #so stop will include stop and stopped
+                    if "stop" in current_cells_list[-1] :
+                        self.push_to_visit_adjusted_medications(cursor,"stopped",current_cells_list)
+                        continue
+                    if "increase" in current_cells_list[-1].lower():
+                        self.push_to_visit_adjusted_medications(cursor,"increased",current_cells_list)
+                        continue
+                    if "reduce" in current_cells_list[-1].lower():
+                        self.push_to_visit_adjusted_medications(cursor,"reduced",current_cells_list)
+                        continue
+                    if "decrease" in current_cells_list[-1].lower():
+                        self.push_to_visit_adjusted_medications(cursor,"reduced", current_cells_list)
+                        continue
+
                     cursor.execute("""
                     INSERT INTO visit_medications
                         (visit_id,name,brand,form,dose,freq,amount,note,created_at)
@@ -512,13 +518,13 @@ class PatientDashBoard(QWidget):
                             """,
                                    (
                                        self.visit_id,
-                                       row_cells_list[0],
-                                       row_cells_list[1],
-                                       row_cells_list[2],
-                                       row_cells_list[3],
-                                       row_cells_list[4],
-                                       row_cells_list[5],
-                                       row_cells_list[6],
+                                       current_cells_list[0],
+                                       current_cells_list[1],
+                                       current_cells_list[2],
+                                       current_cells_list[3],
+                                       current_cells_list[4],
+                                       current_cells_list[5],
+                                       current_cells_list[6],
                                        datetime.now().replace(microsecond=0).isoformat()
                                    ))
                 print("medications pushed")
@@ -530,7 +536,23 @@ class PatientDashBoard(QWidget):
 
 
 
+    def push_to_visit_adjusted_medications(self,cursor,flag,current_cells_list):
+        cursor.execute("""
+        INSERT INTO visit_adjusted_medications
+            (visit_id,drug_name,dose,freq,flag,reason,created_at)
+            VALUES(?,?,?,?,?,?,?)
             
+        """,
+                       (
+                           self.visit_id,
+                           current_cells_list[0],
+                           current_cells_list[3],
+                           current_cells_list[4],
+                           flag,
+                           current_cells_list[6],
+                           datetime.now().replace(microsecond=0).isoformat()
+                       ))
+
     def calculate_set_age(self):
         age=self.now-int(self.patient_DOB_edit.text())
         self.patient_age_edit.setText(str(age))
@@ -738,16 +760,18 @@ class PatientDashBoard(QWidget):
                     break
         self.clinical_intellisense_line_edit.clear()
 
+    def change_title(self):
+        if self.patient_name_edit.text():
+            self.setWindowTitle(self.patient_name_edit.text()+" new patient")
 
 
 
 #TODO ((done but))mental note to expand and revist the dictionary in json creation tool for the symptoms
-#NOTE use the dictionary twice one to pick from the intellisense and second when reading the soft line edits and
-#NOTE add them to the db as visitID KEYWORD  LINE mentioned in
+
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = PatientDashBoard()
+    window = NewPatientDashBoard()
     window.show()
     app.exec()

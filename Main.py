@@ -1,13 +1,13 @@
-"""
 
 
 
-Future refinement
 
-    better windows location when are called ((non fixed and breakable))
 
-    better main window move integrate with standered option button wndows((also non breakable))
-"""
+
+    #TODO better windows location when are called ((non fixed and breakable))
+
+    #TODO better main window move integrate with standered option button wndows((also non breakable))
+
 
 
 import os,sys
@@ -17,7 +17,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QGridLayou
 from PySide6.QtGui import QGuiApplication
 from eGFRSubWindow import eGFRSubWindow
 from ContrastRiskSubWindow import ContrastRiskSubWindow
-from NewPatientDashBoard import PatientDashBoard
+from NewPatientDashBoard import NewPatientDashBoard
 from Finances import Finances
 
 
@@ -27,6 +27,7 @@ class MainWindow_class(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.daughter_windows_new_patient=[]
         self.connect = sqlite3.connect("ceara.db")
         self.screen_geometry = QGuiApplication.primaryScreen().availableGeometry()
 
@@ -38,8 +39,8 @@ class MainWindow_class(QMainWindow):
 
         standard_button=QPushButton("Standard")
         standard_button.clicked.connect(self.call_standard)
-        dash_board_button = QPushButton("Dash Board")
-        dash_board_button.clicked.connect(self.call_patient_dashboard)
+        self.add_new_patient_button = QPushButton("New Patient")
+        self.add_new_patient_button.clicked.connect(self.call_new_patient_dashboard)
         cin_button=QPushButton("CIN")
         cin_button.clicked.connect(self.call_cin)
         gfr_button=QPushButton("GFR")
@@ -48,7 +49,7 @@ class MainWindow_class(QMainWindow):
         finances_button.clicked.connect(self.call_finances)
 
         layout.addWidget(standard_button)
-        layout.addWidget(dash_board_button)
+        layout.addWidget(self.add_new_patient_button)
         layout.addWidget(cin_button)
         layout.addWidget(gfr_button)
         layout.addWidget(finances_button)
@@ -70,8 +71,8 @@ class MainWindow_class(QMainWindow):
         self.move(window_geometry.topLeft())
 
         #just testing passing dn connect and passing window title in multiple windows
-        self.patient_dashboard_windows=[]
-        self.title_int=1
+
+
         # self.resize(self.screen_width,self.screen_height)
     def call_standard(self):
         screen = QGuiApplication.primaryScreen()
@@ -83,7 +84,7 @@ class MainWindow_class(QMainWindow):
         frame_rect.moveCenter(self.screen_geometry.bottomRight())
         self.move(width,height-695)
 
-        self.call_patient_dashboard()
+        self.call_new_patient_dashboard()
         self.call_gfr()
         self.call_cin()
 
@@ -106,13 +107,12 @@ class MainWindow_class(QMainWindow):
         self.CINWindow.raise_()
 
 
-    def call_patient_dashboard(self):
-        self.title_int +=1
-        # new_patientWindow = PatientDashBoard(self.connect,"patient no "+str(self.title_int))
-        new_patientWindow = PatientDashBoard()
-        self.patient_dashboard_windows.append(new_patientWindow)
-        new_patientWindow.show()
-        new_patientWindow.raise_()
+    def call_new_patient_dashboard(self):
+
+        new_patient_Window = NewPatientDashBoard()
+        self.daughter_windows_new_patient.append(new_patient_Window)
+        new_patient_Window.show()
+        new_patient_Window.raise_()
 
     def call_finances(self):
         self.financesWindow.show()

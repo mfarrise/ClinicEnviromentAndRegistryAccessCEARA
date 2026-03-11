@@ -4,11 +4,13 @@ from PySide6.QtCore import QSortFilterProxyModel, Qt
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QGridLayout, QLabel, QLineEdit, QListView, QPushButton
 import sys
-
+from update_add_visit_selector_widget import update_add_visit_selector_widget
 
 class PatientSearchNewPatientWidget(QWidget):
     def __init__(self):
         super().__init__()
+        self.do_something_with_selection_widget=""
+
         self.model = None
         self.proxy=None
         self.setWindowTitle("patient_search_new_patient")
@@ -32,7 +34,6 @@ class PatientSearchNewPatientWidget(QWidget):
         self.search_line_edit.textChanged.connect(self.filter_patients)
         self.search_list_view.clicked.connect(self.patient_selected)
         self.search_list_view.setCurrentIndex(self.proxy.index(0, 0))
-
 
 
 
@@ -70,14 +71,16 @@ class PatientSearchNewPatientWidget(QWidget):
 
         patient_id = item.data(Qt.ItemDataRole.UserRole)
 
-        print("Open Patient ID:", patient_id)
+        print("Open Patient ID:", patient_id,"patient name ",item.text())
 
-        # open PatientDashboard(patient_id)
+        self.do_something_with_selection_widget=update_add_visit_selector_widget(patient_id,item.text())
+        self.do_something_with_selection_widget.show()
+        self.do_something_with_selection_widget.raise_()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = PatientSearchNewPatientWidget()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
