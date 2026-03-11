@@ -324,7 +324,7 @@ class PatientDashBoard(QWidget):
         self.today_investigations_intellisense_line.returnPressed.connect(self.investigation_intellisense)
 
         self.patient_old_medication_and_today_investigations_layout.addWidget(
-            self.today_investigations_widget ,1,1)
+            self.today_investigations_widget ,0,1)
         self.main_layout.addWidget(self.patient_old_medication_and_today_investigations_widget, 1, 1)
 
 
@@ -432,7 +432,7 @@ class PatientDashBoard(QWidget):
             self.visit_id=cursor.lastrowid
             # print(self.visit_id,self.patient_id)
             if self.today_history_edit.toPlainText().strip():
-                print("today history pushed")
+
                 cursor.execute("""
                 INSERT INTO visit_free_form_findings
                     (visit_id,free_form,created_at)
@@ -443,11 +443,12 @@ class PatientDashBoard(QWidget):
                                    self.today_history_edit.toPlainText(),
                                    datetime.now().replace(microsecond=0).isoformat()
                                ))
+                print("today history pushed")
             picked_findings_str=self.picked_symptom_text_edit.toPlainText()
             picked_findings_list=picked_findings_str.split("\n")
 
             if self.picked_symptom_text_edit.toPlainText().strip():
-                print("picked symptom pushed")
+
                 for raw_finding in picked_findings_list:
                     if raw_finding.strip():#rule out accidental empty lines from manual editing the text edit box
                         keyword,context=raw_finding.split(":")
@@ -462,6 +463,66 @@ class PatientDashBoard(QWidget):
                                            context,
                                            datetime.now().replace(microsecond=0).isoformat()
                                        ))
+                print("picked symptom pushed")
+
+            if self.today_investigations_edit.toPlainText().strip():
+                investigations_str=self.today_investigations_edit.toPlainText()
+                investigations_list=investigations_str.split("\n")
+                print (investigations_list)
+                for raw_investigation in investigations_list:
+                    parsed_investigation_list=raw_investigation.split(" ")
+                    if len(parsed_investigation_list)<4:# correct non standard input forms
+                        for i in range(len(parsed_investigation_list),4):
+                            parsed_investigation_list.append("ommited")
+                        parsed_investigation_list[3]="unknown"
+                        print(parsed_investigation_list)
+                    print(parsed_investigation_list,len(parsed_investigation_list))
+                    if raw_investigation.strip():#avoid emty lines resulting from manual edit
+                        cursor.execute("""
+                        INSERT INTO visit_investigations
+                            (visit_id,test_name,value,unit,flag,created_at)
+                            VALUES(?,?,?,?,?,?)""",
+                                       (
+                                           self.visit_id,
+                                           parsed_investigation_list[0],
+                                           float(parsed_investigation_list[1]),
+                                           parsed_investigation_list[2],
+                                           parsed_investigation_list[3].strip("()"),
+                                           datetime.now().replace(microsecond=0).isoformat()
+                                       ))
+                print("investigation pushed")
+            if self.medication_table.item(0,0):
+                row_count=self.medication_table.rowCount()
+                column_count=self.medication_table.columnCount()
+
+                for row in range(row_count):
+                    row_cells_list=[]
+                    for column in range(column_count):
+                        row_cells_list.append(self.medication_table.item(row,column).text())
+                        for i in range(len(row_cells_list)):  # fail safe for empty ,,,replace with " "
+                            # print(row_cells_list[i])
+                            if not row_cells_list[i].strip():
+                                row_cells_list[i] = "omitted"
+                            # print(row_cells_list[i])
+                    #NOTE implement stop reduced ,increased logic HERE
+                    cursor.execute("""
+                    INSERT INTO visit_medications
+                        (visit_id,name,brand,form,dose,freq,amount,note,created_at)
+                        VALUES(?,?,?,?,?,?,?,?,?)
+                            """,
+                                   (
+                                       self.visit_id,
+                                       row_cells_list[0],
+                                       row_cells_list[1],
+                                       row_cells_list[2],
+                                       row_cells_list[3],
+                                       row_cells_list[4],
+                                       row_cells_list[5],
+                                       row_cells_list[6],
+                                       datetime.now().replace(microsecond=0).isoformat()
+                                   ))
+                print("medications pushed")
+                    
 
 
 
@@ -545,15 +606,15 @@ class PatientDashBoard(QWidget):
     def append_investigation(self,test_name,test_value,upper_limit,lower_limit,unit):
         if test_value > upper_limit:
             self.today_investigations_edit.append(
-                f"<span style='color:rgb(200,110,110)' ><b>{test_name+' ' + str(test_value) + ' ' +unit+' (High)'}</b></span>"
+                f"<span style='color:rgb(200,110,110)' ><b>{test_name+' ' + str(test_value) + ' ' +unit+' (high)'}</b></span>"
             )
         elif test_value < lower_limit:
             self.today_investigations_edit.append(
-                f"<span style='color:rgb(200,110,110)' ><b>{test_name + ' ' + str(test_value) + ' ' + unit + ' (Low)'}</b></span>"
+                f"<span style='color:rgb(200,110,110)' ><b>{test_name + ' ' + str(test_value) + ' ' + unit + ' (low)'}</b></span>"
             )
         else :
             self.today_investigations_edit.append(
-                f"<span ><b>{test_name + ' ' + str(test_value) + ' ' + unit }</b></span>"
+                f"<span ><b>{test_name + ' ' + str(test_value) + ' ' + unit + ' (normal)'}</b></span>"
             )
 
     def drug_intellisense(self):

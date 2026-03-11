@@ -136,9 +136,9 @@ def creat_DB_patients_tables():
                         id         INTEGER PRIMARY KEY AUTOINCREMENT,
                         visit_id   INTEGER NOT NULL,
                         test_name  TEXT    NOT NULL,
-                        value      REAL    NOT NULL,
+                        value      TEXT    NOT NULL,
                         unit       TEXT    NOT NULL,
-                        flag       TEXT    CHECK (flag IN('high','low','normal','abnormal')) NOT NULL,
+                        flag       TEXT    CHECK (flag IN('high','low','normal','abnormal','unknown')) NOT NULL,
                         created_at TEXT    NOT NULL,
                         FOREIGN KEY(visit_id) REFERENCES visits(id) ON DELETE CASCADE
                     );

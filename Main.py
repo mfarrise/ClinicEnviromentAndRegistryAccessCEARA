@@ -17,7 +17,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QGridLayou
 from PySide6.QtGui import QGuiApplication
 from eGFRSubWindow import eGFRSubWindow
 from ContrastRiskSubWindow import ContrastRiskSubWindow
-from PatientDashBoard import PatientDashBoard
+from NewPatientDashBoard import PatientDashBoard
 from Finances import Finances
 
 
