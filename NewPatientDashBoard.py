@@ -767,6 +767,10 @@ class NewPatientDashBoard(QWidget):
 
 
 #TODO ((done but))mental note to expand and revist the dictionary in json creation tool for the symptoms
+#TODO in this and the newvisit module make new connect that triiger when text lines lost focus (clinical,investigation,drug) and chronic in new visit
+#TODO dont remove the reduced and the increased from the main drug list only remove the stopped so in reduced and increased both inserstions should work
+#TODO add powder to forms in db
+# deal with dose and form as not NULL or not
 
 
 
