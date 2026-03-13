@@ -1,23 +1,25 @@
 
 
-import os
+
 import re
 import sys
 import json
-from SharedWidgetsPyside6 import show_warning
-from datetime import datetime
+
+
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
-    QLabel, QComboBox, QMenuBar, QTableWidget, QTableWidgetItem, QHBoxLayout
-from docx import Document
+    QLabel, QComboBox, QMenuBar, QTableWidget, QTableWidgetItem
+
 from SharedWidgetsPyside6 import show_warning
-from PySide6.QtGui import QTextCharFormat, QColor, QFont, QIntValidator, Qt
+from PySide6.QtGui import  QIntValidator, Qt
 
 from Tool_CreatDataBase import *
 
 
 class NewVisitDashBoard(QWidget):
-    def __init__(self):
+    def __init__(self,id):
         super().__init__()
+
+        self.id=id
         # self.setStyleSheet("""
         # QWidget {
         #     background-color: #1e1e1e;
@@ -43,7 +45,7 @@ class NewVisitDashBoard(QWidget):
         # }
         # """)
 
-        self.setWindowTitle("Add New Patient")
+
         #NOTE global declarations
         self.patient_id=0
         self.visit_id=0
@@ -102,39 +104,63 @@ class NewVisitDashBoard(QWidget):
         #setting up the ULQ which is the patient old history and demographics#
         ######################################################################
         # region
+
+        with sqlite3.connect("ceara.db") as connection:
+            cursor=connection.cursor()
+            cursor.execute("""SELECT * FROM patients WHERE id=?""",(self.id,))
+            self.demo_query_list=cursor.fetchall()
+
+        self.demo_query_list=self.demo_query_list[0]#flatten2d to 1d
+
         self.patient_demo_and_old_data_widget=QWidget()
         self.patient_demo_and_old_data_layout = QGridLayout(self.patient_demo_and_old_data_widget)
         self.patient_demo_and_old_data_widget.setLayout(self.patient_demo_and_old_data_layout)
         self.set_quadrants_size(self.patient_demo_and_old_data_widget,quadrant_width,quadrant_height)
 
         self.patient_id_line_edit=QLineEdit()
-        self.patient_id_line_edit.setPlaceholderText("Patient ID")
+        self.patient_id_line_edit.setText(str(self.demo_query_list[0]))
         self.patient_id_line_edit.setReadOnly(True)
         self.patient_id_line_edit.setFocusPolicy(Qt.ClickFocus)
 
         self.patient_name_edit = QLineEdit()
-        self.patient_name_edit.setPlaceholderText("Patient Name")
-        self.patient_name_edit.editingFinished.connect(self.change_title)
+        self.patient_name_edit.setText(self.demo_query_list[1])
+        # self.patient_name_edit.editingFinished.connect(self.change_title)
+        self.patient_name_edit.setReadOnly(True)
+        self.setWindowTitle(self.demo_query_list[1])
 
         self.patient_DOB_edit = QLineEdit()
         self.patient_DOB_edit.setPlaceholderText("DOB")
         self.now=datetime.now().year
         self.patient_DOB_edit.setValidator(QIntValidator(1900,self.now))
-        self.patient_DOB_edit.textChanged.connect(self.calculate_set_age)
+        self.patient_DOB_edit.setText(str(self.demo_query_list[2]))
+        self.patient_DOB_edit.setDisabled(True)
 
         self.patient_age_edit = QLineEdit()
-        self.patient_age_edit.setPlaceholderText("Age")
+        # self.patient_age_edit.setPlaceholderText("Age")
         self.patient_age_edit.setReadOnly(True)
         self.patient_age_edit.setFocusPolicy(Qt.ClickFocus)
+        self.patient_age_edit.setDisabled(True)
+        self.calculate_set_age()
 
         self.patient_gender_combo=QComboBox()
         self.patient_gender_combo.addItems(["Male","Female"])
+        self.patient_gender_combo.setCurrentText(self.demo_query_list[3])
+        self.patient_gender_combo.setDisabled(True)
 
         self.patient_marital_combo=QComboBox()
         self.patient_marital_combo.addItems(["Single","Married","Divorced","Widowed"])
+        self.patient_marital_combo.setCurrentText(self.demo_query_list[4])
+        self.patient_marital_combo.setDisabled(True)
 
-        self.patient_tel_line_edit=QLineEdit()
-        self.patient_tel_line_edit.setPlaceholderText("Telephone")
+        self.patient_education_combo=QComboBox()
+        self.patient_education_combo.addItems(["University","PostGraduate","Institute","Secondary","Primary","None"])
+
+        self.patient_job_edit = QLineEdit()
+        self.patient_job_edit.setPlaceholderText("Job")
+
+        self.patient_job_type_combo=QComboBox()
+        self.patient_job_type_combo.addItems(["retired","desk/sedentary","light/outdoor","heavy labour","student"])
+
 
         self.patient_residence_free_form_edit=QLineEdit()
         self.patient_residence_free_form_edit.setPlaceholderText("residence")
@@ -145,14 +171,11 @@ class NewVisitDashBoard(QWidget):
         self.patient_residence_type_combo = QComboBox()
         self.patient_residence_type_combo.addItems(["center","periphery","rural"])
 
-        self.patient_education_combo=QComboBox()
-        self.patient_education_combo.addItems(["University","PostGraduate","Institute","Secondary","Primary","None"])
 
-        self.patient_job_edit = QLineEdit()
-        self.patient_job_edit.setPlaceholderText("Job")
 
-        self.patient_job_type_combo=QComboBox()
-        self.patient_job_type_combo.addItems(["retired","desk/sedentary","light/outdoor","heavy labour","student"])
+        self.patient_tel_line_edit=QLineEdit()
+        self.patient_tel_line_edit.setText(self.demo_query_list[11])
+        self.patient_tel_line_edit.setReadOnly(True)
 
         self.patient_demo_and_old_data_layout.addWidget(self.patient_id_line_edit,0,0)
         self.patient_demo_and_old_data_layout.addWidget(self.patient_name_edit,0,1)
@@ -791,6 +814,6 @@ class NewVisitDashBoard(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = NewVisitDashBoard()
+    window = NewVisitDashBoard(4)
     window.show()
     app.exec()

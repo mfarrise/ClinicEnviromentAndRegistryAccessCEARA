@@ -13,13 +13,13 @@ class PatientSearchNewPatientWidget(QWidget):
 
         self.model = None
         self.proxy=None
-        self.setWindowTitle("patient_search_new_patient")
+        self.setWindowTitle("Patient Search")
         self.setGeometry(300, 300, 300, 300)
         self.main_layout = QGridLayout()
         self.setLayout(self.main_layout)
-
+        self.opened_windows_list=[]
         #NOTE opening DB
-        self.conn=sqlite3.connect("dummy_patients.db")
+        self.conn=sqlite3.connect("ceara.db")
 
         self.search_label=QLabel("Search")
         self.search_line_edit = QLineEdit()
@@ -55,7 +55,7 @@ class PatientSearchNewPatientWidget(QWidget):
 
     def load_patients(self):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT id,name FROM patients ORDER BY name")
+        cursor.execute("SELECT id,patient_name FROM patients ORDER BY patient_name")
 
         for pid,name in cursor.fetchall():
             item=QStandardItem(name)
@@ -73,7 +73,7 @@ class PatientSearchNewPatientWidget(QWidget):
 
         print("Open Patient ID:", patient_id,"patient name ",item.text())
 
-        self.do_something_with_selection_widget=update_add_visit_selector_widget(patient_id,item.text())
+        self.do_something_with_selection_widget=update_add_visit_selector_widget(self.opened_windows_list,patient_id,item.text())
         self.do_something_with_selection_widget.show()
         self.do_something_with_selection_widget.raise_()
 
