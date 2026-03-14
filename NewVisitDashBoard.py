@@ -4,7 +4,7 @@
 import re
 import sys
 import json
-
+import old_history_viewer
 
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QFileDialog, QLineEdit, QApplication, QTextEdit, \
     QLabel, QComboBox, QMenuBar, QTableWidget, QTableWidgetItem
@@ -13,12 +13,13 @@ from SharedWidgetsPyside6 import show_warning
 from PySide6.QtGui import  QIntValidator, Qt
 
 from Tool_CreatDataBase import *
+from old_history_viewer import OldHistoryViewer
 
 
 class NewVisitDashBoard(QWidget):
     def __init__(self,id):
         super().__init__()
-
+        self.opened_windows_list=[]
         self.id=id
         # self.setStyleSheet("""
         # QWidget {
@@ -93,11 +94,13 @@ class NewVisitDashBoard(QWidget):
         self.setLayout(self.main_layout)
         self.move(0, 0)
 
-        menu_bar=QMenuBar()
-        file_menu=menu_bar.addMenu("File")
-        set_directory_action=file_menu.addAction("Set Directory")
-        set_directory_action.triggered.connect(self.set_directory_for_patient_registry_in_setting_json)
-        self.main_layout.addWidget(menu_bar)
+        self.menu_bar=QMenuBar()
+        self.file_menu=self.menu_bar.addMenu("File")
+        self.set_directory_action_menu_item=self.file_menu.addAction("Set Directory")
+        self.set_directory_action_menu_item.triggered.connect(self.set_directory_for_patient_registry_in_setting_json)
+        self.open_old_history_viewer_menu_item=self.file_menu.addAction("view Old History")
+        self.open_old_history_viewer_menu_item.triggered.connect(self.open_old_history_viewer)
+        self.main_layout.addWidget(self.menu_bar)
 
         #NOTE ULQ Demographics
         ######################################################################
@@ -116,9 +119,9 @@ class NewVisitDashBoard(QWidget):
             self.old_history_html=""
             for visit_tuple in self.visits_query_list:
                 self.visit_id=visit_tuple[0]#will loop the visit id through all visits and automatically take the last visit id at last
-                self.old_history_html +=f"""<span style='color:red'><b>{visit_tuple[2]}</b></span><br>"""#Date
+                self.old_history_html +=f"""<div style="text-align:center;"><h3 style='color:red'><b>{visit_tuple[2]}</b><br>"""#Date
 
-                self.old_history_html += """<span style='color:red'><b>-----------------</b></span><br>"""
+                self.old_history_html += """<b>-----------------</b></h3></div>"""
 
                 cursor.execute("""SELECT free_form from visit_free_form_findings where id=?""",
                                (self.visit_id,))
@@ -135,19 +138,39 @@ class NewVisitDashBoard(QWidget):
                               (self.visit_id,))
                 self.visit_investigations_list=cursor.fetchall()
                 for investigation_tuple in self.visit_investigations_list:
-                    self.old_history_html +=f"""<span style='color:blue'>{investigation_tuple[0]} {investigation_tuple[1]} {investigation_tuple[2]}
-                      {investigation_tuple[3]}<br></span>"""
+                    investigation_list = list(investigation_tuple)
+                    investigation_list = [" " if x == "omitted" else x for x in investigation_list]
+                    self.old_history_html +=f"""<span style='color:blue'><b>{investigation_list[0]}</b> {investigation_list[1]} {investigation_list[2]}
+                     <i>===> </i> {investigation_list[3]}<br></span>"""
+
+                self.old_history_html += \
+                    """<span style='color:brown'><br><b>Adjusted Medications<br>---------------------------------</span></b><br>"""
+
+                cursor.execute("""
+                                SELECT drug_name,dose,freq,flag,reason FROM visit_adjusted_medications WHERE visit_id=?""",
+                               (self.visit_id,))
+                self.visit_adjusted_medications_list = cursor.fetchall()
+                for adjusted_medications_tuple in self.visit_adjusted_medications_list:
+                    adjusted_medications_list = list(adjusted_medications_tuple)
+                    adjusted_medications_list = [" " if x == "omitted" else x for x in adjusted_medications_list]
+                    self.old_history_html +=f"""<span style='color:brown'><b>{adjusted_medications_list[0]}</b> {adjusted_medications_list[1]} {adjusted_medications_list[2]}
+                      I <b>{adjusted_medications_list[3]}</b> it  <i><u>context</u></i> {adjusted_medications_list[4]}<br></span>"""
+
 
                 self.old_history_html += \
                     """<span style='color:green'><br><b>medications<br>-----------------------</span></b><br>"""
 
                 cursor.execute("""
-                                SELECT name,form,dose,freq,note FROM visit_medications WHERE visit_id=?""",
+                                SELECT name,brand,form,dose,freq,note FROM visit_medications WHERE visit_id=?""",
                                (self.visit_id,))
                 self.visit_medications_list = cursor.fetchall()
+
                 for medications_tuple in self.visit_medications_list:
-                    self.old_history_html +=f"""<span style='color:green'>{medications_tuple[0]} {medications_tuple[1]} {medications_tuple[2]}
-                      {medications_tuple[3]} {medications_tuple[4]}<br></span>"""
+                    medications_list=list(medications_tuple)
+                    medications_list = [" " if x == "omitted" else x for x in medications_list]
+
+                    self.old_history_html +=f"""<span style='color:green'><b>{medications_list[0]}</b> ({medications_list[1]}) {medications_list[2]}
+                      {medications_list[3]} {medications_list[4]} {medications_list[5]}<br></span>"""
                 self.old_history_html += """<br>"""
 
 
@@ -863,7 +886,10 @@ class NewVisitDashBoard(QWidget):
         if self.patient_name_edit.text():
             self.setWindowTitle(self.patient_name_edit.text()+" new patient")
 
-
+    def open_old_history_viewer(self):
+        old_history_viewer_window=OldHistoryViewer(self.patient_name_edit.text(),self.old_history_html)
+        old_history_viewer_window.show()
+        self.opened_windows_list.append(old_history_viewer_window)
 
 #TODO ((done but))mental note to expand and revist the dictionary in json creation tool for the symptoms
 

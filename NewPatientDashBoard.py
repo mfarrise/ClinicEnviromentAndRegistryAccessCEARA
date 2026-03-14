@@ -465,7 +465,7 @@ class NewPatientDashBoard(QWidget):
                     parsed_investigation_list=raw_investigation.split(" ")
                     if len(parsed_investigation_list)<4:# correct non standard input forms
                         for i in range(len(parsed_investigation_list),4):
-                            parsed_investigation_list.append("ommited")
+                            parsed_investigation_list.append("omitted")
                         parsed_investigation_list[3]="unknown"
                         print(parsed_investigation_list)
                     print(parsed_investigation_list,len(parsed_investigation_list))
