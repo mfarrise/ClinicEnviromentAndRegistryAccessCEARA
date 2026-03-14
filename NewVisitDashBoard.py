@@ -109,6 +109,49 @@ class NewVisitDashBoard(QWidget):
             cursor=connection.cursor()
             cursor.execute("""SELECT * FROM patients WHERE id=?""",(self.id,))
             self.demo_query_list=cursor.fetchall()
+            cursor.execute("""SELECT * from visits where patient_id=?
+            ORDER BY visit_date ASC""",(self.id,))
+            self.visits_query_list=cursor.fetchall()
+            print (self.visits_query_list)
+            self.old_history_html=""
+            for visit_tuple in self.visits_query_list:
+                self.visit_id=visit_tuple[0]#will loop the visit id through all visits and automatically take the last visit id at last
+                self.old_history_html +=f"""<span style='color:red'><b>{visit_tuple[2]}</b></span><br>"""#Date
+
+                self.old_history_html += """<span style='color:red'><b>-----------------</b></span><br>"""
+
+                cursor.execute("""SELECT free_form from visit_free_form_findings where id=?""",
+                               (self.visit_id,))
+                self.visit_free_form_list=cursor.fetchall()
+                self.visit_free_form_str=self.visit_free_form_list[0][0].replace("\n","<br>")
+                self.old_history_html +=f"""{self.visit_free_form_str}"""#old_history free form
+
+                self.old_history_html +="""<br>"""
+                self.old_history_html +=\
+                    """<span style='color:blue'><br><b>Investigations<br>-----------------------</span></b><br>"""
+
+                cursor.execute("""
+                SELECT test_name,value,unit,flag FROM visit_investigations WHERE visit_id=?""",
+                              (self.visit_id,))
+                self.visit_investigations_list=cursor.fetchall()
+                for investigation_tuple in self.visit_investigations_list:
+                    self.old_history_html +=f"""<span style='color:blue'>{investigation_tuple[0]} {investigation_tuple[1]} {investigation_tuple[2]}
+                      {investigation_tuple[3]}<br></span>"""
+
+                self.old_history_html += \
+                    """<span style='color:green'><br><b>medications<br>-----------------------</span></b><br>"""
+
+                cursor.execute("""
+                                SELECT name,form,dose,freq,note FROM visit_medications WHERE visit_id=?""",
+                               (self.visit_id,))
+                self.visit_medications_list = cursor.fetchall()
+                for medications_tuple in self.visit_medications_list:
+                    self.old_history_html +=f"""<span style='color:green'>{medications_tuple[0]} {medications_tuple[1]} {medications_tuple[2]}
+                      {medications_tuple[3]} {medications_tuple[4]}<br></span>"""
+                self.old_history_html += """<br>"""
+
+
+
 
         self.demo_query_list=self.demo_query_list[0]#flatten2d to 1d
 
@@ -154,27 +197,38 @@ class NewVisitDashBoard(QWidget):
 
         self.patient_education_combo=QComboBox()
         self.patient_education_combo.addItems(["University","PostGraduate","Institute","Secondary","Primary","None"])
+        self.patient_education_combo.setCurrentText(self.demo_query_list[5])
+        self.patient_education_combo.setDisabled(True)
 
         self.patient_job_edit = QLineEdit()
         self.patient_job_edit.setPlaceholderText("Job")
+        self.patient_job_edit.setText(self.demo_query_list[6])
+        self.patient_job_edit.setDisabled(True)
 
         self.patient_job_type_combo=QComboBox()
         self.patient_job_type_combo.addItems(["retired","desk/sedentary","light/outdoor","heavy labour","student"])
-
-
-        self.patient_residence_free_form_edit=QLineEdit()
-        self.patient_residence_free_form_edit.setPlaceholderText("residence")
+        self.patient_job_type_combo.setCurrentText(self.demo_query_list[7])
+        self.patient_job_type_combo.setDisabled(True)
 
         self.patient_governorates_combo = QComboBox()
         self.patient_governorates_combo.addItems(iraq_governorates)
+        self.patient_governorates_combo.setCurrentText(self.demo_query_list[8])
+        self.patient_governorates_combo.setDisabled(True)
+
+        self.patient_residence_free_form_edit=QLineEdit()
+        self.patient_residence_free_form_edit.setPlaceholderText("residence")
+        if self.demo_query_list[9]:
+            self.patient_residence_free_form_edit.setText(self.demo_query_list[9])
+        self.patient_residence_free_form_edit.setDisabled(True)
 
         self.patient_residence_type_combo = QComboBox()
         self.patient_residence_type_combo.addItems(["center","periphery","rural"])
-
-
+        self.patient_residence_type_combo.setCurrentText(self.demo_query_list[10])
+        self.patient_residence_type_combo.setDisabled(True)
 
         self.patient_tel_line_edit=QLineEdit()
-        self.patient_tel_line_edit.setText(self.demo_query_list[11])
+        if self.demo_query_list[11]:
+            self.patient_tel_line_edit.setText(self.demo_query_list[11])
         self.patient_tel_line_edit.setReadOnly(True)
 
         self.patient_demo_and_old_data_layout.addWidget(self.patient_id_line_edit,0,0)
@@ -200,7 +254,8 @@ class NewVisitDashBoard(QWidget):
 
         #chronic disease lined edit
         self.chronic_disease_line_edit=QLineEdit()
-        self.chronic_disease_line_edit.setPlaceholderText("IHD HT DM CKD ESRD CVA")
+        self.chronic_disease_line_edit.setText(self.demo_query_list[12])
+        self.chronic_disease_line_edit.setEnabled(False)
         self.patient_demo_and_old_data_layout.addWidget(self.chronic_disease_line_edit,3,1,1,3)
 
         #chronic disease lined edit ADD
@@ -211,7 +266,9 @@ class NewVisitDashBoard(QWidget):
         # text edit
         self.previous_history_edit = QTextEdit()
         self.previous_history_edit.setReadOnly(True)
+        self.previous_history_edit.setHtml(self.old_history_html)
         self.patient_demo_and_old_data_layout.addWidget(self.previous_history_edit, 4, 0,1,5)
+
 
         self.main_layout.addWidget(self.patient_demo_and_old_data_widget,1,0)
 
