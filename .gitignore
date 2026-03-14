@@ -22,7 +22,8 @@ __pycache__/
 
 #ignore workspace its just local pycharm status
 .idea/workspace.xml
-
+/misc.xml
+/temppci.docx
 /InvestigationDatabase.json
 /PatientDashBoard_settings.json
 /build/Main/Analysis-00.toc
@@ -42,3 +43,4 @@ __pycache__/
 /dist/temppci.docx
 /build/Main/warn-Main.txt
 /build/Main/xref-Main.html
+
