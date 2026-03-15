@@ -44,3 +44,4 @@ __pycache__/
 /build/Main/warn-Main.txt
 /build/Main/xref-Main.html
 
+.idea/
