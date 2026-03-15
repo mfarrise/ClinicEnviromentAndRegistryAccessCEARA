@@ -21,30 +21,7 @@ class NewVisitDashBoard(QWidget):
         super().__init__()
         self.opened_windows_list=[]
         self.id=id
-        # self.setStyleSheet("""
-        # QWidget {
-        #     background-color: #1e1e1e;
-        #     color: white;
-        #     font-size: 13px;
-        # }
-        #
-        # QLineEdit, QTextEdit, QComboBox {
-        #     background-color: #2b2b2b;
-        #     border: 1px solid #3a3a3a;
-        #     border-radius: 6px;
-        #     padding: 4px;
-        # }
-        #
-        # QPushButton {
-        #     background-color: #3a3a3a;
-        #     border-radius: 6px;
-        #     padding: 6px;
-        # }
-        #
-        # QPushButton:hover {
-        #     background-color: #505050;
-        # }
-        # """)
+
 
 
         #NOTE global declarations
@@ -150,20 +127,24 @@ class NewVisitDashBoard(QWidget):
                                 SELECT drug_name,dose,freq,flag,reason FROM visit_adjusted_medications WHERE visit_id=?""",
                                (self.visit_id,))
                 self.visit_adjusted_medications_list = cursor.fetchall()
+                self.adjusted_medications_table_filling_list=[]#this will be used down far below to fill the table
+
                 for adjusted_medications_tuple in self.visit_adjusted_medications_list:
                     adjusted_medications_list = list(adjusted_medications_tuple)
                     adjusted_medications_list = [" " if x == "omitted" else x for x in adjusted_medications_list]
                     self.old_history_html +=f"""<span style='color:brown'><b>{adjusted_medications_list[0]}</b> {adjusted_medications_list[1]} {adjusted_medications_list[2]}
                       I <b>{adjusted_medications_list[3]}</b> it  <i><u>context</u></i> {adjusted_medications_list[4]}<br></span>"""
-
+                    self.adjusted_medications_table_filling_list.append(adjusted_medications_tuple)
 
                 self.old_history_html += \
                     """<span style='color:green'><br><b>medications<br>-----------------------</span></b><br>"""
 
+
                 cursor.execute("""
-                                SELECT name,brand,form,dose,freq,note FROM visit_medications WHERE visit_id=?""",
+                                SELECT name,brand,form,dose,freq,amount,note FROM visit_medications WHERE visit_id=?""",
                                (self.visit_id,))
                 self.visit_medications_list = cursor.fetchall()
+                self.medications_table_filling_list = []  # this will be used down far below to fill the table
 
                 for medications_tuple in self.visit_medications_list:
                     medications_list=list(medications_tuple)
@@ -171,6 +152,7 @@ class NewVisitDashBoard(QWidget):
 
                     self.old_history_html +=f"""<span style='color:green'><b>{medications_list[0]}</b> ({medications_list[1]}) {medications_list[2]}
                       {medications_list[3]} {medications_list[4]} {medications_list[5]}<br></span>"""
+                    self.medications_table_filling_list.append(medications_tuple)
                 self.old_history_html += """<br>"""
 
 
@@ -383,7 +365,7 @@ class NewVisitDashBoard(QWidget):
 
         #adjusted medications from last visit table
         self.adjusted_medications_label = QLabel()
-        self.adjusted_medications_label.setText("Adjusted Medications")
+        self.adjusted_medications_label.setText("Adjusted Medications in the last visit")
         self.adjusted_medications_label.setAlignment(Qt.AlignCenter)
         self.old_medication_layout.addWidget(self.adjusted_medications_label, 0, 0)
 
@@ -393,6 +375,16 @@ class NewVisitDashBoard(QWidget):
         self.adjusted_medication_table.setAlternatingRowColors(True)
         self.old_medication_layout.addWidget(self.adjusted_medication_table, 1, 0)
         self.adjusted_medication_table.setHorizontalHeaderLabels(["Name","Dose","Freq","Change","Reason"])
+        # update the adjusted medications table
+        row_number = self.adjusted_medication_table.rowCount()
+        print(self.adjusted_medications_table_filling_list)
+        for adjusted_med_tuple in self.adjusted_medications_table_filling_list:
+            self.adjusted_medication_table.insertRow(row_number)
+            for i, text in enumerate(adjusted_med_tuple):
+                self.adjusted_medication_table.setItem(row_number, i , QTableWidgetItem(text))
+            row_number += 1
+
+
 
         self.creat_new_patient_in_db_button = QPushButton("Add Visit")
         self.creat_new_patient_in_db_button.setFocusPolicy(Qt.ClickFocus)
@@ -468,6 +460,14 @@ class NewVisitDashBoard(QWidget):
         self.patient_today_medication_layout.addWidget(self.medication_table, 1, 0)
         self.medication_table.setHorizontalHeaderLabels(["Name","Brand","Form","Dose","Freq","Amount","Note"])
 
+        # update the adjusted medications table
+        row_number = self.medication_table.rowCount()
+        # print(self.adjusted_medications_table_filling_list)
+        for med_tuple in self.medications_table_filling_list:
+            self.medication_table.insertRow(row_number)
+            for i, text in enumerate(med_tuple):
+                self.medication_table.setItem(row_number, i , QTableWidgetItem(text))
+            row_number += 1
         # today Medication intelligent
         # line edit
         self.today_medication_intellisense_line = QLineEdit(self)
@@ -851,9 +851,7 @@ class NewVisitDashBoard(QWidget):
 
 
             print("new row created")
-            row_number=self.old_medication_table.rowCount()
-            self.old_medication_table.insertRow(row_number)
-
+            row_number=self.medication_table.rowCount()
             #ill implement transfering the dictionary to the new row using row_number in row place
             for i,key in enumerate(drug_name_DIC.keys()):
                 item = QTableWidgetItem(drug_name_DIC[key])

@@ -19,7 +19,7 @@ from eGFRSubWindow import eGFRSubWindow
 from ContrastRiskSubWindow import ContrastRiskSubWindow
 from NewPatientDashBoard import NewPatientDashBoard
 from Finances import Finances
-
+from FetchPatient import PatientSearchNewPatientWidget
 
 
 
@@ -37,8 +37,8 @@ class MainWindow_class(QMainWindow):
         self.setFixedSize(280,295)
         self.setCentralWidget(central_widget)
 
-        standard_button=QPushButton("Standard")
-        standard_button.clicked.connect(self.call_standard)
+        standard_button=QPushButton("Fetch Patient")
+        standard_button.clicked.connect(self.call_new_visit_dashboard)
         self.add_new_patient_button = QPushButton("New Patient")
         self.add_new_patient_button.clicked.connect(self.call_new_patient_dashboard)
         cin_button=QPushButton("CIN")
@@ -120,6 +120,11 @@ class MainWindow_class(QMainWindow):
         frame_rect.moveCenter(self.screen_geometry.center())
         self.financesWindow.move(frame_rect.topLeft())
         self.financesWindow.raise_()
+    def call_new_visit_dashboard(self):
+        FetchPatientWindow = PatientSearchNewPatientWidget()
+        self.daughter_windows_new_patient.append(FetchPatientWindow)
+        FetchPatientWindow.show()
+        FetchPatientWindow.raise_()
 
 App = QApplication(sys.argv)
 App.setStyleSheet("""

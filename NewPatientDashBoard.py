@@ -18,39 +18,8 @@ from Tool_CreatDataBase import *
 class NewPatientDashBoard(QWidget):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("""
-        QWidget {
-            background-color: #e3e5e7;
-            color: #505255;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: "Ubuntu";
-        }
 
-        QLineEdit, QTextEdit, QComboBox {
-            background-color: #e3e5e7;
-            border: 1px solid #a2a4a5;
-            border-radius: 9px;
-            padding: 4px;
-        }
- 
-        QComboBox::drop-down {
-        border: none;
-        width: 18px;
-        }
 
-        QPushButton {
-            background-color: #e6e6e6 ;
-            border: 1px solid #a2a4a5;
-            padding: 6px;
-            border-radius: 9px;
-        }
-
-        QPushButton:hover {
-            background-color: #f0f0f0;
-        }
-        
-        """)
 
         self.setWindowTitle("Add New Patient")
         #NOTE global declarations
@@ -509,16 +478,16 @@ class NewPatientDashBoard(QWidget):
                     #so stop will include stop and stopped
                     if "stop" in current_cells_list[-1] :
                         self.push_to_visit_adjusted_medications(cursor,"stopped",current_cells_list)
-                        continue
+                        continue #dont add it to medications it will be only added to adjuste dmedications
                     if "increase" in current_cells_list[-1].lower():
                         self.push_to_visit_adjusted_medications(cursor,"increased",current_cells_list)
-                        continue
+                        current_cells_list[-1]= "original note in adjusted medications above"
                     if "reduce" in current_cells_list[-1].lower():
                         self.push_to_visit_adjusted_medications(cursor,"reduced",current_cells_list)
-                        continue
+                        current_cells_list[-1] = "original note in adjusted medications above"
                     if "decrease" in current_cells_list[-1].lower():
                         self.push_to_visit_adjusted_medications(cursor,"reduced", current_cells_list)
-                        continue
+                        current_cells_list[-1] = "original note in adjusted medications above"
 
                     cursor.execute("""
                     INSERT INTO visit_medications

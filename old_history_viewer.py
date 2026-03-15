@@ -4,6 +4,12 @@ from PySide6.QtWidgets import QWidget, QGridLayout, QTextEdit
 class OldHistoryViewer(QWidget):
     def __init__(self, name,html):
         super().__init__()
+        self.setStyleSheet("""
+                
+                QTextEdit {
+                    font-size: 12pt;
+                }
+                """)
         self.name=name
         self.html=html
         self.setWindowTitle(self.name+" Previous History")
