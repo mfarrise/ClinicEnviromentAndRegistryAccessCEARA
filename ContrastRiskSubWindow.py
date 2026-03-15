@@ -94,7 +94,7 @@ class ContrastRiskSubWindow(QWidget):
 
         CINLayout = QGridLayout(self)
         self.setLayout(CINLayout)
-        self.setFixedSize(280,340)
+        self.setFixedSize(280,360)
         self.setWindowTitle("Contrast Risk Calculator")
 
         egfrlbl=QLabel("eGFR")

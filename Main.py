@@ -122,6 +122,39 @@ class MainWindow_class(QMainWindow):
         self.financesWindow.raise_()
 
 App = QApplication(sys.argv)
+App.setStyleSheet("""
+        QWidget {
+            background-color: #e3e5e7;
+            color: #505255;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: "Ubuntu";
+        }
+
+        QLineEdit, QTextEdit, QComboBox {
+            background-color: #e3e5e7;
+            border: 1px solid #a2a4a5;
+            border-radius: 9px;
+            padding: 4px;
+        }
+
+        QComboBox::drop-down {
+        border: none;
+        width: 18px;
+        }
+
+        QPushButton {
+            background-color: #f0f0f0 ;
+            border: 1px solid #a2a4a5;
+            padding: 6px;
+            border-radius: 9px;
+        }
+
+        QPushButton:hover {
+            background-color: #f5f5f6;
+        }
+
+        """)
 MainWindow = MainWindow_class()
 MainWindow.setWindowTitle("C.E.A.R.A. v0.6")
 
