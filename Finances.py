@@ -23,7 +23,7 @@ class Finances(QWidget):
         self.finances_layout = QGridLayout()
         self.setLayout(self.finances_layout)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        #################         data input section     ###############
+        #BC ################         data input section     ###############
         #region
 
         self.data_input_section=QWidget()
@@ -84,14 +84,15 @@ class Finances(QWidget):
         self.type_combo=QComboBox()
         self.type_combo.addItems(["income","expense"])
         self.data_input_layout.addWidget(self.type_combo, 1, 3)
+        self.type_combo.currentTextChanged.connect(self.modify_category_content)
 
         self.category_label = QLabel("Category")
         self.category_label.setAlignment(Qt.AlignCenter)
         self.data_input_layout.addWidget(self.category_label, 0, 4)
 
         self.category_combo=QComboBox()
-        self.category_combo.addItems(["visit","staff","cleaning","rent","printing","shopping",
-                                      "equipment","furniture","tax","other"])
+        self.modify_category_content()
+
         self.data_input_layout.addWidget(self.category_combo, 1, 4)
 
         self.method_label = QLabel("Method")
@@ -171,7 +172,11 @@ class Finances(QWidget):
 
 
         if self.type_combo.currentText() == "expense" and self.amount_line_edit.text():
-            if self.category_combo.currentText() !="visit":# sorry can be resolved with AND in parent if statement but too lazy to fix it
+            #although the next if safemeasure is made redandant by this method "def modify_category_content(self):"
+            #but ill keep it as an extra safty measure in case i change the method above in the future
+            #the job of this if and the method mentioned is to reduce the risk the user from accidentally inserting expenses as an income
+
+            if self.category_combo.currentText() !="visit":
                 add_DB_transaction_expense(
                     self.date_edit.text(),
 
@@ -198,6 +203,14 @@ class Finances(QWidget):
                     item.setTextAlignment(Qt.AlignCenter)
                     self.action_done_table.setItem(self.row,i,item)
                 self.row+=1
+    def modify_category_content(self):#this method will remove the expense categories from the box when income is chosen
+        if self.type_combo.currentText() == "income":
+            self.category_combo.clear()
+            self.category_combo.addItem("visit")
+        elif self.type_combo.currentText() == "expense":
+            self.category_combo.clear()
+            self.category_combo.addItems(["staff","cleaning","rent","printing","shopping",
+                                      "equipment","furniture","tax","other"])
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
